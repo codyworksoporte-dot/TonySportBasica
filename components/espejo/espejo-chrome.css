@@ -1,7 +1,8 @@
 /*
  * Chrome of the mirror: top bar, header and menus, footer, floating widgets and the inner-page title band.
  * Geometry measured on the official site (outline-desktop/mobile.json of Inicio); colours and buttons are ours.
- * Desktop header: 62 px bar + 146 px logo row + two 146 px menu rows. Phones (up to 1018 px): 62 + 62.
+ * Desktop header: 62 px bar + 146 px logo row + two 146 px menu rows (three up to 1280 px, as the official).
+ * Phones (up to 1018 px): 62 + 62.
  */
 
 /* ---------- Top contact bar ---------- */
@@ -31,11 +32,13 @@
 @media(hover:hover) and (pointer:fine){.wb-carrito-cabecera:hover{color:var(--wb-lima)}}
 .wb-hamburguesa{display:none;place-items:center;width:44px;height:44px;margin-right:-7px;padding:0;border:0;background:none;color:var(--wb-texto);cursor:pointer}
 
-/* ---------- Desktop menu: 146 px rows, 7 + 6 entries from 1200 px ---------- */
+/* ---------- Desktop menu: 146 px rows, 7 + 6 entries from 1281 px ---------- */
 .wb-menu-lista{display:flex;flex-wrap:wrap;margin:0 auto;padding:0;list-style:none}
-@media(min-width:1200px){.wb-menu-lista::after{content:'';order:1;flex-basis:100%;height:0}.wb-menu-item--fila2{order:2}}
+@media(min-width:1281px){.wb-menu-lista::after{content:'';order:1;flex-basis:100%;height:0}.wb-menu-item--fila2{order:2}}
 .wb-menu-item{position:relative;display:flex;align-items:center;height:146px;padding:0 15px;transition:background-color 200ms ease}
 .wb-menu-item::after{content:'';position:absolute;left:15px;right:15px;top:calc(50% + 17px);height:2px;background:var(--wb-lima);transform:scaleX(0);transform-origin:left;transition:transform 260ms var(--tc-ease);pointer-events:none}
+/* Up to 1280 px the official theme narrows each entry to 9 px a side and the menu wraps freely (6 + 5 + 2 at 1024). */
+@media(max-width:1280px){.wb-menu-item{padding:0 9px}.wb-menu-item::after{left:9px;right:9px}}
 /* 23 px with wide tracking: each entry is within ~3 px of the official Montserrat 18 px box. */
 .wb-menu-enlace{display:flex;align-items:center;height:100%;color:var(--wb-lima);font:600 23px/1 var(--wb-f-display);letter-spacing:.085em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
 .wb-menu-enlace[aria-current=page]{color:var(--wb-lima-hi)}
@@ -82,8 +85,9 @@
 }
 @media(min-width:1019px){.wb-menu-movil{display:none!important}}
 
-/* Phone menu: black panel under the header, 50 px rows, submenus inline. */
-.wb-menu-movil{background:var(--wb-negro);border-top:1px solid var(--wb-linea)}
+/* Phone menu: black panel dropped over the page under the header row (the official one does not push the
+   page down), 50 px rows, submenus inline. */
+.wb-menu-movil{position:absolute;top:100%;left:0;right:0;background:var(--wb-negro);border-top:1px solid var(--wb-linea);box-shadow:0 18px 36px rgb(0 0 0 / .45)}
 .wb-menu-movil[hidden]{display:none}
 .wb-mm-lista,.wb-mm-sub{margin:0;padding:0;list-style:none}
 .wb-mm-sub[hidden]{display:none}
@@ -110,6 +114,7 @@ body>.replay-intro{z-index:45;top:113px;right:auto;left:calc(max(40px,(100vw - 1
 /* ---------- Footer ---------- */
 .wb-pie{position:relative;z-index:1;background:var(--wb-fondo);color:var(--wb-texto);border-top:1px solid var(--wb-linea-fuerte);font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto)}
 .wb-pie-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;padding:51px 0 62px}
+@media(max-width:1280px){.wb-pie-cols{column-gap:28px}}
 .wb-pie-col{min-width:0}
 .wb-pie-titulo{margin:0 0 22px;font:700 21px/1.05 var(--wb-f-display);letter-spacing:.07em;text-transform:uppercase;color:var(--wb-texto)}
 .wb-pie-texto{text-align:justify;hyphens:manual}
@@ -132,7 +137,7 @@ body>.replay-intro{z-index:45;top:113px;right:auto;left:calc(max(40px,(100vw - 1
 .wb-pie-social:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px;border-radius:50%}
 @media(hover:hover) and (pointer:fine){.wb-pie-social:hover{color:var(--wb-lima)}}
 @media(max-width:767px){
-  .wb-pie-cols{grid-template-columns:1fr;gap:42px;padding:52px 0 60px}
+  .wb-pie-cols{grid-template-columns:1fr;gap:42px;padding:60px 0 60px}
   .wb-pie-barra-in{flex-direction:column;align-items:stretch;gap:4px;padding-block:14px 18px}
   .wb-pie-social{align-self:flex-end}
   .wb-pie-copy{text-align:center;line-height:2.1}

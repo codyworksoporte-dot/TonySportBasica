@@ -3,7 +3,6 @@ import Columna from '@/components/espejo/Columna';
 import Fila from '@/components/espejo/Fila';
 import Titulo from '@/components/espejo/Titulo';
 import BandaTitulo from '@/components/espejo/contenido/BandaTitulo';
-import CajaImagen from '@/components/espejo/contenido/CajaImagen';
 import ImagenEnlazada from '@/components/espejo/contenido/ImagenEnlazada';
 import '@/components/espejo/contenido/contenido.css';
 
@@ -39,8 +38,9 @@ export default function TipoDeSublimandoPage() {
       {fila.map((t, j) => <Columna key={t.href} ancho={{ sm: 6 }}>
         <Titulo nivel={2} alinear="centro" color="lima">{t.titulo}</Titulo>
         <ImagenEnlazada href={t.href} url={t.imagen} movil={movil(t.imagen)} alt={t.titulo} sizes={TAMANOS} prioridad={i === 0}/>
-        {/* Official image box with no picture (its product no longer exists): only reachable with the keyboard. */}
-        {i === 0 && j === 1 && <CajaImagen href={`${SITIO}producto/album-001-de-camisas-full-sublimadas-linea-slim-fit/`} titulo="Camisa Full Sublimadas" nivel={3}/>}
+        {/* Official image box with no picture whose product no longer exists (404 there too): only its 35 px
+            margin shows. The mirror keeps its hidden title and drops the dead link. */}
+        {i === 0 && j === 1 && <div className="wb-contenido-caja-hueco"><h3 className="sr-only">Camisa Full Sublimadas</h3></div>}
       </Columna>)}
     </Fila>)}
   </main>;

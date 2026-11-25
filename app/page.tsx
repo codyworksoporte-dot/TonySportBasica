@@ -18,8 +18,8 @@ const CONTACTO = enlaceLocal('https://www.tonysportselsalvador.com/contacto/');
 
 export default function Inicio() {
   return <main id="contenido" className="wb-inicio">
-    {/* Slider Revolution «portada»: 19 slides; from 1200 px it keeps the official 637 px height. */}
-    <Carrusel id="deslizador" slides={DIAPOSITIVAS} alto={{ sm: '44.24vw', md: '44.24vw', lg: 637 }} etiqueta="Portada" className="wb-inicio-carrusel"/>
+    {/* Slider Revolution «portada»: 19 slides, 4 s each (official duration:4000); from 1200 px it keeps the official 637 px height. */}
+    <Carrusel id="deslizador" slides={DIAPOSITIVAS} alto={{ sm: '44.24vw', md: '44.24vw', lg: 637 }} intervalo={4000} etiqueta="Portada" className="wb-inicio-carrusel"/>
 
     <Fila fondo="oscuro" sinPadding className="wb-inicio-circulos">
       <Columna ancho={{ sm: 4 }}>

@@ -1,7 +1,8 @@
 'use client';
 /*
- * MenuEscritorio: the official main menu from 1019 px up. Thirteen entries in two 146 px rows at 1200 px+
- * (seven, then six, like the official at 1440), dropdowns on hover and with the chevron buttons for
+ * MenuEscritorio: the official main menu from 1019 px up. Thirteen entries in two 146 px rows from 1281 px
+ * (seven, then six, like the official at 1440); narrower entries wrapping freely below that (three rows at
+ * 1024, like the official), dropdowns on hover and with the chevron buttons for
  * keyboard and touch (aria-expanded; Escape closes and returns focus). Closed dropdowns are display:none,
  * and an open one flips to the left when the window's edge would cut it. Props: ruta (normalised pathname).
  */

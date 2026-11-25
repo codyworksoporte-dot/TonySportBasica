@@ -19,7 +19,14 @@ const OFFICIAL = 'https://www.tonysportselsalvador.com';
 const images = existsSync(join(ROOT, 'data', 'oficial', 'imagenes.json')) ? JSON.parse(await readFile(join(ROOT, 'data', 'oficial', 'imagenes.json'), 'utf8')) : {};
 const normalizeUrl = u => { try { const x = new URL(u.replace(/&amp;/g, '&'), OFFICIAL); x.search = ''; x.hash = ''; x.protocol = 'https:'; return decodeURI(x.href); } catch { return u; } };
 const fold = t => (t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[“”«»"'’‘`´]/g, '').replace(/\s+/g, ' ').trim();
+// WhatsApp links are compared by phone number (the mirror uses wa.me where the official uses api.whatsapp.com).
+const whatsapp = href => {
+  const m = /(?:api\.whatsapp\.com\/send|web\.whatsapp\.com\/send|wa\.me\/)\/?\??(?:.*?phone=)?(\d{8,15})/i.exec(href || '');
+  return m ? `whatsapp:${m[1]}` : null;
+};
 const localPath = href => {
+  const w = whatsapp(href);
+  if (w) return w;
   try {
     const u = new URL(href, OFFICIAL);
     if (u.origin !== OFFICIAL) return null;
@@ -84,9 +91,9 @@ for (const ref of refs) {
     status = res?.status() || 0;
     await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); } window.scrollTo(0, 0); });
     mirror = await page.evaluate(() => {
-      const chrome = el => el.closest('header, footer, [data-espejo-chrome], .wb-cabecera, .wb-pie, .wb-barra-superior, .wb-flotante');
-      const main = document.querySelector('main') || document.body;
-      const text = [...main.querySelectorAll('*')].filter(el => !chrome(el) && el.children.length === 0 || el.matches('p,li,h1,h2,h3,h4,h5,h6,a,button,td,th,figcaption,blockquote')).map(el => el.innerText || el.textContent || '').join(' \n ');
+      // The official outlines also list the header and footer rows, so texts are searched in the whole page
+      // (visible text plus visually hidden text such as screen-reader-only headings).
+      const text = [document.body.innerText, ...[...document.querySelectorAll('.tc-sr, .sr-only, [class*="visually-hidden"]')].map(el => el.textContent || '')].join(' \n ');
       const srcs = [...document.querySelectorAll('img')].map(i => i.currentSrc || i.src).concat([...document.querySelectorAll('[style*="background-image"]')].map(e => (getComputedStyle(e).backgroundImage.match(/url\(["']?([^"')]+)/) || [])[1]).filter(Boolean));
       const hrefs = [...document.querySelectorAll('a[href]')].map(a => a.getAttribute('href'));
       return { text, srcs, hrefs };
@@ -96,12 +103,22 @@ for (const ref of refs) {
   const haystack = fold(mirror.text);
   const missingTexts = want.texts.filter(t => !haystack.includes(t));
   const localSrcs = new Set(mirror.srcs.map(s => { try { return decodeURI(new URL(s).pathname); } catch { return s; } }));
+  // WordPress size variants (-400x400, -scaled…) of the same picture count as the same image.
+  const stripSize = u => u.replace(/-(?:\d+x\d+|scaled|e\d+)(?=\.\w+$)/i, '');
+  const shownOfficial = new Set();
+  for (const [url, entry] of Object.entries(images)) if ([...localSrcs].some(s => s.endsWith(entry.src))) shownOfficial.add(stripSize(url));
   const missingImages = want.images.filter(u => {
     const entry = images[u];
-    if (!entry) return true;
-    return ![...localSrcs].some(s => s.endsWith(entry.src));
+    if (entry && [...localSrcs].some(s => s.endsWith(entry.src))) return false;
+    return !shownOfficial.has(stripSize(u));
   });
-  const mirrorLinks = new Set(mirror.hrefs.map(h => { if (!h) return h; if (/^https?:/.test(h)) { const p = localPath(h); return p || h.replace(/\/$/, ''); } return h.replace(/^\/TonySport[^/]*/, '').replace(/\/?$/, '/').replace(/\/\?/, '?'); }));
+  const mirrorLinks = new Set(mirror.hrefs.map(h => {
+    if (!h) return h;
+    if (whatsapp(h)) return whatsapp(h);
+    if (/^https?:/.test(h)) { const p = localPath(h); return p || h.replace(/\/$/, ''); }
+    if (!h.startsWith('/')) return h; // mailto:, tel:, #…
+    return h.replace(/^\/TonySport[^/]*/, '').replace(/\/?$/, '/').replace(/\/\?/, '?');
+  }));
   const missingLinks = want.links.filter(l => {
     const key = /^https?:/.test(l) ? l.replace(/\/$/, '') : l;
     return !mirrorLinks.has(key) && !mirrorLinks.has(l);

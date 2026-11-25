@@ -11,7 +11,8 @@ export const metadata: Metadata = { title: 'Uniformes BKB' };
 
 const SUBIDAS = 'https://www.tonysportselsalvador.com/wp-content/uploads/';
 const PRODUCTO = 'https://www.tonysportselsalvador.com/producto/';
-const TAMANOS = '(max-width: 767px) calc(100vw - 90px), (max-width: 1199px) 30vw, 380px';
+// Official sizes attribute: the desktop loads the 1080 px original and phones the -400x400 copy.
+const TAMANOS = '(max-width: 1080px) 100vw, 1080px';
 
 const UNIFORMES = [
   { titulo: 'Uniforme BKB full sublimado', archivo: 'WhatsApp-Image-2024-11-05-at-3.32.42-PM', href: `${PRODUCTO}click-aca-para-ver-los-disenos-de-este-album-001-uniformes-bkb-linea-modern-carving-3/` },
@@ -26,7 +27,6 @@ export default function UniformesBkbPage() {
     <Fila sinPadding className="wb-contenido-fila">
       {UNIFORMES.map((u) => <Columna key={u.href} ancho={{ sm: 4 }}>
         <Titulo nivel={2} alinear="centro" color="lima" className="wb-contenido-dos-lineas">{u.titulo}</Titulo>
-        {/* The official phone layout loads the -400x400 copy. */}
         <ImagenEnlazada href={u.href} url={`${SUBIDAS}${u.archivo}.jpeg`} movil={`${SUBIDAS}${u.archivo}-400x400.jpeg`} alt={u.titulo} sizes={TAMANOS} prioridad/>
       </Columna>)}
     </Fila>

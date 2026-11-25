@@ -3,19 +3,14 @@ import Columna from '@/components/espejo/Columna';
 import Fila from '@/components/espejo/Fila';
 import Titulo from '@/components/espejo/Titulo';
 import BandaTitulo from '@/components/espejo/contenido/BandaTitulo';
-import EnlaceDiscreto from '@/components/espejo/contenido/EnlaceDiscreto';
 import '@/components/espejo/contenido/contenido.css';
 
 // Mirror of https://www.tonysportselsalvador.com/replica/: lime band "Replicas" and three price headings.
-// On the official each heading is followed by a linked image whose picture was deleted (an empty link).
+// On the official each heading is followed by an empty link (its picture was deleted) to a category that no
+// longer exists (404 there too); the mirror leaves those dead, invisible links out.
 export const metadata: Metadata = { title: 'replica' };
 
-const CATEGORIA = 'https://www.tonysportselsalvador.com/categoria/';
-const PRECIOS = [
-  { titulo: 'Replicas de $7.99', href: `${CATEGORIA}replicas-bordadas-de-8-50/` },
-  { titulo: 'Replica de $8.50', href: `${CATEGORIA}replicas-bordadas/` },
-  { titulo: 'replicas de $10', href: `${CATEGORIA}replicas-bordadas-de-futbol-10/` },
-];
+const PRECIOS = ['Replicas de $7.99', 'Replica de $8.50', 'replicas de $10'];
 
 export default function ReplicaPage() {
   return <main id="contenido" className="wb-contenido-pagina">
@@ -23,9 +18,8 @@ export default function ReplicaPage() {
     <h1 className="sr-only">replica</h1>
     <BandaTitulo nivel={2}>Replicas</BandaTitulo>
     <Fila sinPadding className="wb-contenido-fila">
-      {PRECIOS.map((p) => <Columna key={p.href} ancho={{ sm: 4 }}>
-        <Titulo nivel={2} alinear="centro" color="lima">{p.titulo}</Titulo>
-        <EnlaceDiscreto href={p.href}>{p.titulo}</EnlaceDiscreto>
+      {PRECIOS.map((titulo) => <Columna key={titulo} ancho={{ sm: 4 }}>
+        <Titulo nivel={2} alinear="centro" color="lima">{titulo}</Titulo>
       </Columna>)}
     </Fila>
   </main>;

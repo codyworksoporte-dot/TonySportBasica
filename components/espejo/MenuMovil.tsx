@@ -1,7 +1,8 @@
 'use client';
 /*
- * MenuMovil: the official phone menu (up to 1018 px). Opens under the header row and pushes the page down;
- * texts keep their original case, entries with children expand inline with a chevron (aria-expanded).
+ * MenuMovil: the official phone menu (up to 1018 px). Drops over the page under the header row without
+ * pushing it down, like the official; texts keep their original case, entries with children expand inline
+ * with a chevron (aria-expanded).
  * Props: id, abierto, ruta (normalised pathname), onCerrar (Escape: close and refocus the toggle),
  * onNavegar (a link was followed).
  */

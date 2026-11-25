@@ -5,8 +5,9 @@
  * Black) take our faces; official link teal and greens take our lime.
  */
 
-/* Page shell and rows */
-.wb-promos{padding-bottom:35px;color:var(--wb-texto)}
+/* Page shell and rows. The official page colour (teal #012e2b) maps to --wb-fondo, as on CREÁ TU PEDIDO and
+   App Tony: the redesign's scale texture on <body> must not show through. */
+.wb-promos{padding-bottom:35px;background:var(--wb-fondo);color:var(--wb-texto)}
 .wb-promos-fila{margin-bottom:35px}
 .wb-promos-fila:last-child{margin-bottom:0}
 @media(max-width:767px){.wb-promos{padding-bottom:25px}}
