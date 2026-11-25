@@ -37,7 +37,8 @@ const archivo=localFont({src:[
 ],variable:'--font-body',display:'swap'});
 
 export const metadata: Metadata={
-  title:{default:'TONY SPORTSWEAR EL SALVADOR',template:'%s · TONY SPORTSWEAR EL SALVADOR'},
+  // Same tab title format as the official site: "Patrocinio | TONY SPORTSWEAR EL SALVADOR".
+  title:{default:'TONY SPORTSWEAR EL SALVADOR',template:'%s | TONY SPORTSWEAR EL SALVADOR'},
   description:'SI NO LO TENEMOS, TE LO HACEMOS',
   robots:{index:false,follow:false},
 };

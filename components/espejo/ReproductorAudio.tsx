@@ -57,6 +57,9 @@ export default function ReproductorAudio({ src, tipo, duracion: duracionInicial,
     </button>
     <input type="range" className="wb-audio-rango wb-audio-rango--volumen" min={0} max={1} step={0.05} value={nivel}
       style={{ '--p': `${nivel * 100}%` } as CSSProperties} aria-label="Control de volumen" aria-valuetext={`${Math.round(nivel * 100)}%`}
+      aria-describedby="wb-audio-ayuda-volumen"
       onChange={event => { const el = audio.current; if (!el) return; el.volume = Number(event.target.value); el.muted = el.volume === 0; }}/>
+    {/* Same screen-reader hint as the official MediaElement player. */}
+    <span id="wb-audio-ayuda-volumen" className="tc-sr">Utiliza las teclas de flecha arriba/abajo para aumentar o disminuir el volumen.</span>
   </div>;
 }

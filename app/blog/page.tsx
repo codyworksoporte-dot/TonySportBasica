@@ -8,7 +8,8 @@ import '@/components/espejo/calidad-nosotros/calidad-nosotros.css';
 // Mirror of https://www.tonysportselsalvador.com/blog/: the posts page has no posts, so it shows the theme's
 // "no results" line next to the sidebar (Buscar, Artículos recientes, Musica de fondo). The official title and
 // breadcrumb bar are hidden (sr-only h1 here).
-export const metadata: Metadata = { title: 'Blog' };
+// The official posts page adds the site tagline to its tab title.
+export const metadata: Metadata = { title: { absolute: 'Blog | TONY SPORTSWEAR EL SALVADOR | SI NO LO TENEMOS, TE LO HACEMOS' } };
 
 // The official "musica de fondo" text widget holds a SoundCloud embed pasted as text, so the page prints the
 // code itself; it is reproduced as text, as on the official site.
@@ -21,7 +22,7 @@ export default function BlogPage() {
       <Columna ancho={{ sm: 9 }}>
         <p className="wb-texto wb-calidad-nosotros-blog-vacio">Lo sentimos, no hay publicaciones que coincidan con sus criterios.</p>
       </Columna>
-      <Columna ancho={{ sm: 3 }} as="aside">
+      <Columna ancho={{ sm: 3 }} as="aside" className="wb-calidad-nosotros-blog-lateral">
         <section className="wb-calidad-nosotros-widget" aria-labelledby="blog-buscar">
           <h2 id="blog-buscar" className="wb-calidad-nosotros-widget-titulo">Buscar</h2>
           {/* Static mirror: the search reloads this page, which (like the official, with no posts) has no matches. */}

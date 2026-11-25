@@ -17,6 +17,11 @@
 .wb-titulo.wb-calidad-nosotros-banda-titulo{margin:0;line-height:35px}
 /* Rows of images: 35 px from the bands, 35 px between images. */
 .wb-fila.wb-calidad-nosotros-bloque{padding-block:35px}
+/* Phones: the theme's image boxes keep 30 px below them; the last row also holds the official empty box (60 px). */
+@media(max-width:767px){
+  .wb-fila.wb-calidad-nosotros-bloque--caja{padding-bottom:65px}
+  .wb-fila.wb-calidad-nosotros-bloque--ultima{padding-bottom:95px}
+}
 .wb-calidad-nosotros-pila{display:grid;gap:35px}
 /* Single image linking to its fabric line. */
 .wb-calidad-nosotros-enlace-img{position:relative;display:block;overflow:hidden;background:var(--wb-tile)}
@@ -60,6 +65,12 @@
 .wb-calidad-nosotros-galeria-boton :is(img,.wb-img-falta){display:block;width:100%;height:auto;min-height:0;aspect-ratio:1;object-fit:cover}
 .wb-calidad-nosotros-galeria-velo{position:absolute;inset:0;display:grid;place-items:center;background:rgb(3 7 5 / .5);opacity:0;transition:opacity 250ms ease}
 .wb-calidad-nosotros-galeria-zoom{display:grid;place-items:center;width:46px;height:46px;background:var(--wb-lima);color:var(--wb-sobre-lima);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)}
+/* Our drawings standing in for official images that are not mirrored: whole, on our scales. */
+.wb-calidad-nosotros-galeria-boton--dibujo{background-color:var(--wb-tile);background-position:center;background-size:300px}
+.wb-calidad-nosotros-galeria-boton--dibujo::before{content:'';position:absolute;inset:0;background:radial-gradient(closest-side,rgb(5 10 7 / .2),rgb(5 10 7 / .85));pointer-events:none}
+.wb-calidad-nosotros-galeria-boton.wb-calidad-nosotros-galeria-boton--dibujo img{position:relative;object-fit:contain;padding:14%;filter:drop-shadow(0 10px 18px rgb(0 0 0 / .5))}
+.wb-calidad-nosotros-galeria-boton.wb-calidad-nosotros-galeria-boton--abajo img{object-position:50% 100%;padding:16% 10% 0}
+.wb-calidad-nosotros-visor-figura img.wb-calidad-nosotros-visor-dibujo{box-shadow:none;filter:drop-shadow(0 12px 24px rgb(0 0 0 / .6))}
 .wb-calidad-nosotros-galeria-boton:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
 .wb-calidad-nosotros-galeria-boton:focus-visible .wb-calidad-nosotros-galeria-velo{opacity:1}
 @media(hover:hover) and (pointer:fine){.wb-calidad-nosotros-galeria-boton:hover .wb-calidad-nosotros-galeria-velo{opacity:1}}
@@ -127,6 +138,8 @@
 
 /* ---------- Blog ---------- */
 .wb-fila.wb-calidad-nosotros-blog-fila{padding-top:57px;padding-bottom:121px}
+/* The theme's sidebar keeps 20 px more on its left from 768 px (official widgets at x 1063, 257 px wide). */
+@media(min-width:768px){.wb-fila .wb-col.wb-calidad-nosotros-blog-lateral{padding-left:35px}}
 .wb-calidad-nosotros-blog-vacio{margin:0;color:var(--wb-texto-suave)}
 .wb-calidad-nosotros-widget{margin:0 0 35px}
 .wb-calidad-nosotros-widget:last-child{margin-bottom:0}

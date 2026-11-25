@@ -4,20 +4,23 @@
  * (Magnific Popup in the official) as a modal <dialog>: Escape closes, Left/Right navigate (looping), Tab stays
  * inside, a click on the dark area closes, and focus returns to the thumbnail. Use Galeria (server) so the
  * images are resolved before reaching the browser.
- * Props: imagenes (ImagenGaleria[]), etiqueta (accessible name of the grid), visor? (name of the dialog).
+ * Props: imagenes (ImagenGaleria[]; dibujo = one of our drawings standing in for an official image, shown
+ * whole on our scales, centred or resting on the bottom edge), etiqueta (accessible name of the grid), visor?
+ * (name of the dialog), fondoDibujo? (URL of the scales behind the drawings).
  */
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import Icon from '@/components/Icon';
 import './calidad-nosotros.css';
 
 type Archivo = { src: string; w: number; h: number };
-export type ImagenGaleria = { mini: Archivo | null; grande: Archivo | null; alt: string; titulo: string; original: string };
-type Props = { imagenes: ImagenGaleria[]; etiqueta: string; visor?: string };
+export type ImagenGaleria = { mini: Archivo | null; grande: Archivo | null; alt: string; titulo: string; original: string; dibujo?: 'centro' | 'abajo' };
+type Props = { imagenes: ImagenGaleria[]; etiqueta: string; visor?: string; fondoDibujo?: string };
 
 const ENFOCABLES = 'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export default function GaleriaVisor({ imagenes, etiqueta, visor = 'Visor de im√°genes' }: Props) {
+export default function GaleriaVisor({ imagenes, etiqueta, visor = 'Visor de im√°genes', fondoDibujo }: Props) {
   const total = imagenes.length;
+  const escamas = fondoDibujo ? ({ backgroundImage: `url("${fondoDibujo}")` } as CSSProperties) : undefined;
   const [abierta, setAbierta] = useState<number | null>(null);
   const dialogo = useRef<HTMLDialogElement>(null);
   const cerrarBoton = useRef<HTMLButtonElement>(null);
@@ -72,7 +75,8 @@ export default function GaleriaVisor({ imagenes, etiqueta, visor = 'Visor de im√
   return <>
     <ul className="wb-calidad-nosotros-galeria" aria-label={etiqueta}>
       {imagenes.map((imagen, i) => <li key={`${imagen.original}-${i}`}>
-        <button type="button" className="wb-calidad-nosotros-galeria-boton" aria-haspopup="dialog" aria-label={`Ampliar ${imagen.alt}`}
+        <button type="button" className={`wb-calidad-nosotros-galeria-boton${imagen.dibujo ? ` wb-calidad-nosotros-galeria-boton--dibujo wb-calidad-nosotros-galeria-boton--${imagen.dibujo}` : ''}`}
+          aria-haspopup="dialog" aria-label={`Ampliar ${imagen.alt}`} style={imagen.dibujo ? escamas : undefined}
           onClick={event => { origen.current = event.currentTarget; setAbierta(i); }}>
           {imagen.mini
             ? <img src={imagen.mini.src} width={imagen.mini.w} height={imagen.mini.h} alt="" loading="lazy" decoding="async"/>
@@ -88,7 +92,8 @@ export default function GaleriaVisor({ imagenes, etiqueta, visor = 'Visor de im√
       </button>
       {actual && abierta !== null && <figure className="wb-calidad-nosotros-visor-figura">
         {actual.grande
-          ? <img src={actual.grande.src} width={actual.grande.w} height={actual.grande.h} alt={actual.alt} decoding="async"/>
+          ? <img src={actual.grande.src} width={actual.grande.w} height={actual.grande.h} alt={actual.alt} decoding="async"
+            className={actual.dibujo ? 'wb-calidad-nosotros-visor-dibujo' : undefined}/>
           : <span className="wb-img-falta" role="img" aria-label={actual.alt} data-falta-imagen={actual.original}/>}
         <figcaption className="wb-calidad-nosotros-visor-pie">
           <span className="wb-calidad-nosotros-visor-titulo">{actual.titulo}</span>

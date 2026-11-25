@@ -41,7 +41,8 @@ export default function QuienesSomosPage() {
         <div className="wb-contenido wb-justificado">
           <p>Estamos seguros que como empresa lograremos establecer relaciones fuertes y duraderas con nuestros clientes. Somos profesionales en lo que hacemos y tenemos amplia experiencia ofreciendo SERVICIOS/PRODUCTOS de la más alta calidad.</p>
         </div>
-        <span className="wb-espacio" style={{ '--alto': '20px' } as CSSProperties}/>
+        {/* Official: the text block's 35 px margin plus a 20 px spacer before «Visión». */}
+        <span className="wb-espacio" style={{ '--alto': '55px' } as CSSProperties}/>
         <Titulo nivel={2} alinear="centro" mayusculas={false} className="wb-calidad-nosotros-titulo-grande">Visión</Titulo>
         <Separador tipo="corto" alinear="centro"/>
         <div className="wb-contenido wb-justificado">

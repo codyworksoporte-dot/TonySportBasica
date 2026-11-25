@@ -13,7 +13,8 @@ const U = 'https://www.tonysportselsalvador.com/wp-content/uploads/';
 export default function TestimonialesProductosPage() {
   return <main id="contenido">
     <h1 className="tc-sr">Testimoniales (productos)</h1>
-    <Fila imagen={`${U}2017/11/fondo-catalogo.jpg`} trama velo={0.45} className="wb-calidad-nosotros-testimonios-fila">
+    {/* Official overlay: pattern 02.png (a flat 2×2 rgba(0,0,0,.5)) at opacity .9, i.e. a plain 45 % veil, no dots. */}
+    <Fila imagen={`${U}2017/11/fondo-catalogo.jpg`} velo={0.45} className="wb-calidad-nosotros-testimonios-fila">
       <Columna>
         <Testimonios testimonios={[
           { texto: 'Gente muy profesional que desde el inicio se tomaron el tiempo de resolver todas mis dudas, son muy cumplidos y realmente estoy satisfecha.', nombre: 'Yolanda Cisneros', lugar: 'Guadalajara, JAL.', foto: `${U}2017/10/testimonial-1.jpg` },

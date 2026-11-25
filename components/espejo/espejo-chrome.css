@@ -107,8 +107,9 @@
 .wb-mm-enlace:focus-visible,.wb-mm-toggle:focus-visible{outline:2px solid var(--wb-lima);outline-offset:-3px}
 @media(hover:hover) and (pointer:fine){.wb-mm-enlace:hover{color:var(--wb-lima)}}
 
-/* LagartoIntro's replay control sits beside our logo on the home page (it replays the logo's entrance). */
-body>.replay-intro{z-index:45;top:113px;right:auto;left:calc(max(40px,(100vw - 1200px) / 2) + 190px)}
+/* The official header has no extra controls: LagartoIntro's "El instinto cobra vida" replay pill is not shown
+   in the mirror (the crocodile entrance still plays on the first desktop visit to the home page). */
+body>.replay-intro{display:none!important}
 .wb-flotantes[hidden]{display:none}
 
 /* ---------- Footer ---------- */

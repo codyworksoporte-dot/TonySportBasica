@@ -3,6 +3,9 @@
  * Prefix wb-tiendas-contacto-. Geometry from the official outlines (1440 and 390 px); colours from app/espejo.css.
  */
 
+/* Official teal page under the rows -> our flat page colour (the body texture must not show through). */
+.wb-tiendas-contacto-lista,.wb-tiendas-contacto-servicio,.wb-tiendas-contacto-cuenta{background:var(--wb-fondo)}
+
 /* ---------- Shared text (official wpb_text_column: Lato 16/27.2, 12 px between paragraphs) ---------- */
 .wb-tiendas-contacto-texto{font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto);overflow-wrap:break-word}
 .wb-tiendas-contacto-texto p{margin:0 0 12px}
@@ -25,9 +28,9 @@
 /* Headings with the theme's .titulo-servicio: 20 px above them once the columns stack. */
 @media(max-width:767px){.wb-titulo.wb-tiendas-contacto-titulo-movil{margin-top:20px}}
 
-/* ---------- Social / contact lines (icon + bold label + link, one per line) ---------- */
-.wb-tiendas-contacto-redes{margin:12px 0 0;padding:0;list-style:none;font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto)}
-.wb-tiendas-contacto-redes li{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:8px;align-items:start;margin:0}
+/* ---------- Social / contact lines (one paragraph, a line per network: icon + bold label + link) ---------- */
+.wb-tiendas-contacto-redes{margin:12px 0 0;padding:0;font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto)}
+.wb-tiendas-contacto-redes-fila{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:8px;align-items:start}
 .wb-tiendas-contacto-redes-icono{display:block;width:16px;height:16px;margin-top:5.5px;color:var(--wb-texto)}
 .wb-tiendas-contacto-redes-linea{min-width:0;overflow-wrap:anywhere}
 .wb-tiendas-contacto-negrita{font-weight:700}
@@ -35,6 +38,9 @@
 /* ---------- Embeds ---------- */
 .wb-tiendas-contacto-mapa{max-width:600px;margin-top:12px}
 @media(max-width:767px){.wb-tiendas-contacto-mapa{--wb-tiendas-contacto-mapa-alto:250px}}
+/* Inset ring when the map frame itself holds the focus (e.g. a map that did not load); once Google's map
+   loads, its own controls show the keyboard focus. The frame clips anything outside it. */
+.wb-tiendas-contacto-mapa iframe:focus{outline:3px solid var(--wb-lima);outline-offset:-3px}
 
 /* Official .mp4 that is not mirrored: a poster in our colours that opens the official file in a new tab. */
 .wb-tiendas-contacto-video{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:var(--wb-tiendas-contacto-video-ancho,100%);aspect-ratio:var(--wb-tiendas-contacto-video-proporcion,16 / 9);overflow:hidden;background-color:var(--wb-negro);background-position:center;background-size:300px;box-shadow:inset 0 0 0 1px var(--wb-linea);color:var(--wb-texto);text-decoration:none}
@@ -53,9 +59,11 @@
 .wb-tiendas-contacto-logo-dibujo{width:var(--wb-tiendas-contacto-logo-ancho,55%);filter:drop-shadow(0 12px 22px rgb(0 0 0 / .5))}
 
 /* ---------- Nuestras tiendas ---------- */
-/* Lime band right under the title: 81 px with 20 px padding on the official page. */
-.wb-banda-cta.wb-tiendas-contacto-banda{padding:20px 0}
+/* Lime band right under the title: 81 px on the official page (191 on phones, text close to the top);
+   the padding makes room for our 56 px button instead of the official 41 px one. */
+.wb-banda-cta.wb-tiendas-contacto-banda{padding:12px 0 13px}
 .wb-tiendas-contacto-banda .wb-banda-cta-in{min-height:41px}
+@media(max-width:767px){.wb-banda-cta.wb-tiendas-contacto-banda{padding:8px 0}}
 /* 70 px spacer row + 35 px row margins before the first store; rows keep 70 or 35 px between them. */
 .wb-tiendas-contacto-lista{padding:140px 0 35px}
 .wb-tiendas-contacto-tienda{margin-bottom:35px}
@@ -87,7 +95,7 @@
 .wb-tiendas-contacto-dato-texto{display:block;margin-top:14px;font:400 var(--wb-t-texto)/1.2 var(--wb-f-texto);overflow-wrap:anywhere}
 @media(max-width:767px){
   .wb-fila .wb-col.wb-tiendas-contacto-caja{margin-top:20px}
-  .wb-fila .wb-col.wb-tiendas-contacto-datos{margin-top:20px;padding:20px 15px 0;text-align:center}
+  .wb-fila .wb-col.wb-tiendas-contacto-datos{margin-top:20px;padding:20px 40px 0;text-align:center}
   .wb-tiendas-contacto-datos .wb-titulo{text-align:center}
   .wb-tiendas-contacto-datos-lista{margin-top:24px}
   .wb-tiendas-contacto-dato{grid-template-columns:minmax(0,1fr);justify-items:center;row-gap:22px}
@@ -103,6 +111,12 @@
 .wb-tiendas-contacto-form .wb-etiqueta{margin-bottom:8px;font-weight:400;font-size:16px}
 .wb-tiendas-contacto-envio{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:2px}
 .wb-tiendas-contacto-nota{margin:0;font:400 var(--wb-t-chico)/1.4 var(--wb-f-texto);color:var(--wb-texto-suave)}
+/* CF7's validation tips (red under the field on the official) and response box, in our colours. */
+.wb-form.wb-tiendas-contacto-form [aria-invalid=true]{border-color:var(--wb-naranja)}
+.wb-tiendas-contacto-error{display:block;margin-top:6px;font:400 var(--wb-t-chico)/1.4 var(--wb-f-texto);color:var(--wb-naranja)}
+.wb-tiendas-contacto-respuesta.wb-aviso{margin:0}
+/* Empty, the live region stays in the page (so it is announced later) without taking a grid row. */
+.wb-tiendas-contacto-respuesta:not(.wb-aviso){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
 /* ---------- Cómo comprar ---------- */
 .wb-fila .wb-col.wb-tiendas-contacto-pasos{padding:100px 130px}

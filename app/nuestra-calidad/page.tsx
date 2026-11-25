@@ -46,10 +46,10 @@ function Lineas({ lista, prioridad = false }: { lista: Linea[]; prioridad?: bool
   </div>;
 }
 
-/** One image box in the left half, like the official single vc_col-sm-6 rows. */
-function Caja({ href, titulo, urls }: { href: string; titulo: string; urls: string[] }) {
-  return <Fila fondo="oscuro" className="wb-calidad-nosotros-bloque">
-    <Columna ancho={{ sm: 6 }}><CajaImagen href={enlaceLocal(href)} titulo={titulo} urls={urls}/></Columna>
+/** One image box in the left half, like the official single vc_col-sm-6 rows (ultima: the row that also holds the empty box). */
+function Caja({ href, titulo, urls, alt, ultima = false }: { href: string; titulo: string; urls: string[]; alt: string; ultima?: boolean }) {
+  return <Fila fondo="oscuro" className={`wb-calidad-nosotros-bloque wb-calidad-nosotros-bloque--caja${ultima ? ' wb-calidad-nosotros-bloque--ultima' : ''}`}>
+    <Columna ancho={{ sm: 6 }}><CajaImagen href={enlaceLocal(href)} titulo={titulo} urls={urls} alt={alt}/></Columna>
   </Fila>;
 }
 
@@ -57,15 +57,20 @@ export default function NuestraCalidadPage() {
   return <main id="contenido">
     <h1 className="tc-sr">Nuestra Calidad</h1>
     <Banda>Líneas de Tela</Banda>
-    <Fila fondo="oscuro" className="wb-calidad-nosotros-bloque">
+    {/* On phones the two columns touch, as on the official (Dry-Fit sits right on Slim-Pro). */}
+    <Fila fondo="oscuro" pegadas className="wb-calidad-nosotros-bloque">
       <Columna ancho={{ sm: 6 }}><Lineas lista={IZQUIERDA} prioridad/></Columna>
       <Columna ancho={{ sm: 6 }}><Lineas lista={DERECHA}/></Columna>
     </Fila>
     <Banda>nuestra confecion</Banda>
-    <Caja href={`${P}costura-reinforced/`} titulo="COSTURA REINFORCED" urls={[`${U}1-12-600x380.jpg`, `${U}1-12.jpg`]}/>
+    {/* The alt texts read the features printed on each picture (the official leaves them empty). */}
+    <Caja href={`${P}costura-reinforced/`} titulo="COSTURA REINFORCED" urls={[`${U}1-12-600x380.jpg`, `${U}1-12.jpg`]}
+      alt="Costura de camiseta: unión plana en tejido, 3 veces mayor seguridad, integración con el tejido, textura de tejido elegante, acabado más limpio y alta calidad basada en costuras de grandes marcas como Under Armour"/>
     <Banda>Malla Anti-Traspirante</Banda>
-    <Caja href={`${P}malla-anti-transpirante-suplex/`} titulo="MALLA ANTI-TRANSPIRANTE SUPLEX" urls={[`${U}1-11-600x380.jpg`, `${U}1-11.jpg`]}/>
+    <Caja href={`${P}malla-anti-transpirante-suplex/`} titulo="MALLA ANTI-TRANSPIRANTE SUPLEX" urls={[`${U}1-11-600x380.jpg`, `${U}1-11.jpg`]}
+      alt="Malla de camiseta: protección UV, control de temperatura corporal, fácil evaporación de sudor, neutraliza el mal olor, textura de tejido elegante y excelente presentación"/>
     <Banda>decoración deportiva</Banda>
-    <Caja href={`${P}vinyl-textil/`} titulo="Vinyl Textil" urls={[`${U}1-13-600x380.jpg`, `${U}1-13.jpg`]}/>
+    <Caja href={`${P}vinyl-textil/`} titulo="Vinyl Textil" urls={[`${U}1-13-600x380.jpg`, `${U}1-13.jpg`]} ultima
+      alt="Letra de vinil textil en una camiseta: excelente tonalidad de colores, textura suave, integridad con el tejido de la prenda, elegante presentación, alto relieve y excelente calidad de material"/>
   </main>;
 }

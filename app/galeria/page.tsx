@@ -3,7 +3,7 @@ import BandaCTA from '@/components/espejo/BandaCTA';
 import Columna from '@/components/espejo/Columna';
 import Fila from '@/components/espejo/Fila';
 import TituloPagina from '@/components/espejo/TituloPagina';
-import Galeria from '@/components/espejo/calidad-nosotros/Galeria';
+import Galeria, { type RespaldoGaleria } from '@/components/espejo/calidad-nosotros/Galeria';
 import '@/components/espejo/calidad-nosotros/calidad-nosotros.css';
 
 // The official /galeria/ answers with an Apache "Index of" listing (a folder of the same name hides the page),
@@ -12,7 +12,13 @@ import '@/components/espejo/calidad-nosotros/calidad-nosotros.css';
 export const metadata: Metadata = { title: 'Galería' };
 
 const U = 'https://www.tonysportselsalvador.com/wp-content/uploads/2017/07/';
-const IMAGENES = [1, 2, 3].map(n => ({ url: `${U}imagen-demo-${n}.jpg`, alt: `imagen-demo-${n}` }));
+// The three theme demo photos (imagen-demo-1/2/3.jpg) were never mirrored: our drawings take their place.
+const DIBUJOS: RespaldoGaleria[] = [
+  { src: '/assets/brand/tony-logo.webp', w: 1200, h: 1079, alt: 'Logo de Tony Sportswear con el cocodrilo Tony' },
+  { src: '/assets/brand/tony-head.webp', w: 512, h: 512, alt: 'Cabeza del cocodrilo Tony rugiendo', abajo: true },
+  { src: '/assets/brand/tony-peek.webp', w: 900, h: 342, alt: 'El cocodrilo Tony asomándose', abajo: true },
+];
+const IMAGENES = DIBUJOS.map((respaldo, i) => ({ url: `${U}imagen-demo-${i + 1}.jpg`, alt: `imagen-demo-${i + 1}`, respaldo }));
 
 export default function GaleriaPage() {
   return <main id="contenido">
