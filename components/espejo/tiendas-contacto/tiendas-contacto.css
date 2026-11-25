@@ -1,0 +1,121 @@
+/*
+ * B6 (Nuestras tiendas, Servicio a domicilio, Contacto, Cómo comprar, Mi cuenta): local pieces in our skin.
+ * Prefix wb-tiendas-contacto-. Geometry from the official outlines (1440 and 390 px); colours from app/espejo.css.
+ */
+
+/* ---------- Shared text (official wpb_text_column: Lato 16/27.2, 12 px between paragraphs) ---------- */
+.wb-tiendas-contacto-texto{font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto);overflow-wrap:break-word}
+.wb-tiendas-contacto-texto p{margin:0 0 12px}
+.wb-tiendas-contacto-texto>:last-child{margin-bottom:0}
+.wb-tiendas-contacto-texto :is(strong,b){font-weight:700}
+.wb-tiendas-contacto-texto :is(em,i){font-style:italic}
+
+/* Links inside the official texts: lime when the official link is green, light text when it is white. */
+.wb-tiendas-contacto-enlace{color:var(--wb-texto);text-decoration:none;text-underline-offset:3px;text-decoration-thickness:1px}
+.wb-tiendas-contacto-enlace--lima{color:var(--wb-lima)}
+.wb-tiendas-contacto-enlace:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px;border-radius:2px}
+@media(hover:hover) and (pointer:fine){.wb-tiendas-contacto-enlace:hover{text-decoration-line:underline}.wb-tiendas-contacto-enlace--lima:hover{color:var(--wb-lima-hi)}}
+
+/* Divider under the store and service headings (official boc_divider, 2 x 100 px or full width). */
+.wb-tiendas-contacto-divisor{display:block;height:2px;margin:24px 0;border:0;background:var(--wb-linea-fuerte)}
+.wb-tiendas-contacto-divisor--corto{width:100px}
+.wb-tiendas-contacto-divisor--medio{margin:20px 0}
+.wb-tiendas-contacto-divisor--fino{height:1px;margin:20px 0}
+
+/* Headings with the theme's .titulo-servicio: 20 px above them once the columns stack. */
+@media(max-width:767px){.wb-titulo.wb-tiendas-contacto-titulo-movil{margin-top:20px}}
+
+/* ---------- Social / contact lines (icon + bold label + link, one per line) ---------- */
+.wb-tiendas-contacto-redes{margin:12px 0 0;padding:0;list-style:none;font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto)}
+.wb-tiendas-contacto-redes li{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:8px;align-items:start;margin:0}
+.wb-tiendas-contacto-redes-icono{display:block;width:16px;height:16px;margin-top:5.5px;color:var(--wb-texto)}
+.wb-tiendas-contacto-redes-linea{min-width:0;overflow-wrap:anywhere}
+.wb-tiendas-contacto-negrita{font-weight:700}
+
+/* ---------- Embeds ---------- */
+.wb-tiendas-contacto-mapa{max-width:600px;margin-top:12px}
+@media(max-width:767px){.wb-tiendas-contacto-mapa{--wb-tiendas-contacto-mapa-alto:250px}}
+
+/* Official .mp4 that is not mirrored: a poster in our colours that opens the official file in a new tab. */
+.wb-tiendas-contacto-video{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:var(--wb-tiendas-contacto-video-ancho,100%);aspect-ratio:var(--wb-tiendas-contacto-video-proporcion,16 / 9);overflow:hidden;background-color:var(--wb-negro);background-position:center;background-size:300px;box-shadow:inset 0 0 0 1px var(--wb-linea);color:var(--wb-texto);text-decoration:none}
+.wb-tiendas-contacto-video::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(closest-side,rgb(5 10 7 / .42),rgb(5 10 7 / .9));pointer-events:none}
+.wb-tiendas-contacto-video-dibujo{position:absolute;left:50%;top:50%;z-index:-1;width:var(--wb-tiendas-contacto-dibujo-ancho,50%);transform:translate(-50%,-50%);opacity:.9}
+.wb-tiendas-contacto-video-boton{display:grid;place-items:center;width:66px;height:66px;flex:none;background:linear-gradient(115deg,#ecffb0 0%,#c6ff55 45%,#9bf02e 100%);color:var(--wb-sobre-lima);clip-path:polygon(var(--tc-cut) 0,100% 0,100% calc(100% - var(--tc-cut)),calc(100% - var(--tc-cut)) 100%,0 100%,0 var(--tc-cut));box-shadow:0 10px 24px rgb(0 0 0 / .45);transition:transform 260ms var(--tc-ease)}
+.wb-tiendas-contacto-video-boton svg{width:26px;height:26px;margin-left:3px}
+.wb-tiendas-contacto-video-texto{padding:6px 12px;background:rgb(5 10 7 / .72);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte);font:700 14px/1 var(--wb-f-texto);letter-spacing:.04em;color:var(--wb-texto)}
+.wb-tiendas-contacto-video:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.wb-tiendas-contacto-video:hover .wb-tiendas-contacto-video-boton{transform:scale(1.07)}.wb-tiendas-contacto-video:hover .wb-tiendas-contacto-video-texto{color:var(--wb-lima)}}
+@media(max-width:767px){.wb-tiendas-contacto-video{gap:10px}.wb-tiendas-contacto-video-boton{width:52px;height:52px}.wb-tiendas-contacto-video-boton svg{width:22px;height:22px}}
+
+/* Old store logo on leather -> our 2026 logo on our scales, same proportions as the official image. */
+.wb-tiendas-contacto-logo{position:relative;isolation:isolate;display:grid;place-items:center;width:100%;overflow:hidden;background-color:var(--wb-tile);background-position:center;background-size:300px;box-shadow:inset 0 0 0 1px var(--wb-linea)}
+.wb-tiendas-contacto-logo::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(closest-side,rgb(5 10 7 / .12),rgb(5 10 7 / .84));pointer-events:none}
+.wb-tiendas-contacto-logo-dibujo{width:var(--wb-tiendas-contacto-logo-ancho,55%);filter:drop-shadow(0 12px 22px rgb(0 0 0 / .5))}
+
+/* ---------- Nuestras tiendas ---------- */
+/* Lime band right under the title: 81 px with 20 px padding on the official page. */
+.wb-banda-cta.wb-tiendas-contacto-banda{padding:20px 0}
+.wb-tiendas-contacto-banda .wb-banda-cta-in{min-height:41px}
+/* 70 px spacer row + 35 px row margins before the first store; rows keep 70 or 35 px between them. */
+.wb-tiendas-contacto-lista{padding:140px 0 35px}
+.wb-tiendas-contacto-tienda{margin-bottom:35px}
+.wb-tiendas-contacto-tienda--amplia{margin-bottom:70px}
+.wb-tiendas-contacto-tienda:last-child{margin-bottom:0}
+.wb-tiendas-contacto-tienda-video{margin-top:35px}
+
+/* ---------- Servicio a domicilio ---------- */
+.wb-tiendas-contacto-servicio{padding:105px 0 0}
+.wb-tiendas-contacto-servicio-fila{margin-bottom:70px}
+.wb-tiendas-contacto-servicio-foto{display:block;max-width:100%;height:auto}
+.wb-titulo.wb-tiendas-contacto-servicio-lema{margin-top:35px}
+.wb-tiendas-contacto-servicio-video{display:flex;justify-content:center;padding-bottom:157px}
+@media(max-width:767px){.wb-tiendas-contacto-servicio-video{padding-bottom:152px}}
+
+/* ---------- Contacto ---------- */
+.wb-fila.wb-tiendas-contacto-fila-contacto{padding:50px 0 80px}
+/* Official white box (30 px padding, light border) -> our tile. */
+.wb-fila .wb-col.wb-tiendas-contacto-caja{margin-top:20px;padding:30px;box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte)}
+.wb-tiendas-contacto-caja-foto{display:block;width:100%;height:auto;margin:0 0 35px}
+.wb-tiendas-contacto-caja .wb-tiendas-contacto-texto{margin-bottom:35px}
+.wb-fila .wb-col.wb-tiendas-contacto-datos{margin-top:20px;padding-left:50px}
+.wb-tiendas-contacto-datos-lista{margin:34px 0 0;padding:0;list-style:none}
+.wb-tiendas-contacto-dato{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:28px;align-items:start}
+.wb-tiendas-contacto-dato+.wb-tiendas-contacto-dato{margin-top:39px}
+.wb-tiendas-contacto-dato-icono{display:grid;place-items:center;width:72px;height:72px;background:linear-gradient(115deg,#ecffb0 0%,#c6ff55 45%,#9bf02e 100%);color:var(--wb-sobre-lima);clip-path:polygon(var(--tc-cut) 0,100% 0,100% calc(100% - var(--tc-cut)),calc(100% - var(--tc-cut)) 100%,0 100%,0 var(--tc-cut))}
+.wb-tiendas-contacto-dato-icono svg{width:34px;height:34px}
+.wb-tiendas-contacto-dato-titulo{margin:-2px 0 0;font:600 var(--wb-t-h4)/1.4 var(--wb-f-display);letter-spacing:.01em;color:var(--wb-texto)}
+.wb-tiendas-contacto-dato-texto{display:block;margin-top:14px;font:400 var(--wb-t-texto)/1.2 var(--wb-f-texto);overflow-wrap:anywhere}
+@media(max-width:767px){
+  .wb-fila .wb-col.wb-tiendas-contacto-caja{margin-top:20px}
+  .wb-fila .wb-col.wb-tiendas-contacto-datos{margin-top:20px;padding:20px 15px 0;text-align:center}
+  .wb-tiendas-contacto-datos .wb-titulo{text-align:center}
+  .wb-tiendas-contacto-datos-lista{margin-top:24px}
+  .wb-tiendas-contacto-dato{grid-template-columns:minmax(0,1fr);justify-items:center;row-gap:22px}
+  .wb-tiendas-contacto-dato+.wb-tiendas-contacto-dato{margin-top:30px}
+}
+
+/* Contact Form 7 replica: fields a shade darker than the box, like the official grey inputs on white. */
+.wb-tiendas-contacto-form{display:grid;gap:18px}
+.wb-tiendas-contacto-form .wb-campo{margin:0}
+.wb-form.wb-tiendas-contacto-form :is(input,textarea){background:var(--wb-fondo)}
+.wb-form.wb-tiendas-contacto-form input{min-height:44px;padding:10px 14px}
+.wb-form.wb-tiendas-contacto-form textarea{min-height:110px}
+.wb-tiendas-contacto-form .wb-etiqueta{margin-bottom:8px;font-weight:400;font-size:16px}
+.wb-tiendas-contacto-envio{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:2px}
+.wb-tiendas-contacto-nota{margin:0;font:400 var(--wb-t-chico)/1.4 var(--wb-f-texto);color:var(--wb-texto-suave)}
+
+/* ---------- Cómo comprar ---------- */
+.wb-fila .wb-col.wb-tiendas-contacto-pasos{padding:100px 130px}
+.wb-tiendas-contacto-pasos-lista{margin:0;padding:0 0 0 45px;font:400 var(--wb-t-texto)/1.5 var(--wb-f-texto);color:var(--wb-texto);text-align:justify}
+.wb-tiendas-contacto-pasos-lista li{margin:0 0 6px;padding-left:2px}
+.wb-tiendas-contacto-pasos-lista li::marker{color:var(--wb-lima);font-weight:700}
+.wb-tiendas-contacto-texto .wb-tiendas-contacto-pasos-nota{margin:20px 0 0}
+.wb-tiendas-contacto-pasos-foto{min-height:300px}
+@media(max-width:767px){.wb-fila .wb-col.wb-tiendas-contacto-pasos{padding:100px 40px}.wb-tiendas-contacto-pasos-lista{padding-left:15px}}
+
+/* ---------- Mi cuenta (WooCommerce frame: no visible title, content in the container) ---------- */
+.wb-tiendas-contacto-cuenta{min-height:70vh;padding:56px 0 80px}
+@media(max-width:767px){.wb-tiendas-contacto-cuenta{padding:36px 0 60px}}
+
+@media(prefers-reduced-motion:reduce){.wb-tiendas-contacto-video-boton{transition:none!important}}
+html[data-tony-effects=off] .wb-tiendas-contacto-video-boton{transition:none!important}

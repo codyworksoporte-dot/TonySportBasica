@@ -1,62 +1,60 @@
-import type {Metadata} from 'next';
-import Link from 'next/link';
-import Icon from '@/components/Icon';
-import {rise} from '@/components/pages/rise';
-import stores from '@/data/tony-stores.json';
-import {siteAsset} from '@/lib/asset-path';
-import {ORDER_LOOKUP_URL, TONY_EMAIL, TONY_WHATSAPP, TONY_WHATSAPP_NUMBER} from '@/lib/site-links';
-import '@/components/pages/pages.css';
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
+import BandaCTA from '@/components/espejo/BandaCTA';
+import Columna from '@/components/espejo/Columna';
+import Fila from '@/components/espejo/Fila';
+import IconoEspejo from '@/components/espejo/Iconos';
+import ImagenOficial from '@/components/espejo/ImagenOficial';
+import Titulo from '@/components/espejo/Titulo';
+import TituloPagina from '@/components/espejo/TituloPagina';
+import FormularioContacto from '@/components/espejo/tiendas-contacto/FormularioContacto';
+import { enlaceLocal } from '@/lib/oficial/enlaces';
+import '@/components/espejo/tiendas-contacto/tiendas-contacto.css';
 
-export const metadata: Metadata = {
-  title: 'Contáctanos',
-  description: `Escríbele a Tony Sportswear por WhatsApp al ${TONY_WHATSAPP_NUMBER} o por correo. También puedes buscar tu tienda o consultar tu pedido.`,
-};
+export const metadata: Metadata = { title: 'Contacto' };
 
-const NEW_TAB = ' (se abre en otra pestaña)';
+const SUBIDAS = 'https://www.tonysportselsalvador.com/wp-content/uploads/';
 
+type Dato = { titulo: string; icono: ReactNode; texto: string; href: string; nueva?: boolean };
+
+// "Datos de Contacto" in the official order; the official colour icons become ours (lime bevelled tiles).
+const DATOS: Dato[] = [
+  { titulo: 'Cel/WhatsApp', icono: <IconoEspejo nombre="whatsapp-solid"/>, texto: '7015-5571', href: 'https://api.whatsapp.com/send?phone=50370155571', nueva: true },
+  { titulo: 'Facebook', icono: <IconoEspejo nombre="facebook"/>, texto: 'Tony Sportswear', href: 'https://www.facebook.com/profile.php?id=100085923971490' },
+  { titulo: 'Instagram', icono: <IconoEspejo nombre="instagram"/>, texto: 'Tony Sportswear', href: 'https://www.instagram.com/tonysportwear/' },
+  { titulo: 'E-mail', icono: <IconoEspejo nombre="correo"/>, texto: 'info@tonysportselsalvador.com', href: 'mailto:info@tonysportselsalvador.com' },
+];
+
+// Mirror of https://www.tonysportselsalvador.com/contacto/: title band, form box + contact data, lime band.
 export default function ContactoPage() {
-  return <main id="contenido" className="tp tc-page tp-contact">
-    <div className="tc-wrap">
-      <header className="tc-head tc-rise">
-        <h1 className="tc-display">Contáctanos</h1>
-        <p>Escríbenos. Te atendemos por WhatsApp.</p>
-      </header>
-
-      <div className="tp-contact-grid">
-        <a className="tp-wa-giant tc-rise" style={rise(1)} href={TONY_WHATSAPP} target="_blank" rel="noopener noreferrer">
-          <Icon name="whatsapp-solid" className="tp-wa-mark"/>
-          <span className="tp-wa-icon"><Icon name="whatsapp-solid"/></span>
-          <span className="tp-wa-text"><small>WhatsApp · El Salvador (+503)</small><b>{TONY_WHATSAPP_NUMBER}</b></span>
-          <span className="tc-go tp-go-white"><Icon name="diagonal"/></span>
-          <span className="tc-sr">Escribir por WhatsApp{NEW_TAB}</span>
-        </a>
-        <a className="tp-mail tc-rise" style={rise(2)} href={`mailto:${TONY_EMAIL}`}>
-          <span className="tp-mail-top"><span className="tp-mail-icon"><Icon name="send"/></span><span className="tc-go"><Icon name="arrow"/></span></span>
-          <span><small>Correo</small><b>{TONY_EMAIL}</b></span>
-        </a>
-      </div>
-
-      <div className="tp-tiles tp-tiles--3 tp-contact-tiles">
-        <Link className="tc-tile tc-rise" style={rise(3)} href="/tiendas">
-          <img className="tp-img-top" src={siteAsset('/assets/sections/tiendas-tony.webp')} alt="" width={960} height={1200} loading="lazy" decoding="async"/>
-          <span className="tc-tile-label"><span><b>Tiendas</b><small>{stores.length} en El Salvador</small></span><span className="tc-go"><Icon name="pin"/></span></span>
-        </Link>
-        <a className="tc-tile tc-rise" style={rise(4)} href={ORDER_LOOKUP_URL} target="_blank" rel="noopener noreferrer">
-          <img className="tp-img-top" src={siteAsset('/assets/sections/entregas-tony.webp')} alt="" width={960} height={1200} loading="lazy" decoding="async"/>
-          <span className="tc-tile-label"><span><b>Consulta tu pedido</b><small>Con tu número de orden</small></span><span className="tc-go"><Icon name="diagonal"/></span></span>
-          <span className="tc-sr">{NEW_TAB}</span>
-        </a>
-        <Link className="tc-tile tc-rise" style={rise(5)} href="/ayuda">
-          <img className="tp-img-top" src={siteAsset('/assets/sections/recientes-tony.webp')} alt="" width={960} height={1200} loading="lazy" decoding="async"/>
-          <span className="tc-tile-label"><span><b>Preguntas frecuentes</b><small>Respuestas rápidas</small></span><span className="tc-go"><Icon name="help"/></span></span>
-        </Link>
-      </div>
-
-      <nav className="tp-legal" aria-label="Atención y condiciones">
-        <Link href="/ayuda#reclamos">Cambios, garantías y reclamos</Link>
-        <Link href="/terminos">Condiciones del pedido</Link>
-        <Link href="/privacidad">Privacidad</Link>
-      </nav>
-    </div>
+  return <main id="contenido">
+    <TituloPagina titulo="Contacto" imagen={`${SUBIDAS}2017/10/banner-contacto-1.jpg`}/>
+    <Fila fondo="negro" className="wb-tiendas-contacto-fila-contacto" pegadas>
+      <Columna ancho={{ sm: 8 }} fondo="tile" className="wb-tiendas-contacto-caja">
+        <Titulo nivel={2} tamano={31} mayusculas={false} separador="corto">Formulario de Contacto</Titulo>
+        <ImagenOficial url={`${SUBIDAS}banner-contacto.jpg`} alt="Persona escribiendo un mensaje en su celular" className="wb-tiendas-contacto-caja-foto"/>
+        <div className="wb-tiendas-contacto-texto wb-justificado">
+          <p>Si tienes alguna duda puedes llamarnos a nuestro teléfono o llenar el siguiente formulario, te daremos una respuesta a la brevedad, gracias.</p>
+        </div>
+        <FormularioContacto/>
+      </Columna>
+      <Columna ancho={{ sm: 4 }} className="wb-tiendas-contacto-datos">
+        <Titulo nivel={2} tamano={31} mayusculas={false}>Datos de Contacto</Titulo>
+        <ul className="wb-tiendas-contacto-datos-lista">
+          {DATOS.map(dato => <li key={dato.titulo} className="wb-tiendas-contacto-dato">
+            <span className="wb-tiendas-contacto-dato-icono" aria-hidden="true">{dato.icono}</span>
+            <div>
+              <h3 className="wb-tiendas-contacto-dato-titulo">{dato.titulo}</h3>
+              <a className="wb-tiendas-contacto-enlace wb-tiendas-contacto-enlace--lima wb-tiendas-contacto-dato-texto" href={dato.href}
+                {...(dato.nueva ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                {dato.texto}{dato.nueva && <span className="tc-sr"> (se abre en otra pestaña)</span>}
+              </a>
+            </div>
+          </li>)}
+        </ul>
+      </Columna>
+    </Fila>
+    <BandaCTA texto="Explora nuestra página web para conocer todo lo que te ofrecemos"
+      boton={{ texto: 'Inicio', href: enlaceLocal('https://www.tonysportselsalvador.com/') }}/>
   </main>;
 }

@@ -1,0 +1,187 @@
+/*
+ * WooCommerce templates of the mirror: category archive (wb-catalogo-), product page (wb-ficha-) and its gallery
+ * (wb-galeria-). Geometry measured on referencia-oficial/plantillas (1440 and 390 px); colours, type and buttons
+ * are ours. The loop cards reuse the base .wb-productos / .wb-producto classes.
+ */
+
+/* Official teal page -> our dark background (like Fila fondo 'oscuro'). */
+.wb-catalogo,.wb-ficha{background:var(--wb-fondo);color:var(--wb-texto)}
+
+/* ---------- Archive layout: 891 px shop column + 257 px sidebar (52 px apart) ---------- */
+.wb-catalogo{padding:57px 0 70px}
+.wb-catalogo-cols{display:grid;grid-template-columns:minmax(0,1fr);row-gap:57px}
+@media(min-width:992px){.wb-catalogo-cols{grid-template-columns:minmax(0,891fr) minmax(0,257fr);column-gap:52px;align-items:start}}
+.wb-catalogo-principal,.wb-catalogo-lateral{min-width:0}
+
+/* Term description (shown above the count on page 1). */
+.wb-catalogo-descripcion{margin:0 0 20px}
+
+/* Result count and ordering: side by side, stacked when they do not fit (phones). */
+.wb-catalogo-barra{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:16px 20px;margin:0 0 36px}
+.wb-catalogo-conteo{margin:0;font:400 var(--wb-t-texto)/27.2px var(--wb-f-texto);color:var(--wb-texto)}
+.wb-catalogo-orden{flex:none;width:251px;max-width:100%}
+.wb-catalogo-orden select{min-height:40px;padding:8px 40px 8px 14px;font-size:15px;background-position:right 12px center}
+.wb-catalogo-aviso{margin:0}
+
+/* Loop cards (base .wb-producto): price inside the product link, sale flash top right as in the loop. */
+.wb-catalogo-tarjeta .wb-producto-precio{display:block}
+.wb-catalogo-oferta{left:auto;right:10px}
+/* Literal "¡Oferta!" (the base flag is uppercase). */
+.wb-catalogo-oferta,.wb-galeria-oferta{text-transform:none;letter-spacing:.02em}
+.wb-catalogo-tarjeta .tc-btn{max-width:100%}
+.wb-catalogo-wa svg{width:18px;height:18px}
+.wb-catalogo-paginacion{margin-top:72px}
+@media(max-width:767px){.wb-catalogo-grilla{row-gap:29px}}
+
+/* Missing product photo: our 2026 logo on a dark tile (WooCommerce placeholder). */
+.wb-catalogo-sin-foto{display:grid;place-items:center;width:100%;height:100%;aspect-ratio:1;background:radial-gradient(circle at 50% 42%,var(--wb-tile-3),var(--wb-tile) 72%);box-shadow:inset 0 0 0 1px var(--wb-linea)}
+.wb-catalogo-sin-foto img{width:56%;height:auto;opacity:.45}
+
+/* ---------- Sidebar widgets ---------- */
+.wb-catalogo-widget{margin:0 0 35px}
+.wb-catalogo-widget:last-child{margin-bottom:0}
+.wb-catalogo-widget-titulo{margin:0 0 20px;font:600 20px/1.2 var(--wb-f-display);letter-spacing:.04em;text-transform:uppercase;color:var(--wb-lima)}
+/* The official heading sits on a dark box that ends a little after the text. */
+.wb-catalogo-widget-titulo span{display:inline-block;max-width:100%;padding:1px 20px 1px 0;background:var(--wb-tile-2)}
+
+/* Buscar */
+.wb-catalogo-buscar{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.wb-catalogo-buscar input{min-height:44px;padding:9px 12px;font-size:15px}
+.wb-catalogo-resultados:empty{display:none}
+.wb-catalogo-resultados-conteo{margin:16px 0 8px;font:400 14px/1.5 var(--wb-f-texto);color:var(--wb-texto-suave)}
+.wb-catalogo-resultados-lista{margin:0;padding:0;list-style:none}
+.wb-catalogo-resultados-lista li{border-top:1px solid var(--wb-linea)}
+.wb-catalogo-resultados-lista a{display:block;padding:8px 0;color:var(--wb-texto);font:700 14px/1.35 var(--wb-f-texto);text-transform:uppercase;text-decoration:none}
+.wb-catalogo-resultados-lista a:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.wb-catalogo-resultados-lista a:hover{color:var(--wb-lima)}}
+
+/* Categorías (select2 look: the × clears it) */
+.wb-catalogo-categorias{position:relative}
+.wb-catalogo-categorias select{min-height:40px;padding:7px 40px 7px 12px;font-size:15px;background-position:right 12px center}
+.wb-catalogo-categorias--con-valor select{padding-right:70px}
+.wb-catalogo-limpiar{position:absolute;top:50%;right:38px;display:grid;place-items:center;width:28px;height:28px;margin-top:-14px;padding:0;border:0;border-radius:50%;background:none;color:var(--wb-texto-suave);cursor:pointer}
+.wb-catalogo-limpiar:focus-visible{outline:2px solid var(--wb-lima);outline-offset:0}
+@media(hover:hover) and (pointer:fine){.wb-catalogo-limpiar:hover{color:var(--wb-lima)}}
+
+/* Filtrar por precio: two-handle slider (step 10), label left, button right. */
+.wb-catalogo-deslizador{position:relative;height:24px;margin:2px 9px 18px}
+.wb-catalogo-deslizador::before,.wb-catalogo-deslizador::after{content:'';position:absolute;top:50%;height:4px;margin-top:-2px;border-radius:2px;pointer-events:none}
+.wb-catalogo-deslizador::before{left:0;right:0;background:var(--wb-tile-3)}
+.wb-catalogo-deslizador::after{left:var(--desde,0%);right:calc(100% - var(--hasta,100%));background:var(--wb-lima)}
+.wb-catalogo-deslizador input{position:absolute;top:0;left:-9px;z-index:1;width:calc(100% + 18px);height:24px;margin:0;padding:0;background:none;-webkit-appearance:none;appearance:none;pointer-events:none}
+.wb-catalogo-deslizador input.wb-catalogo-deslizador-arriba{z-index:2}
+.wb-catalogo-deslizador input::-webkit-slider-runnable-track{height:24px;background:none;border:0}
+.wb-catalogo-deslizador input::-moz-range-track{height:24px;background:none;border:0}
+.wb-catalogo-deslizador input::-webkit-slider-thumb{width:18px;height:18px;margin-top:3px;border:2px solid var(--wb-lima);border-radius:50%;background:var(--wb-texto);box-shadow:0 2px 6px rgb(0 0 0 / .45);cursor:pointer;pointer-events:auto;-webkit-appearance:none;appearance:none}
+.wb-catalogo-deslizador input::-moz-range-thumb{width:14px;height:14px;border:2px solid var(--wb-lima);border-radius:50%;background:var(--wb-texto);box-shadow:0 2px 6px rgb(0 0 0 / .45);cursor:pointer;pointer-events:auto}
+.wb-catalogo-deslizador input:focus-visible{outline:none}
+.wb-catalogo-deslizador input:focus-visible::-webkit-slider-thumb{outline:2px solid var(--wb-lima-hi);outline-offset:2px}
+.wb-catalogo-deslizador input:focus-visible::-moz-range-thumb{outline:2px solid var(--wb-lima-hi);outline-offset:2px}
+.wb-catalogo-precio-fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.wb-catalogo-precio-etiqueta{margin:0;font:400 15px/1.4 var(--wb-f-texto);color:var(--wb-texto)}
+
+/* Últimos productos añadidos (product_list_widget): 56 px thumbnail floated left. */
+.wb-catalogo-ultimos{margin:0;padding:0;list-style:none}
+.wb-catalogo-ultimos li{display:flow-root;padding:12px 0}
+.wb-catalogo-ultimos a{display:block;color:var(--wb-texto);text-decoration:none}
+.wb-catalogo-ultimos img,.wb-catalogo-ultimos-sin-foto{float:left;width:56px!important;height:56px!important;margin:0 14px 6px 0;object-fit:cover;box-shadow:0 0 0 2px var(--wb-linea-fuerte)}
+.wb-catalogo-ultimos-nombre{font:700 16px/24px var(--wb-f-texto);text-transform:uppercase}
+.wb-catalogo-ultimos-precio{display:block;font:400 14px/24px var(--wb-f-texto);color:var(--wb-texto)}
+.wb-catalogo-ultimos-precio del{margin-right:6px;color:var(--wb-texto-tenue)}
+.wb-catalogo-ultimos-precio ins{text-decoration:none}
+.wb-catalogo-ultimos a:focus-visible{outline:2px solid var(--wb-lima);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.wb-catalogo-ultimos a:hover .wb-catalogo-ultimos-nombre{color:var(--wb-lima)}}
+
+/* ---------- Product page: 480 px gallery + 672 px summary (48 px apart) ---------- */
+.wb-ficha{padding:85px 0 70px}
+.wb-ficha-producto{display:grid;grid-template-columns:minmax(0,1fr);row-gap:62px}
+@media(min-width:768px){.wb-ficha-producto{grid-template-columns:minmax(0,480fr) minmax(0,672fr);column-gap:48px;align-items:start}}
+.wb-ficha-galeria,.wb-ficha-resumen{min-width:0}
+.wb-ficha-titulo{margin:0 0 10px;font:600 35px/40px var(--wb-f-display);letter-spacing:.01em;text-transform:uppercase;color:var(--wb-lima);overflow-wrap:anywhere}
+.wb-ficha-precio{margin:0 0 12px;font:700 21px/27.2px var(--wb-f-texto);color:var(--wb-texto)}
+.wb-ficha-precio del{margin-right:8px;font-weight:400;color:var(--wb-texto-tenue)}
+.wb-ficha-precio ins{text-decoration:none}
+
+/* Short and long descriptions (WordPress HTML): official greens -> lime, its Times New Roman -> our faces. */
+.wb-ficha-html p{margin:0 0 12px}
+.wb-ficha-html :is(ul,ol){margin:0 0 12px}
+.wb-ficha-html [style*="00ff00"],.wb-ficha-html [style*="00FF00"],.wb-ficha-html [style*="02ff02"]{color:var(--wb-lima)!important}
+.wb-ficha-html [style*="99cc00"],.wb-ficha-html [style*="99CC00"]{color:var(--wb-lima-hi)!important}
+.wb-ficha-html [style*="font-family"]{font-family:inherit!important}
+.wb-ficha-html p.price{font:700 21px/27.2px var(--wb-f-texto);color:var(--wb-texto)}
+.wb-ficha-html .product_meta:empty{display:none}
+
+/* Where the official "Añadir al carrito" form was. */
+.wb-ficha-accion{margin:12px 0 14px}
+.wb-ficha-stock{margin:0 0 12px;font:400 14px/1.5 var(--wb-f-texto);color:var(--wb-texto-suave)}
+.wb-ficha-meta{display:flex;flex-direction:column;font:400 13px/27.2px var(--wb-f-texto);color:var(--wb-texto)}
+.wb-ficha-meta a{color:var(--wb-lima);text-decoration:none}
+.wb-ficha-meta a:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.wb-ficha-meta a:hover{color:var(--wb-lima-hi);text-decoration:underline;text-underline-offset:3px}}
+
+/* Description tab (WooCommerce tabs with a single "Descripción" tab). */
+.wb-ficha-pestanas{margin-top:50px}
+.wb-ficha-pestana{display:inline-block;margin:0;padding:8px 18px;background:var(--wb-tile-2);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte),inset 0 -2px 0 var(--wb-lima);font:500 16px/1.4 var(--wb-f-texto);color:var(--wb-texto)}
+.wb-ficha-panel{margin-top:28px;text-align:justify}
+
+/* Productos relacionados: 4 columns of 282 px (24 px gaps), 2 on phones. */
+.wb-ficha-relacionados{margin-top:68px}
+.wb-ficha-relacionados-titulo{margin:0 0 50px;font:600 25px/30px var(--wb-f-texto);letter-spacing:.01em;text-transform:uppercase;color:var(--wb-lima)}
+.wb-ficha-relacionados .wb-productos{column-gap:24px}
+@media(max-width:767px){
+  .wb-ficha-relacionados .wb-productos{gap:28px 12px}
+  .wb-ficha-relacionados .wb-producto-nombre{margin-top:14px;font-size:14px}
+  .wb-ficha-relacionados .tc-btn{--h:40px;padding:6px 10px;font-size:11.5px;letter-spacing:.04em;line-height:1.2;white-space:normal;text-align:center}
+  .wb-ficha-relacionados .wb-catalogo-wa svg{display:none}
+}
+
+/* ---------- Gallery ---------- */
+.wb-galeria-principal{position:relative}
+.wb-galeria--unica .wb-galeria-principal{max-width:400px}
+.wb-galeria-enlace{position:relative;display:block;overflow:hidden;background:var(--wb-tile)}
+.wb-galeria-enlace img{display:block;width:100%;height:auto}
+.wb-galeria-enlace:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+.wb-galeria-lupa{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:rgb(5 10 7 / .72);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte);color:var(--wb-lima);opacity:0;transition:opacity 200ms ease}
+.wb-galeria-enlace:focus-visible .wb-galeria-lupa{opacity:1}
+@media(hover:hover) and (pointer:fine){.wb-galeria-enlace:hover .wb-galeria-lupa{opacity:1}.wb-galeria-enlace:hover img{filter:brightness(1.06)}}
+.wb-galeria-oferta{left:10px;z-index:2}
+.wb-galeria-miniaturas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 0;margin:0;padding:0;list-style:none}
+.wb-galeria-miniaturas .wb-galeria-enlace{aspect-ratio:1}
+.wb-galeria-miniaturas img{height:100%;object-fit:cover}
+.wb-galeria-sin-foto{max-width:400px}
+
+/* Lightbox (native modal dialog). */
+.wb-galeria-dialogo{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;background:rgb(2 4 3 / .94);color:var(--wb-texto);overflow:hidden}
+.wb-galeria-dialogo::backdrop{background:rgb(2 4 3 / .6)}
+.wb-galeria-dialogo-in{position:relative;display:grid;place-items:center;width:100%;height:100%;padding:56px 64px}
+.wb-galeria-figura{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;margin:0}
+/* Box sized from the image ratio (--r) before it loads: fits the window, never above 1200 px. */
+.wb-galeria-figura img{display:block;width:min(100%,1200px,calc((100dvh - 150px) * var(--r,1)));height:auto;aspect-ratio:var(--r,1);object-fit:contain;background:var(--wb-tile);box-shadow:0 20px 50px rgb(0 0 0 / .5)}
+.wb-galeria-contador{font:600 14px/1 var(--wb-f-texto);color:var(--wb-texto-suave);font-variant-numeric:tabular-nums}
+.wb-galeria-boton{position:absolute;display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:50%;background:var(--wb-tile-2);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte);color:var(--wb-lima);cursor:pointer;transition:background-color 180ms ease}
+.wb-galeria-boton:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.wb-galeria-boton:hover{background:var(--wb-tile-3)}}
+.wb-galeria-cerrar{top:12px;right:12px}
+.wb-galeria-anterior{left:10px;top:50%;margin-top:-24px}
+.wb-galeria-siguiente{right:10px;top:50%;margin-top:-24px}
+@media(max-width:767px){
+  .wb-galeria-dialogo-in{padding:64px 12px 76px}
+  .wb-galeria-figura img{width:min(100%,calc((100dvh - 170px) * var(--r,1)))}
+  .wb-galeria-anterior,.wb-galeria-siguiente{top:auto;bottom:14px;margin-top:0}
+  .wb-galeria-anterior{left:calc(50% - 60px)}.wb-galeria-siguiente{right:calc(50% - 60px)}
+}
+
+/* ---------- Previous / next product tabs (desktop only) ---------- */
+/* Above the header (z 40), as on the official, below the floating widgets (z 89+). */
+.wb-ficha-nav-enlace{position:fixed;top:calc(50% - 54px);z-index:45;display:flex;align-items:center;gap:12px;width:220px;height:90px;padding:10px;background:rgb(5 10 7 / .88);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte),0 12px 30px rgb(0 0 0 / .4);color:var(--wb-texto);text-decoration:none;transition:transform 320ms var(--tc-ease)}
+.wb-ficha-nav-enlace--anterior{left:0;justify-content:flex-end;transform:translateX(-190px)}
+.wb-ficha-nav-enlace--siguiente{right:0;transform:translateX(190px)}
+.wb-ficha-nav-enlace:hover,.wb-ficha-nav-enlace:focus-visible{transform:none}
+.wb-ficha-nav-enlace:focus-visible{outline:2px solid var(--wb-lima);outline-offset:-2px}
+.wb-ficha-nav-flecha{display:grid;flex:none;place-items:center;width:20px;color:var(--wb-lima)}
+.wb-ficha-nav-enlace img,.wb-ficha-nav-vacia{flex:none;width:70px;height:70px;object-fit:cover;background:var(--wb-tile)}
+.wb-ficha-nav-titulo{flex:1;min-width:0;font:700 13px/1.35 var(--wb-f-texto);text-transform:uppercase}
+@media(max-width:1018px){.wb-ficha-nav{display:none}}
+
+@media(prefers-reduced-motion:reduce){.wb-ficha-nav-enlace,.wb-galeria-lupa,.wb-galeria-boton{transition:none!important}}
+html[data-tony-effects=off] :is(.wb-ficha-nav-enlace,.wb-galeria-lupa,.wb-galeria-boton){transition:none!important}
