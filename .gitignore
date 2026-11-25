@@ -1,0 +1,23 @@
+node_modules/
+.next/
+out/
+.npm-cache/
+.pnpm-store/
+test-results/
+playwright-report/
+*.tsbuildinfo
+.env*
+!.env.example
+preview-*.log
+*.log
+docs/*.png
+docs/*.jpg
+docs/*.webp
+output/
+.claude/
+docs/*.json
+docs/reference/*.png
+docs/reference/*.json
+
+# Material del sitio anterior con claves privadas y registros de pagos: nunca al repositorio.
+lo que faltaba/
