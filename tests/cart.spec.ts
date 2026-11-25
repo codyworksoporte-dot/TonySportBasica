@@ -5,6 +5,9 @@ import {createOrder, ORDER_STORAGE_KEY, withQuantity} from '../lib/order';
 
 const team = 'Atlético Prueba';
 const cartDatabase = 'tony-cart-v1';
+// The header's cart link announces the saved designs ("Carrito: 1 diseño"), whatever the header markup.
+const headerCart = (page: Page) => page.getByRole('banner').getByRole('link', {name: /^Carrito\b/}).first();
+const designs = (count: number) => new RegExp(`^Carrito\\W+${count} diseños?$`);
 
 test.beforeEach(async ({page}) => {
   const order = withQuantity(createOrder(), '6');
@@ -98,18 +101,18 @@ test('a configured team survives reload and appears only in this customer’s re
 test('adding the same review twice does not duplicate it and the header count updates', async ({page}) => {
   await openReview(page);
   await addCurrentReview(page);
-  await expect(page.locator('.cart-link-count').first()).toHaveText('1');
+  await expect(headerCart(page)).toHaveAccessibleName(designs(1));
   await page.getByRole('button', {name: 'Diseño guardado', exact: true}).click();
   await expect(page.locator('.cart-add-message')).toContainText('Este diseño ya está en tu carrito');
   expect(await savedCart(page)).toHaveLength(1);
-  await expect(page.locator('.cart-link-count').first()).toHaveText('1');
+  await expect(headerCart(page)).toHaveAccessibleName(designs(1));
 
   await page.getByRole('button', {name: 'Editar jugadores', exact: true}).click();
   await page.locator('#cfg-team').fill('Segundo equipo');
   await page.getByRole('button', {name: 'Ir al editor de diseño', exact: true}).click();
   await page.getByRole('button', {name: 'Revisar mi pedido', exact: true}).click();
   await addCurrentReview(page);
-  await expect(page.locator('.cart-link-count').first()).toHaveText('2');
+  await expect(headerCart(page)).toHaveAccessibleName(designs(2));
   expect((await savedCart(page)).map(item => item.order.team).sort()).toEqual([team, 'Segundo equipo'].sort());
   // General navigation must not deserialize every saved artwork to show a badge.
   await page.addInitScript(database => {
@@ -120,7 +123,7 @@ test('adding the same review twice does not duplicate it and the header count up
     };
   }, cartDatabase);
   await page.goto('/contacto');
-  await expect(page.locator('.cart-link-count').first()).toHaveText('2');
+  await expect(headerCart(page)).toHaveAccessibleName(designs(2));
 });
 
 test('Escape and cancel preserve the design; confirmation removes it from cart and recents', async ({page}) => {

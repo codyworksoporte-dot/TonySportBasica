@@ -6,6 +6,12 @@ test.use({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
 type Voice = {name:string;lang:string};
 type Harness = {voices:Voice[];mode:string;said:string[];listeners:Set<unknown>;cancels:number};
 const generic = {name:'es-us-x-sfb-local',lang:'es-US'};
+/** A site-menu entry: in the header, or behind the phone menu toggle (works with any header markup). */
+async function menuEntry(page:Page, name:RegExp) {
+  const link=page.getByRole('banner').or(page.getByRole('dialog')).or(page.getByRole('navigation')).getByRole('link',{name}).filter({visible:true}).first();
+  if(!(await link.isVisible())) await page.getByRole('banner').getByRole('button',{name:/^(abrir\s+(el\s+)?)?men[uú]/i}).first().click();
+  return link;
+}
 
 async function setup(page:Page, voices:Voice[]=[generic], mode='ok') {
   await mockPedidoApi(page);
@@ -141,9 +147,8 @@ test('no speech API still leaves written guidance and a lightweight mode',async(
 test('leaving the order cancels speech and removes voice subscriptions',async({page})=>{
   await setup(page);
   await expect.poll(()=>page.evaluate(()=>(window as unknown as {__speech:Harness}).__speech.listeners.size)).toBe(1);
-  await page.getByRole('button',{name:'Abrir menú'}).tap();
-  await page.getByRole('dialog',{name:'Menú de Tony Sportswear'}).getByRole('link',{name:/Tony News/}).tap();
-  await expect(page).toHaveURL(/\/tony-news$/,{timeout:20000});
+  await (await menuEntry(page,/^Tony News/)).tap();
+  await expect(page).toHaveURL(/\/tony-news\/?$/,{timeout:20000});
   await expect.poll(()=>page.evaluate(()=>(window as unknown as {__speech:Harness}).__speech.listeners.size)).toBe(0);
   await page.goBack();
   await expect(page.getByRole('region',{name:'Tu asesora Tony'})).toBeVisible();

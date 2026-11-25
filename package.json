@@ -1,12 +1,12 @@
 {
-  "name": "tony-sportswear",
+  "name": "tony-sportswear-web-basica",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1",
+    "dev": "next dev --hostname 127.0.0.1 --port 3001",
     "prebuild": "node scripts/check-assets.mjs",
     "build": "next build",
-    "start": "next start --hostname 127.0.0.1",
+    "start": "next start --hostname 127.0.0.1 --port 3001",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test"
   },

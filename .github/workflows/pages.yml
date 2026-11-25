@@ -1,3 +1,6 @@
+# Esta carpeta (web básica, el espejo del sitio oficial) todavía no está conectada a ningún repositorio
+# (no tiene repositorio remoto en GitHub), así que este flujo aún no se ejecuta. Al conectarla, la exportación
+# usa el prefijo /TonySportBasica, o el valor de TONY_PAGES_BASE si se define (ver docs/WEB-BASICA.md).
 name: Publicar Tony Sportswear
 
 on:

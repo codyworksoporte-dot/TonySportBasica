@@ -1,4 +1,8 @@
-import {test,expect} from '@playwright/test';
+import {test,expect,type Page} from '@playwright/test';
+
+// The mirror's home has more than one h1 (as the official one), so these checks read the first.
+/** A site-menu entry: in the header, or behind the phone menu toggle (works with any header markup). */
+const menuLink=(page:Page,name:RegExp)=>page.getByRole('banner').or(page.getByRole('dialog')).or(page.getByRole('navigation')).getByRole('link',{name}).filter({visible:true}).first();
 
 test('la primera pantalla queda cubierta antes de hidratar aunque el JavaScript tarde',async({page})=>{
   await page.emulateMedia({reducedMotion:'no-preference'});
@@ -10,7 +14,7 @@ test('la primera pantalla queda cubierta antes de hidratar aunque el JavaScript 
   });
   try {
     await page.goto('/',{waitUntil:'commit'});
-    await expect(page.locator('main h1')).toBeAttached();
+    await expect(page.locator('main h1').first()).toBeAttached();
     // The server content exists, but the boot curtain must own the first paint.
     const curtain=await page.evaluate(()=>{
       const style=getComputedStyle(document.documentElement,'::before');
@@ -36,15 +40,16 @@ test('la entrada del lagarto se reproduce una vez por sesión y se puede repetir
   await expect(skip).toBeVisible();
   await expect(skip).toBeHidden({timeout:8000});
   await page.reload({waitUntil:'domcontentloaded'});
-  await expect(page.locator('main h1')).toBeVisible();
+  await expect(page.locator('main h1').first()).toBeVisible();
   await expect(skip).toBeHidden();
   await page.getByRole('button',{name:'Repetir entrada del lagarto',exact:true}).click();
   await expect(skip).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(skip).toBeHidden();
-  // The page is usable right after: the header's search pill opens the site search.
-  await page.getByRole('banner').getByRole('button',{name:'¿Qué buscas en específico?',exact:true}).click();
-  await expect(page.getByRole('searchbox')).toBeVisible();
+  // The page is usable right after: the header menu takes you to another section.
+  await expect(page.locator('body')).not.toHaveCSS('overflow','hidden');
+  await menuLink(page,/^Tony News/).click();
+  await expect(page).toHaveURL(/\/tony-news\/?$/,{timeout:20000});
 });
 
 test('móvil permite usar la página inmediatamente sin esperar la intro',async({page})=>{
@@ -53,11 +58,13 @@ test('móvil permite usar la página inmediatamente sin esperar la intro',async(
   await page.goto('/',{waitUntil:'domcontentloaded'});
   await expect(page.getByRole('button',{name:'Saltar intro',exact:true})).toBeHidden();
   await expect.poll(()=>page.evaluate(()=>getComputedStyle(document.documentElement,'::before').content)).toBe('none');
-  // No curtain on phones, so the poll passes before React hydrates; the menu button only works once it has.
-  await expect(page.locator('html')).toHaveAttribute('data-tony-effects','on');
-  await page.getByRole('button',{name:'Abrir menú',exact:true}).click();
-  await expect(page.getByRole('dialog',{name:'Menú de Tony Sportswear'}).getByRole('navigation',{name:'Navegación principal',exact:true})).toBeVisible();
+  // No curtain on phones, so the poll passes before React hydrates; the menu button only works once it has
+  // (the section transition picking its phone artwork marks the hydrated page).
+  await expect(page.locator('.route-transition')).toHaveAttribute('data-art','mobile');
+  // The intro left nothing locked (checked before the menu, which may lock scrolling while open).
   await expect(page.locator('body')).not.toHaveCSS('overflow','hidden');
+  await page.getByRole('banner').getByRole('button',{name:/^(abrir\s+(el\s+)?)?men[uú]/i}).first().click();
+  await expect(menuLink(page,/^Tony News/)).toBeVisible();
 });
 
 test('movimiento reducido y las páginas internas no muestran la intro',async({page})=>{

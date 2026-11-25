@@ -4,19 +4,22 @@ import {mkdtempSync,readdirSync,readFileSync,unlinkSync,rmdirSync} from 'node:fs
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 
+// Web básica dev server (playwright.config.ts baseURL); port 3000 belongs to the original TonySportWeb.
+const FRONTEND='http://127.0.0.1:3001';
+
 test.describe('real local PHP accounts',()=>{
   test.skip(process.env.TONY_AUTH_TEST!=='true','Run separately with TONY_AUTH_TEST=true and TONY_TEST_PHP.');
   let php:ChildProcess,privateDir:string;
   test.beforeAll(async()=>{
     privateDir=mkdtempSync(path.join(tmpdir(),'tony-auth-browser-'));
-    php=spawn(process.env.TONY_TEST_PHP||'php',['-S','127.0.0.1:8931','-t','backend/pedido-api'],{windowsHide:true,stdio:'ignore',env:{...process.env,TONY_ENV:'test',TONY_API_MOCK:'true',TONY_AUTH_ENABLED:'true',TONY_PRIVATE_DIR:privateDir,TONY_APP_SECRET:'synthetic-browser-test-not-a-production-secret',TONY_FRONTEND_URL:'http://127.0.0.1:3000',TONY_ALLOWED_ORIGINS:'http://127.0.0.1:3000'}});
+    php=spawn(process.env.TONY_TEST_PHP||'php',['-S','127.0.0.1:8931','-t','backend/pedido-api'],{windowsHide:true,stdio:'ignore',env:{...process.env,TONY_ENV:'test',TONY_API_MOCK:'true',TONY_AUTH_ENABLED:'true',TONY_PRIVATE_DIR:privateDir,TONY_APP_SECRET:'synthetic-browser-test-not-a-production-secret',TONY_FRONTEND_URL:FRONTEND,TONY_ALLOWED_ORIGINS:FRONTEND}});
     await expect.poll(async()=>{try{return(await fetch('http://127.0.0.1:8931/auth.php')).status;}catch{return 0;}}).toBe(403);
   });
   test.afterAll(async()=>{
     if(php){php.kill();await new Promise<void>(resolve=>php.exitCode!==null?resolve():php.once('exit',()=>resolve()));}
     if(privateDir&&path.dirname(path.resolve(privateDir))===path.resolve(tmpdir())&&path.basename(privateDir).startsWith('tony-auth-browser-')){for(const name of readdirSync(privateDir))unlinkSync(path.join(privateDir,name));rmdirSync(privateDir);}
   });
-  function mailLink(kind:string){const mails=readdirSync(privateDir).filter(x=>x.startsWith('mail-')).map(x=>JSON.parse(readFileSync(path.join(privateDir,x),'utf8')));const mail=mails.find(x=>x.body.includes(`accion=${kind}`));return mail?.body.match(/http:\/\/127\.0\.0\.1:3000\/cuenta\/#[^\s]+/)?.[0] as string;}
+  function mailLink(kind:string){const mails=readdirSync(privateDir).filter(x=>x.startsWith('mail-')).map(x=>JSON.parse(readFileSync(path.join(privateDir,x),'utf8')));const mail=mails.find(x=>x.body.includes(`accion=${kind}`));return mail?.body.match(/http:\/\/127\.0\.0\.1:3001\/cuenta\/#[^\s]+/)?.[0] as string;}
   test('browse freely; register, verify, sign in, guard orders, recover and change password',async({page})=>{
     test.setTimeout(120000);await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/colecciones');await expect(page.getByRole('heading',{name:'TODAS LAS LÍNEAS. TU IDENTIDAD.'})).toBeVisible();

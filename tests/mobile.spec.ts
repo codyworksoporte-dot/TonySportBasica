@@ -1,6 +1,9 @@
-import {expect, test} from '@playwright/test';
+import {expect, test, type Page} from '@playwright/test';
 import {completePedido, layer} from './pedido/pricing.fixtures';
 import {seedPedido, openSeededEditor, expectNoOverflow} from './pedido/helpers';
+
+// The header's cart link announces the saved designs ("Carrito: 1 diseño"), whatever the header markup.
+const headerCart=(page:Page)=>page.getByRole('banner').getByRole('link',{name:/^Carrito\b/}).first();
 
 test.use({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
 test('mobile editor keeps the chosen piece and its controls together', async ({page}) => {
@@ -19,7 +22,9 @@ test('mobile editor keeps the chosen piece and its controls together', async ({p
   console.log('preview and controls',scene,controls);
   await expectNoOverflow(page,390);
   if(!process.env.TONY_MOBILE_BASELINE){
-    expect(scene!.y).toBeGreaterThanOrEqual(60);
+    // Nothing pinned at the top covers the preview (the redesign's sticky header was 60 px; the mirror's scrolls away).
+    const pinnedTop=await page.getByRole('banner').evaluate(el=>['fixed','sticky'].includes(getComputedStyle(el).position)?el.getBoundingClientRect().bottom:0);
+    expect(scene!.y).toBeGreaterThanOrEqual(pinnedTop);
     expect(scene!.y+scene!.height).toBeLessThan(controls!.y);
     expect(controls!.y+controls!.height).toBeLessThan(844);
     await expect(page.getByRole('region',{name:'Tu asesora Tony'})).toHaveCount(0);
@@ -36,7 +41,7 @@ test('a mobile save confirms persistence, deduplicates repeated saves and opens 
   const notice=page.locator('.cart-feedback');
   await expect(notice).toContainText('Guardado en tu carrito');
   await expect(save).toContainText('Guardado');
-  await expect(page.locator('.cart-link').first()).toHaveAttribute('aria-label','Carrito, 1 diseño');
+  await expect(headerCart(page)).toHaveAccessibleName(/^Carrito\W+1 diseño$/);
   const box=await notice.boundingBox(); expect(box!.y).toBeGreaterThanOrEqual(64); expect(box!.y+box!.height).toBeLessThan(844);
   await page.screenshot({path:'output/mobile-cart-confirmation.png'});
   await save.tap(); await save.tap();
@@ -57,45 +62,15 @@ test('storage failure shows an error and never a false cart success', async ({pa
   await expect(page.locator('.cart-feedback')).toContainText('No se pudo guardar');
   await expect(page.locator('.cart-feedback a')).toHaveCount(0);
   await expect(page.locator('.pedido-mobile-save')).toContainText('Reintentar');
-  await expect(page.locator('.cart-link').first()).toHaveAttribute('aria-label','Carrito, 0 diseños');
+  await expect(headerCart(page)).toHaveAccessibleName(/^Carrito\W+0 diseños$/);
 });
 
-test('mobile navigation keeps close and search reachable, releases scroll and uses a full-screen transition', async ({page}) => {
-  await page.goto('/');
-  await expect(page.locator('.lagarto-intro[open]')).toHaveCount(0);
-  const menu=page.getByRole('dialog',{name:'Menú de Tony Sportswear'});
-  await page.getByRole('button',{name:'Abrir menú'}).tap();
-  // The disciplines are picture chips in the menu (the old Producto accordion is gone).
-  await menu.getByRole('navigation',{name:'Navegación principal'}).getByRole('link',{name:'Fútbol',exact:true}).tap();
-  await expect(page).toHaveURL(/\/producto#categoria-futbol$/);
-  await expect(menu).not.toBeVisible();
-  await expect(page.locator('.route-transition')).toHaveAttribute('data-phase','idle');
-  await expect(page.locator('.route-transition')).toHaveAttribute('data-art','mobile');
-  await expect(page.locator('.rt-panel')).toHaveCount(0);
-  await expect(page.locator('#categoria-futbol')).toBeInViewport();
-  await expect.poll(()=>page.evaluate(()=>getComputedStyle(document.documentElement).overflow)).not.toBe('hidden');
-  await page.getByRole('button',{name:'Abrir menú'}).tap();
-  await expect(menu.getByRole('link',{name:'Ver todas',exact:true})).toHaveAttribute('aria-current','page');
-  await menu.getByRole('button',{name:'¿Qué buscas en específico?',exact:true}).tap();
-  await expect(page.locator('#site-search')).toBeFocused();
-  await page.locator('#site-search').fill('tiendas');
-  await page.locator('.tony-search-results').getByRole('link',{name:'Tiendas',exact:true}).tap();
-  await expect(page).toHaveURL(/\/tiendas$/);
-  await page.goBack(); await expect(page).toHaveURL(/\/producto#categoria-futbol$/);
-  await page.getByRole('button',{name:'Abrir menú'}).tap();
-  const body=menu.locator('.tony-mobile-body');
-  await body.evaluate(el=>{el.scrollTop=el.scrollHeight;});
-  expect(await body.evaluate(el=>el.scrollTop)).toBeGreaterThan(0);
-  const close=await menu.getByRole('button',{name:'Cerrar menú'}).boundingBox();
-  expect(close!.y).toBeGreaterThanOrEqual(0); expect(close!.y).toBeLessThan(100);
-  await menu.getByRole('button',{name:'Cerrar menú'}).tap();
-  await expect(page.getByRole('button',{name:'Abrir menú'})).toBeFocused();
-});
-
+// The redesign's phone menu/search test left with that header; the mobile transition lives in mobile-transition.spec.ts.
 test('dragging on touch commits once and undoes as one action', async ({page,context}) => {
   const order=completePedido(); order.design.layers=[layer('Escudo','Escudo')];
   await seedPedido(page,order); await openSeededEditor(page);
-  const piece=page.locator('.pedido-design-layer'); await piece.scrollIntoViewIfNeeded();
+  // Centred, so the touch never lands on the sticky step bar whatever the header height above.
+  const piece=page.locator('.pedido-design-layer'); await piece.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));
   const rect=await piece.boundingBox();
   const session=await context.newCDPSession(page);
   const x=rect!.x+rect!.width/2, y=rect!.y+rect!.height/2;

@@ -3,6 +3,9 @@ node_modules/
 out/
 .npm-cache/
 .pnpm-store/
+# Capturas, HTML y esquemas del sitio oficial (referencia local para el espejo).
+referencia-oficial/
+.pnpm-store/
 test-results/
 playwright-report/
 *.tsbuildinfo

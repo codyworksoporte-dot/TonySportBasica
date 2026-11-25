@@ -14,7 +14,8 @@ async function buyerAndSignature(page: Page) {
   await expect(page.getByRole('heading',{name:'Tu pedido, con tu firma',exact:true})).toBeVisible();
   await page.getByLabel(/^Nombre completo/).fill('CLIENTE DE PRUEBA');
   await page.getByLabel(/^DUI \(00000000-0\)/).fill('00000000-0');
-  await page.getByLabel(/^WhatsApp/).fill('70000000');
+  // Scoped to the order: the mirror's floating WhatsApp bubble (outside <main>) is also labelled "WhatsApp".
+  await page.getByRole('main').getByLabel(/^WhatsApp/).fill('70000000');
   await page.getByLabel('Correo electrónico (opcional)',{exact:true}).fill('prueba@example.invalid');
   await page.getByRole('checkbox',{name:'Leí y acepto los términos y condiciones del pedido.'}).check();
   await signPedido(page);
@@ -113,25 +114,19 @@ test('la asesora guía cada pantalla automáticamente y recuerda la versión lig
   await page.getByRole('button',{name:/^Gama alta/}).click();await expect(advisor).toBeVisible();
 });
 
-test('la política de privacidad explica los datos del pedido y se enlaza desde el pie',async({page})=>{
+// The mirror's footer is the official one (no privacy link): the order conditions link to the policy instead.
+test('la política de privacidad explica los datos del pedido y se enlaza desde las condiciones del pedido',async({page})=>{
   await page.goto('/privacidad');
   await expect(page.getByRole('heading',{level:1})).toContainText('PRIVACIDAD');
   for (const title of ['Qué información utilizas aquí','Servicios externos y opciones voluntarias','Lo que permanece en tu navegador','Solicitudes sobre tu información']) await expect(page.getByRole('heading',{name:title})).toBeVisible();
-  await page.goto('/contacto');
-  await page.locator('.tony-footer-bottom').getByRole('link',{name:'Privacidad',exact:true}).click();
+  await page.goto('/terminos');
+  await page.getByRole('main').getByRole('link',{name:'política de privacidad',exact:true}).first().click();
   await expect(page).toHaveURL(/\/privacidad\/?$/);
 });
 
-test('el catálogo muestra los 70 diseños oficiales y lleva el elegido al pedido',async({page})=>{
-  await mockPedidoApi(page);await page.goto('/catalogo');
-  await expect(page.getByText('PRÓXIMAMENTE')).toHaveCount(0);
-  const cards=page.locator('.catalog-gallery-grid li');await expect(cards).toHaveCount(70);
-  const broken=await page.locator('.catalog-gallery-grid img').evaluateAll(images=>Promise.all(images.slice(0,8).map(image=>(image as HTMLImageElement).decode().then(()=>0,()=>1))));
-  expect(broken.reduce((a,b)=>a+b,0)).toBe(0);
-  await page.getByLabel('Buscar por número').fill('012');await expect(cards).toHaveCount(1);
-  await page.getByRole('button',{name:'Ver TONY-012 completo'}).click();
-  const dialog=page.getByRole('dialog',{name:'TONY-012'});await expect(dialog).toBeVisible();
-  await dialog.getByRole('link',{name:/Usar TONY-012 en mi pedido/}).click();
+// /catalogo becomes the mirror of the official «Catálogo»; a design code still reaches the order as ?diseno=.
+test('un diseño del catálogo llega al pedido con ?diseno=',async({page})=>{
+  await mockPedidoApi(page);await page.goto('/configurador?diseno=TONY-012');
   await expect(page).toHaveURL(/\/configurador\/?$/);
   await expect(page.getByText('Elegiste TONY-012 del catálogo Tony.')).toBeVisible();
   await page.getByRole('button',{name:/CREAR MI PEDIDO/}).click();

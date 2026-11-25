@@ -15,10 +15,13 @@ async function observe(page:Page) {
   await expect(page.locator('.route-transition')).toHaveAttribute('data-art','mobile');
 }
 const phases = (page:Page)=>page.evaluate(()=>(window as unknown as {__transitions:Sample[]}).__transitions.map(s=>s.phase).join(' '));
+// Header-agnostic: the official menu entry «Tony News» (behind the phone menu toggle) and the header logo.
 async function news(page:Page) {
-  await page.getByRole('button',{name:'Abrir menú'}).tap();
-  await page.getByRole('dialog',{name:'Menú de Tony Sportswear'}).getByRole('link',{name:/Tony News/}).tap();
+  const link=page.getByRole('banner').or(page.getByRole('dialog')).or(page.getByRole('navigation')).getByRole('link',{name:/^Tony News/}).filter({visible:true}).first();
+  if(!(await link.isVisible())) await page.getByRole('banner').getByRole('button',{name:/^(abrir\s+(el\s+)?)?men[uú]/i}).first().tap();
+  await link.tap();
 }
+const logo=(page:Page)=>page.getByRole('banner').locator('a[href="/"]:has(img), a[href="/"]:has(svg)').filter({visible:true}).first();
 const NEWS=/\/tony-news(?:\?|$)/;
 /**
  * Holds the next /tony-news navigation until the test releases it. The server builds the
@@ -66,7 +69,7 @@ test('touch navigation shows Tony over the full viewport without delaying routin
   await news(page);
   await expect(page).toHaveURL(/\/tony-news$/);
   await expect(transition).toHaveAttribute('data-phase','idle');
-  await page.locator('.tony-header-inner .brand').tap();
+  await logo(page).tap();
   await expect(page).toHaveURL(/\/$/);
   await expect.poll(()=>phases(page)).toBe('cover wink reveal idle cover wink reveal idle cover wink reveal idle cover wink reveal idle');
   await expect(page.locator('.lagarto-intro[open]')).toHaveCount(0);
@@ -81,9 +84,9 @@ test('motion changes interrupt the mobile transition and leave navigation usable
   await expect(page.locator('.route-transition')).toHaveAttribute('data-phase','idle');
   await expect(page.locator('.route-transition')).toBeHidden();
   await expect(page).toHaveURL(/\/tony-news$/);
+  // Motion back on: the next navigation (the logo, home) still works and its transition ends clean.
   await page.emulateMedia({reducedMotion:'no-preference'});
-  await page.getByRole('button',{name:'Pausar efectos',exact:true}).tap();
-  await page.locator('.tony-header-inner .brand').tap();
+  await logo(page).tap();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator('.route-transition')).toHaveAttribute('data-phase','idle');
   await expect(page.locator('html')).not.toHaveAttribute('data-route-cover',/.*/);
@@ -93,7 +96,7 @@ test('rapid route changes restart one transition and clean up every animation',a
   await observe(page);
   await news(page);
   await expect(page).toHaveURL(/\/tony-news$/);
-  await page.locator('.tony-header-inner .brand').tap();
+  await logo(page).tap();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator('.route-transition')).toHaveAttribute('data-phase','idle');
   await expect.poll(()=>page.locator('.route-transition').evaluate(el=>el.getAnimations({subtree:true}).length)).toBe(0);
