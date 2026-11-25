@@ -1,0 +1,62 @@
+/*
+ * Inicio (home): local adjustments over the base components, prefix wb-inicio-. Spacing follows
+ * referencia-oficial/principales/inicio (outline-desktop.json at 1440 px, outline-mobile.json at 390 px).
+ */
+
+/* Slider: the official «Mas diseños» button of the third slide (its only HTML layer), drawn as our lime
+   button over that slide's link. From 768 px only: on phones the official layer falls outside the slide. */
+@media(min-width:768px){
+  .wb-inicio-carrusel .wb-carrusel-enlace[href*="/categoria/camisa-full-sublimada-y-calzoneta-full-sublimada-personalizados"]::after{
+    content:'Mas diseños';
+    content:'Mas diseños' / '';
+    position:absolute;left:50%;bottom:44px;
+    display:inline-flex;align-items:center;min-height:44px;padding:0 42px 0 18px;
+    transform:translateX(-50%);
+    font:700 14px/1 var(--wb-f-texto);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
+    color:var(--wb-sobre-lima);
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b120d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E") no-repeat right 15px center/18px 18px,linear-gradient(to top,rgb(46 86 12 / .5) 0 3px,transparent 3px),linear-gradient(115deg,#ecffb0 0%,#c6ff55 45%,#9bf02e 100%);
+    clip-path:polygon(var(--tc-cut) 0,100% 0,100% calc(100% - var(--tc-cut)),calc(100% - var(--tc-cut)) 100%,0 100%,0 var(--tc-cut));
+    transition:filter 220ms ease;
+  }
+}
+@media(min-width:768px) and (hover:hover) and (pointer:fine){
+  .wb-inicio-carrusel .wb-carrusel-enlace[href*="/categoria/camisa-full-sublimada-y-calzoneta-full-sublimada-personalizados"]:hover::after{filter:brightness(1.06) drop-shadow(0 10px 18px rgb(0 0 0 / .35))}
+}
+
+/* Circles row: 35 px under the slider, about 88 px before the welcome row. */
+.wb-fila.wb-inicio-circulos{padding:35px 0 88px}
+
+/* Welcome row: image 80 px from the top, text column 100 px (60 under the image on phones), 42 px after the button. */
+.wb-inicio-bienvenida-media{padding-top:80px}
+.wb-inicio-bienvenida-texto{padding-top:100px;padding-bottom:42px}
+@media(max-width:767px){.wb-inicio-bienvenida-texto{padding-top:60px}}
+/* The official picture is the old logo on leather: ours is the 2026 logo on our scales, same proportions. */
+.wb-inicio-logo{position:relative;isolation:isolate;display:grid;place-items:center;aspect-ratio:1200/1032;overflow:hidden;background-color:var(--wb-tile);background-size:300px;background-position:center;box-shadow:inset 0 0 0 1px var(--wb-linea)}
+.wb-inicio-logo::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(closest-side,rgb(5 10 7 / .15),rgb(5 10 7 / .86))}
+.wb-inicio-logo img{display:block;width:76%;height:auto}
+.wb-inicio-subtitulo{margin:0 0 20px;font:italic 400 20px/1.4 var(--wb-f-texto);color:var(--wb-texto)}
+.wb-inicio-parrafo{margin:0 0 35px;font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);text-align:justify;color:var(--wb-texto)}
+
+/* Photo band: like the official one the photo scrolls with the page (a fixed 1550x302 photo would be blown up to
+   the window), and the text sits 97 px from the top, 105 px from the bottom. */
+.wb-fila--parallax.wb-inicio-banda{background-attachment:scroll}
+.wb-inicio-banda .wb-banda-parallax-in{padding-block:92px 100px}
+
+/* «LO QUE NOS DISTINGUE»: the official column padding (9% 9% 6% 14% of the column), 65 / 40 px on phones. */
+.wb-inicio-distingue-in{padding:9% 9% 6% 14%}
+@media(max-width:767px){.wb-inicio-distingue-in{padding:65px 40px 36px}}
+.wb-inicio-distingue .wb-titulo.wb-inicio-h1{font-size:var(--wb-t-h1)}
+.wb-inicio-distingue .wb-titulo.wb-inicio-h4{font-size:var(--wb-t-h4)}
+.wb-inicio-distingue-foto{min-height:284px}
+
+/* CajaIcono (side_icon_box xlarge): icon left, text 85 px from the column edge; stacked and centred on phones. */
+.wb-inicio-caja{display:flex;align-items:flex-start;gap:31px;margin:0 0 20px}
+.wb-inicio-caja:last-child{margin-bottom:32px}
+.wb-inicio-caja-icono{flex:none;display:grid;place-items:center;width:54px;color:var(--wb-lima)}
+.wb-inicio-caja-icono svg{display:block}
+.wb-inicio-caja--check .wb-inicio-caja-icono path{stroke-width:2.6}
+.wb-inicio-caja-texto{flex:1;min-width:0;margin:0;font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);text-align:justify;color:var(--wb-texto)}
+@media(max-width:767px){
+  .wb-inicio-caja{flex-direction:column;align-items:center;gap:26px;margin-bottom:24px}
+  .wb-inicio-caja-texto{width:100%}
+}

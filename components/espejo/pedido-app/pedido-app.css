@@ -1,0 +1,38 @@
+/*
+ * B2 pages (CREÁ TU PEDIDO, App Tony, DESCARGA NUESTRA APP, Premios App): the official WordPress page body
+ * (Elegante .content_body: WPBakery rows 35 px apart, text blocks with 35 px under them, paragraphs
+ * 16/27.2 justified with 12 px between them) in our colours and type. Prefix wb-pedido-app-.
+ */
+/* The mirror header ends where the official one does (500 px, 124 on phones): content starts right there. */
+.wb-pedido-app{display:flex;flex-direction:column;gap:35px;padding:0 0 35px;background:var(--wb-fondo);color:var(--wb-texto)}
+
+/* wpb_text_column */
+.wb-pedido-app-bloque{margin:0 0 35px}
+.wb-pedido-app-bloque:last-child{margin-bottom:0}
+.wb-pedido-app-bloque p{margin:0 0 12px}
+.wb-pedido-app-bloque p:last-child{margin-bottom:0}
+.wb-pedido-app-texto{font:400 var(--wb-t-texto)/27.2px var(--wb-f-texto);text-align:justify;color:var(--wb-texto)}
+
+/* Links written as URLs: lime, underlined, and wrapped on phones instead of running off the screen. */
+.wb-pedido-app-enlace{color:var(--wb-lima);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;overflow-wrap:anywhere}
+@media(hover:hover) and (pointer:fine){.wb-pedido-app-enlace:hover{color:var(--wb-lima-hi)}}
+
+/* CREÁ TU PEDIDO: 18 pt title, 14 pt text, 24 pt closing link. */
+.wb-pedido-app-titulo{margin:0 0 12px;font:600 28px/28px var(--wb-f-display);letter-spacing:.01em;text-transform:uppercase;text-align:justify;color:var(--wb-texto)}
+.wb-pedido-app-14pt{font-size:18.67px}
+.wb-pedido-app-24pt{font-size:32px;line-height:1.1}
+/* An empty official paragraph (&nbsp;): one line plus its margin. */
+.wb-pedido-app-linea{display:block;height:39px}
+.wb-pedido-app-banner{display:block;width:100%;max-width:1122px;height:auto}
+
+/* App Tony heading: 64 px (official 56 x 1.15) on 73 px lines, 900 px wide so it breaks like the official's
+   two lines; below 360 px it shrinks so «DESCARGA» still fits the column. */
+.wb-pedido-app .wb-titulo.wb-pedido-app-titular{max-width:900px;margin-inline:auto;font-size:min(64px,calc((100vw - 90px) / 4.1));line-height:1.14}
+/* Phone banners (aligncenter) and the boc_spacing pair (20 + 30 px) after the first one. */
+.wb-pedido-app-imagen{display:block;width:100%;height:auto;margin-inline:auto}
+.wb-pedido-app-imagen--490{max-width:490px}
+.wb-pedido-app-imagen--532{max-width:532px}
+.wb-pedido-app-espaciado{display:block;height:50px}
+
+/* Pages whose WordPress content is empty: the official shows a blank body 596 px tall (1440 and 390). */
+.wb-pedido-app-vacia{min-height:596px;background:var(--wb-fondo)}

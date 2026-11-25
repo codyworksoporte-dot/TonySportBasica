@@ -145,6 +145,8 @@ En PowerShell: `$env:TONY_GITHUB_PAGES='true'; npm run build; node scripts/prepa
 - la portada no tiene enlaces internos con el prefijo o tiene rutas sin él;
 - falta `out/crea-tu-pedido/index.html` o no contiene el texto «CREÁ TU PEDIDO».
 
-El flujo de GitHub Actions (`.github/workflows/pages.yml`) está listo, pero esta carpeta todavía no está conectada a ningún repositorio.
+Esta carpeta está conectada al repositorio público **[codyworksoporte-dot/TonySportBasica](https://github.com/codyworksoporte-dot/TonySportBasica)** (remoto `origin`). Cada subida a `main` ejecuta `.github/workflows/pages.yml` y publica **https://codyworksoporte-dot.github.io/TonySportBasica/**. En ese repositorio, *Settings → Pages → Source* está en *GitHub Actions* y el entorno `github-pages` solo despliega desde `main`. Nunca se sube al repositorio del sitio original (`TonySport`).
 
-Pendientes conocidos del cambio de prefijo (archivos que no son de esta tarea): `scripts/preview-pages.mjs` y `scripts/smoke-pages.cjs` todavía sirven y revisan `/TonySport`; `components/LagartoIntroBootstrap.tsx` y `components/espejo/LogoEspejo.tsx` comparan la dirección con `/TonySport` para reconocer la portada; y `TONY_FRONTEND_URL` en `.env.example` apunta al sitio del original.
+Vista previa local de la exportación con el mismo prefijo: `node scripts/preview-pages.mjs` → `http://127.0.0.1:4173/TonySportBasica/`. `scripts/smoke-pages.cjs`, `components/LagartoIntroBootstrap.tsx` y `components/espejo/LogoEspejo.tsx` leen el prefijo de la configuración (`TONY_PAGES_BASE` / `TONY_ASSET_BASE`).
+
+El envío de pedidos del configurador queda **sin conectar a propósito** en esta publicación: el repositorio no define `NEXT_PUBLIC_TONY_API_BASE`, así que una copia de demostración no puede crear pedidos reales. Para conectarlo, definir esa variable en *Settings → Secrets and variables → Actions → Variables* y volver a publicar.

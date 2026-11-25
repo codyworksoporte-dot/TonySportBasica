@@ -1,21 +1,27 @@
-import SectionImage from '@/components/SectionImage';
-import Link from 'next/link';
-import type {Metadata} from 'next';
-import Icon from '@/components/Icon';
-import SocialPublication from '@/components/SocialPublication';
-import {LOURDES_PUBLICATION,TONY_CHANNELS} from '@/lib/social-news';
-import './tony-news.css';
+import type { Metadata } from 'next';
+import VideoNoticia from '@/components/espejo/contenido/VideoNoticia';
+import '@/components/espejo/contenido/contenido.css';
 
-export const metadata:Metadata={title:'Tony News | Historias y videos de Tony',description:'Publicaciones de Tony Sportswear, sus canales oficiales en Instagram, TikTok y Facebook, y las líneas Motorcycle y Cycling Pro.'};
+// Mirror of https://www.tonysportselsalvador.com/tony-news/: seven rows, each a centred title and its video.
+export const metadata: Metadata = { title: 'Tony News' };
 
-export default function TonyNewsPage(){return <main id="contenido" className="tony-news-page">
-  <header className="tn-hero tn-wrap"><div><p className="tn-eyebrow"><span aria-hidden="true"/>HISTORIAS CON IDENTIDAD</p><h1>TONY <em>NEWS.</em></h1></div><div className="tn-hero-copy"><p>Lo que pasa dentro y fuera de la cancha.<br/>Encuentra nuestras publicaciones y continúa la historia en su canal original.</p><nav aria-label="Canales oficiales de Tony">{Object.entries(TONY_CHANNELS).map(([id,channel])=><a key={id} href={channel.url} target="_blank" rel="noopener noreferrer">{channel.name}<Icon name="diagonal"/></a>)}</nav></div></header>
+const SUBIDAS = 'https://www.tonysportselsalvador.com/wp-content/uploads/';
 
-  <section className="tn-feature tn-wrap" aria-labelledby="tn-feature-title"><SocialPublication provider="instagram"/><div className="tn-feature-copy"><div className="tn-post-meta"><span>INSTAGRAM</span><span>ARCHIVO</span></div><h2 id="tn-feature-title">UNA HISTORIA.<br/><em>UN NUEVO<br/>PUNTO DE ENCUENTRO.</em></h2><p className="tn-post-title">{LOURDES_PUBLICATION.title}</p><p>Un anuncio de la marca para la apertura prevista el 18 de septiembre de 2026. Mira la publicación y sus detalles directamente en Instagram.</p><div className="tn-post-byline"><span>@tonysportswearsv</span><time dateTime={LOURDES_PUBLICATION.publishedAt}>{LOURDES_PUBLICATION.dateLabel}</time></div><p className="tn-archive-note">Publicación de archivo. La fecha anunciada ya pasó.</p></div></section>
+// Titles as published (the official bolds some of them); videos in the official order.
+const VIDEOS = [
+  { titulo: 'LINEA MOTORCYCLE', video: `${SUBIDAS}Video-de-WhatsApp-2025-12-04-a-las-13.44.10_a296132f.mp4`, negrita: true },
+  { titulo: 'CYCLING PRO', video: `${SUBIDAS}Video-de-WhatsApp-2025-12-04-a-las-13.59.44_2f0f2246.mp4`, negrita: true },
+  { titulo: 'MOLDE DE FÙTBOL', video: `${SUBIDAS}Video-de-WhatsApp-2025-12-04-a-las-14.18.31_2c479fe6.mp4`, negrita: true },
+  { titulo: 'TONY PREMIA TUS COMPRAS', video: `${SUBIDAS}WhatsApp-Video-2025-12-23-at-8.17.19-AM.mp4`, negrita: false },
+  { titulo: 'COSTURA REFORZADA', video: `${SUBIDAS}WhatsApp-Video-2025-12-23-at-8.17.31-AM.mp4`, negrita: false },
+  { titulo: 'DISEÑOS NUEVOS MUNDIAL 2026', video: `${SUBIDAS}WhatsApp-Video-2025-12-31-at-10.30.15-AM.mp4`, negrita: true },
+  { titulo: 'RÉPLICAS SUBLIMADAS A SOLO $8.49', video: `${SUBIDAS}WhatsApp-Video-2026-01-19-at-9.14.19-AM.mp4`, negrita: false },
+];
 
-  <section className="tn-channels tn-wrap" aria-labelledby="tn-channels-title"><div className="tn-section-heading"><div><p className="tn-eyebrow">CADA CANAL, SU FORMA DE CONTARLO.</p><h2 id="tn-channels-title">SIGUE EL <em>MOVIMIENTO.</em></h2></div><p>Abre una publicación desde el perfil para verla en su plataforma.</p></div><div className="tn-channel-grid"><div className="tn-tiktok"><div className="tn-channel-caption"><span>TIKTOK</span><strong>{TONY_CHANNELS.tiktok.handle}</strong></div><SocialPublication provider="tiktok"/></div><aside className="tn-facebook"><SectionImage photo="comunidad" shade="strong" /><div className="tn-facebook-copy"><p className="tn-eyebrow">TAMBIÉN EN FACEBOOK</p><h3>OTRA FORMA<br/>DE ESTAR <em>CERCA.</em></h3><p>{TONY_CHANNELS.facebook.handle}</p><a href={TONY_CHANNELS.facebook.url} target="_blank" rel="noopener noreferrer">Visitar el canal<Icon name="diagonal"/></a></div><div className="tn-facebook-status"><span aria-hidden="true"/><p>La primera publicación de video para esta sección se añadirá próximamente. El canal oficial ya está disponible.</p></div></aside></div></section>
-
-  <section className="tn-topics tn-wrap" aria-labelledby="tn-topics-title"><div className="tn-section-heading"><div><p className="tn-eyebrow">DOS FORMAS DE SEGUIR AVANZANDO</p><h2 id="tn-topics-title">EL CAMINO <em>TAMBIÉN CUENTA.</em></h2></div></div><div className="tn-topic-grid"><Link className="tn-topic tn-topic-racing" href="/producto#racing"><span className="tn-topic-label">EXPLORA LA LÍNEA RACING</span><SectionImage photo="racing" shade="bottom" /><div><h3>MOTORCYCLE.</h3><p>Identidad para el equipo y la ruta.</p><span>Ver la línea <Icon name="diagonal"/></span></div></Link><Link className="tn-topic tn-topic-cycling" href="/producto#ciclismo"><span className="tn-topic-label">EXPLORA LA LÍNEA CICLISMO</span><SectionImage photo="ciclismo" shade="bottom" /><div><h3>CYCLING PRO.</h3><p>El siguiente kilómetro lleva tu identidad.</p><span>Ver la línea <Icon name="diagonal"/></span></div></Link></div></section>
-  <div className="tn-endnote tn-wrap"><span>TONY NEWS</span><p>Publicaciones seleccionadas y canales oficiales. Cada plataforma determina qué contenido está disponible.</p></div>
-</main>}
-
+export default function TonyNewsPage() {
+  return <main id="contenido" className="wb-contenido-pagina">
+    {/* The official page title (h1 "Tony News") is hidden by the theme. */}
+    <h1 className="sr-only">Tony News</h1>
+    {VIDEOS.map((v, i) => <VideoNoticia key={v.video} id={`tony-news-${i + 1}`} titulo={v.titulo} video={v.video} negrita={v.negrita}/>)}
+  </main>;
+}

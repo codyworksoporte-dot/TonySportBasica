@@ -1,15 +1,10 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
+import PaginaProductos from '@/components/espejo/tienda/PaginaProductos';
 
-// Placeholder: keeps /producto alive for the protected cart (CartExperience links here) until the
-// mirror of the official "Productos" page replaces this file.
-export const metadata: Metadata = {title: 'Productos'};
+// /producto: the route the protected cart links to («ver productos»). It shows the official «Productos»
+// page of the menu, the same as /productos3/.
+export const metadata: Metadata = { title: 'Productos' };
 
 export default function Producto() {
-  return <main id="contenido" className="tc-page">
-    <div className="tc-wrap">
-      <header className="tc-head">
-        <h1>Productos</h1>
-      </header>
-    </div>
-  </main>;
+  return <PaginaProductos/>;
 }

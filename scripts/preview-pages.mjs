@@ -4,7 +4,14 @@ import { extname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(fileURLToPath(new URL('../out/', import.meta.url)));
-const base = '/TonySport';
+// Same rule as next.config.ts: TONY_PAGES_BASE unset or empty → '/TonySportBasica'; '/' → domain root.
+function pagesBase(value = process.env.TONY_PAGES_BASE) {
+  const raw = value?.trim();
+  if (!raw) return '/TonySportBasica';
+  const path = raw.replace(/^\/+|\/+$/g, '');
+  return path ? `/${path}` : '';
+}
+const base = pagesBase();
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8'};
 
 createServer(async (request, response) => {

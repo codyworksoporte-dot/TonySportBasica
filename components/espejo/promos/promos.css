@@ -1,0 +1,81 @@
+/*
+ * B5 pages (Promociones, Patrocinio, Copa Tony Sportswear, Eventos, Paquetes). Prefix wb-promos-.
+ * Spacing follows the official outlines: WPBakery rows sit flush under the header, 35 px apart, and the
+ * last one leaves 35 px (25 on phones) before the footer. Official inline fonts (Times New Roman, Arial
+ * Black) take our faces; official link teal and greens take our lime.
+ */
+
+/* Page shell and rows */
+.wb-promos{padding-bottom:35px;color:var(--wb-texto)}
+.wb-promos-fila{margin-bottom:35px}
+.wb-promos-fila:last-child{margin-bottom:0}
+@media(max-width:767px){.wb-promos{padding-bottom:25px}}
+
+/* Pages that end with the green band (Paquetes, Eventos): 63 px before the footer (26 on phones). */
+.wb-promos--banda{padding-bottom:63px}
+@media(max-width:767px){.wb-promos--banda{padding-bottom:26px}}
+
+/* Promociones: the official page is empty (its content is "<p></p>" and the title is hidden). */
+.wb-promos-vacia{min-height:596px;padding-bottom:0}
+
+/* In-text links: underlined so they never rely on colour alone. */
+.wb-promos-enlace{color:var(--wb-lima);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.wb-promos-enlace:focus-visible,.wb-promos-equipo a:focus-visible{outline:2px solid var(--wb-lima);outline-offset:3px;border-radius:2px}
+@media(hover:hover) and (pointer:fine){.wb-promos-enlace:hover{color:var(--wb-lima-hi)}}
+
+/* Images (vc_single_image), optionally linked. */
+.wb-promos-img{display:block;width:100%;height:auto}
+.wb-promos-img-enlace{display:block}
+.wb-promos-img-enlace:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+.wb-promos-linea{margin:20px 0}
+
+/* ---------- Patrocinio ---------- */
+/* Official: Times New Roman 18 pt bold, capitals, 52 px lines. */
+.wb-promos-patro-h1{margin:0;font:700 28px/1.86 var(--wb-f-display);letter-spacing:.015em;text-transform:uppercase;text-align:center;color:var(--wb-texto);overflow-wrap:break-word}
+.wb-promos-patro-h1 .wb-promos-enlace{text-underline-offset:5px}
+/* The official breaks before the league name: keep it on one line where it fits. */
+@media(min-width:768px){.wb-promos-patro-h1 .wb-promos-enlace{white-space:nowrap}}
+/* Team names: Times New Roman 14 pt bold in each club's colour (blue lightened for contrast). */
+.wb-promos-equipo{margin:0;font:700 21px/27px var(--wb-f-display);letter-spacing:.02em;text-align:center}
+.wb-promos-equipo a{color:var(--wb-promos-club,var(--wb-lima));text-decoration:none}
+@media(hover:hover) and (pointer:fine){.wb-promos-equipo a:hover{text-decoration:underline;text-underline-offset:4px}}
+.wb-promos-club--platense{--wb-promos-club:#ffcc00}
+.wb-promos-club--cacahuatique{--wb-promos-club:#ff0000}
+.wb-promos-club--marte{--wb-promos-club:#6f8bff}
+/* Closing text: Montserrat 14 pt capitals, justified. */
+.wb-promos-patro-cierre{margin:0;font:600 24px/1.4 var(--wb-f-display);letter-spacing:.015em;text-transform:uppercase;text-align:justify;color:var(--wb-texto)}
+.wb-promos-patro-cierre .wb-promos-enlace{white-space:nowrap}
+@media(max-width:767px){
+  .wb-promos-patro-h1{line-height:1.7}
+  .wb-promos-patro-cierre{font-size:21px;line-height:1.38}
+}
+
+/* ---------- Copa Tony Sportswear ---------- */
+.wb-promos-copa-texto{font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto);text-align:justify}
+.wb-promos-copa-texto p{margin:0 0 12px}
+.wb-promos-copa-texto strong{font-weight:700}
+.wb-promos-copa-texto em{font-style:italic}
+.wb-promos-copa-texto .wb-promos-copa-ultimo{margin-bottom:0}
+/* Official: Arial Black 20 px capitals, 29 px lines; the number in the official yellow. */
+.wb-promos-copa-h3{margin:0 0 20px;font:700 var(--wb-t-h3)/1.27 var(--wb-f-display);letter-spacing:.02em;text-transform:uppercase;text-align:left;color:var(--wb-texto);overflow-wrap:break-word}
+.wb-promos-copa-tel{color:#ffff00;white-space:nowrap;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.wb-promos-copa-tel:focus-visible{outline:2px solid #ffff00;outline-offset:3px;border-radius:2px}
+/* Official: Arial Black 14 pt. */
+.wb-promos-copa-inicio{font:700 21px/1.35 var(--wb-f-display);letter-spacing:.02em;text-align:left}
+/* Inner rows (vc_row vc_inner) of the text column. */
+.wb-promos-interna{margin-top:35px}
+.wb-promos-copa-h1{margin:0;font:600 var(--wb-t-h1)/1.12 var(--wb-f-display);letter-spacing:.015em;text-transform:uppercase;text-align:center;color:var(--wb-texto);overflow-wrap:break-word}
+.wb-promos-interna .wb-promos-linea{margin-bottom:0}
+.wb-promos-equipos{margin-top:56px}
+/* Official: Arial Black 10 pt, 40 px apart; on phones both halves stack flush. */
+.wb-promos-copa-lista{margin:0;padding:0;list-style:none}
+.wb-promos-copa-lista li{margin:0 0 12px;font:700 14px/28px var(--wb-f-texto);letter-spacing:.01em;color:var(--wb-texto)}
+.wb-promos-copa-lista li:last-child{margin-bottom:0}
+
+/* ---------- Paquetes and Eventos ---------- */
+/* Shortcodes the official prints as text (their plugins are gone). */
+.wb-promos-codigo{margin:0;font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto);text-align:justify}
+/* Paquetes: 20 px spacer row + 35 px above; 35 px column margin + 17 px spacer below. */
+.wb-promos-fila.wb-promos-codigo-fila{margin:55px 0 52px}
+/* Eventos: 70 px spacer row + 35 px above; 35 px column margin + 55 px spacer below. */
+.wb-promos-fila.wb-promos-codigo-fila--eventos{margin:105px 0 90px}

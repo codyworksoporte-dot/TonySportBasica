@@ -1,0 +1,147 @@
+/*
+ * Group B7 (Nuestra Calidad, Quiénes somos, Galería, Proyectos, Testimoniales, Blog): local variants on top of
+ * the mirror's base components. Prefix wb-calidad-nosotros-. Geometry follows the official outlines
+ * (1440 and 390 px); colours, buttons and focus rings are ours.
+ */
+
+/* ---------- Shared ---------- */
+.wb-calidad-nosotros-img{display:block;width:100%;height:auto}
+/* Official 36 px Montserrat headings (h1 there, h2 here: one h1 per page). */
+.wb-titulo.wb-calidad-nosotros-titulo-grande{font-size:var(--wb-t-h1)}
+/* Official boc_divider 100 x 2 px with 24 px margins (the 60 x 1 px one is Separador 'corto'). */
+.wb-divisor.wb-calidad-nosotros-divisor-ancho{width:100px;height:2px;margin-top:24px;margin-bottom:24px}
+
+/* ---------- Nuestra Calidad ---------- */
+/* Green title bands (55 px). */
+.wb-fila.wb-calidad-nosotros-banda{padding-block:10px}
+.wb-titulo.wb-calidad-nosotros-banda-titulo{margin:0;line-height:35px}
+/* Rows of images: 35 px from the bands, 35 px between images. */
+.wb-fila.wb-calidad-nosotros-bloque{padding-block:35px}
+.wb-calidad-nosotros-pila{display:grid;gap:35px}
+/* Single image linking to its fabric line. */
+.wb-calidad-nosotros-enlace-img{position:relative;display:block;overflow:hidden;background:var(--wb-tile)}
+.wb-calidad-nosotros-enlace-img img{display:block;width:100%;height:auto;transition:transform 700ms var(--tc-ease),filter 300ms ease}
+.wb-calidad-nosotros-recorte img{aspect-ratio:600 / 380;object-fit:cover}
+.wb-calidad-nosotros-enlace-img:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.wb-calidad-nosotros-enlace-img:hover img{transform:scale(1.03);filter:brightness(1.06)}}
+
+/* Image box with hover caption (theme's pic_info type1): corner "+" always, title on hover and focus. */
+.wb-calidad-nosotros-caja{position:relative;display:block;overflow:hidden;background:var(--wb-tile);color:var(--wb-texto);text-decoration:none}
+.wb-calidad-nosotros-caja img{display:block;width:100%;height:auto;aspect-ratio:600 / 380;object-fit:cover;transition:transform 700ms var(--tc-ease)}
+.wb-calidad-nosotros-caja-velo{position:absolute;inset:0;background:rgb(3 7 5 / .7);opacity:0;transition:opacity 300ms ease}
+.wb-calidad-nosotros-caja-info{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center;opacity:0;transform:translateY(14px);transition:opacity 300ms ease,transform 350ms var(--tc-ease)}
+.wb-calidad-nosotros-caja-icono{display:grid;place-items:center;width:44px;height:44px;background:var(--wb-lima);color:var(--wb-sobre-lima);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)}
+.wb-calidad-nosotros-caja-titulo{margin:0;font:600 var(--wb-t-h3)/1.2 var(--wb-f-display);letter-spacing:.035em;text-transform:uppercase;color:#fff}
+.wb-calidad-nosotros-caja-mas{position:absolute;right:0;bottom:0;display:flex;align-items:flex-end;justify-content:flex-end;width:46px;height:46px;padding:0 5px 5px 0;background:var(--wb-lima);color:var(--wb-sobre-lima);clip-path:polygon(100% 0,100% 100%,0 100%);transition:opacity 250ms ease}
+.wb-calidad-nosotros-caja:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+.wb-calidad-nosotros-caja:focus-visible :is(.wb-calidad-nosotros-caja-velo,.wb-calidad-nosotros-caja-info){opacity:1;transform:none}
+@media(hover:hover) and (pointer:fine){
+  .wb-calidad-nosotros-caja:hover :is(.wb-calidad-nosotros-caja-velo,.wb-calidad-nosotros-caja-info){opacity:1;transform:none}
+  .wb-calidad-nosotros-caja:hover img{transform:scale(1.04)}
+  .wb-calidad-nosotros-caja:hover .wb-calidad-nosotros-caja-mas{opacity:0}
+}
+
+/* ---------- Quiénes somos ---------- */
+/* 70 px spacer row + 35 px row margin above; image, 34 px spacer and margins below. */
+.wb-fila.wb-calidad-nosotros-sobre{padding-top:105px;padding-bottom:71px}
+.wb-calidad-nosotros-equipo{padding-bottom:34px}
+@media(max-width:767px){.wb-fila.wb-calidad-nosotros-sobre{padding-top:105px;padding-bottom:98px}}
+/* Mission / vision column (official #222 with 100/130 px padding) and its photo column. */
+.wb-fila--ancho-completo .wb-col.wb-calidad-nosotros-mision{padding:100px 130px}
+.wb-calidad-nosotros-negocios{min-height:340px}
+@media(max-width:767px){.wb-fila--ancho-completo .wb-col.wb-calidad-nosotros-mision{padding:100px 40px}}
+
+/* ---------- Galería ---------- */
+.wb-fila.wb-calidad-nosotros-galeria-fila{padding-top:105px;padding-bottom:90px}
+.wb-calidad-nosotros-galeria{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:0;padding:0;list-style:none}
+@media(max-width:650px){.wb-calidad-nosotros-galeria{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:450px){.wb-calidad-nosotros-galeria{grid-template-columns:minmax(0,1fr)}}
+.wb-calidad-nosotros-galeria-boton{position:relative;display:block;width:100%;padding:0;border:0;border-radius:5px;overflow:hidden;background:var(--wb-tile);box-shadow:0 5px 7px rgb(0 0 0 / .4);color:inherit;cursor:zoom-in}
+.wb-calidad-nosotros-galeria-boton :is(img,.wb-img-falta){display:block;width:100%;height:auto;min-height:0;aspect-ratio:1;object-fit:cover}
+.wb-calidad-nosotros-galeria-velo{position:absolute;inset:0;display:grid;place-items:center;background:rgb(3 7 5 / .5);opacity:0;transition:opacity 250ms ease}
+.wb-calidad-nosotros-galeria-zoom{display:grid;place-items:center;width:46px;height:46px;background:var(--wb-lima);color:var(--wb-sobre-lima);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)}
+.wb-calidad-nosotros-galeria-boton:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+.wb-calidad-nosotros-galeria-boton:focus-visible .wb-calidad-nosotros-galeria-velo{opacity:1}
+@media(hover:hover) and (pointer:fine){.wb-calidad-nosotros-galeria-boton:hover .wb-calidad-nosotros-galeria-velo{opacity:1}}
+
+/* Lightbox (Magnific Popup in the official): modal dialog, Escape closes, arrows navigate, focus trapped. */
+.wb-calidad-nosotros-visor{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:56px 70px;border:0;background:rgb(3 7 5 / .92);color:var(--wb-texto);overflow:hidden}
+.wb-calidad-nosotros-visor:not([open]){display:none}
+.wb-calidad-nosotros-visor[open]{display:flex;align-items:center;justify-content:center}
+.wb-calidad-nosotros-visor::backdrop{background:rgb(3 7 5 / .6)}
+.wb-calidad-nosotros-visor-figura{display:flex;flex-direction:column;align-items:center;max-width:min(900px,100%);max-height:100%;margin:0}
+.wb-calidad-nosotros-visor-figura :is(img,.wb-img-falta){display:block;width:auto;max-width:100%;height:auto;max-height:calc(100vh - 160px);max-height:calc(100dvh - 160px);box-shadow:0 0 18px rgb(0 0 0 / .6)}
+.wb-calidad-nosotros-visor-figura .wb-img-falta{width:min(600px,calc(100vw - 140px));aspect-ratio:1}
+.wb-calidad-nosotros-visor-pie{display:flex;justify-content:space-between;gap:20px;width:100%;padding-top:10px;font:400 13px/1.4 var(--wb-f-texto);color:var(--wb-texto-suave)}
+.wb-calidad-nosotros-visor-titulo{color:var(--wb-texto)}
+.wb-calidad-nosotros-visor-boton{position:absolute;z-index:2;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgb(5 10 7 / .7);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte);color:var(--wb-lima);cursor:pointer;transition:background-color 200ms ease}
+.wb-calidad-nosotros-visor-boton:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.wb-calidad-nosotros-visor-boton:hover{background:var(--wb-negro)}}
+.wb-calidad-nosotros-visor-cerrar{top:10px;right:10px}
+.wb-calidad-nosotros-visor-anterior{top:50%;left:12px;margin-top:-22px}
+.wb-calidad-nosotros-visor-siguiente{top:50%;right:12px;margin-top:-22px}
+@media(max-width:767px){
+  .wb-calidad-nosotros-visor{padding:60px 12px}
+  .wb-calidad-nosotros-visor-figura .wb-img-falta{width:calc(100vw - 24px)}
+  .wb-calidad-nosotros-visor-anterior,.wb-calidad-nosotros-visor-siguiente{top:auto;bottom:10px;margin-top:0}
+}
+
+/* ---------- Proyectos ---------- */
+.wb-fila.wb-calidad-nosotros-proyectos{padding-top:97px;padding-bottom:140px}
+.wb-calidad-nosotros-proyecto-texto{margin:0}
+.wb-calidad-nosotros-proyecto+.wb-calidad-nosotros-proyecto{margin-top:98px}
+@media(max-width:767px){
+  .wb-fila.wb-calidad-nosotros-proyectos{padding-top:97px;padding-bottom:130px}
+  .wb-calidad-nosotros-proyecto+.wb-calidad-nosotros-proyecto{margin-top:88px}
+}
+
+/* ---------- Testimoniales ---------- */
+.wb-fila.wb-calidad-nosotros-testimonios-fila{padding:29px 0 40px}
+/* Side room for the arrows lives on the region, so the clipped view shows exactly one testimonial. */
+.wb-calidad-nosotros-testimonios{position:relative;padding-inline:54px}
+.wb-calidad-nosotros-testimonios-vista{overflow:hidden}
+.wb-calidad-nosotros-testimonios-pista{display:flex;margin:0;padding:0;list-style:none;transition:transform 600ms ease}
+.wb-calidad-nosotros-testimonios:not([data-movimiento]) .wb-calidad-nosotros-testimonios-pista{transition:none}
+.wb-calidad-nosotros-testimonio{flex:0 0 100%;min-width:0;margin:0;text-align:center}
+.wb-calidad-nosotros-testimonio-figura{margin:0}
+.wb-calidad-nosotros-testimonio-cita{margin:0 auto;max-width:1092px;font:italic 400 19px/34px var(--wb-f-texto);color:#fff;text-shadow:0 1px 10px rgb(0 0 0 / .45)}
+.wb-calidad-nosotros-testimonio-cita p{margin:0}
+.wb-calidad-nosotros-testimonio-autor{display:flex;flex-direction:column;align-items:center;margin-top:32px}
+.wb-calidad-nosotros-testimonio-foto{display:block;width:106px;height:106px;border:3px solid var(--wb-lima);border-radius:50%;object-fit:cover;background:var(--wb-tile)}
+.wb-calidad-nosotros-testimonio-foto.wb-img-falta{min-height:0}
+.wb-calidad-nosotros-testimonio-nombre{display:block;margin-top:12px;font:600 23px/1.2 var(--wb-f-display);letter-spacing:.03em;text-transform:uppercase;color:#fff}
+.wb-calidad-nosotros-testimonio-lugar{display:block;margin-top:2px;font:italic 700 15px/1.5 var(--wb-f-texto);color:var(--wb-texto);text-decoration:underline;text-underline-offset:3px}
+.wb-calidad-nosotros-testimonios-flecha{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:rgb(5 10 7 / .6);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte);color:var(--wb-lima);cursor:pointer;transition:background-color 200ms ease,opacity 200ms ease}
+.wb-calidad-nosotros-testimonios-flecha--prev{left:0}
+.wb-calidad-nosotros-testimonios-flecha--next{right:0}
+.wb-calidad-nosotros-testimonios-flecha[aria-disabled=true]{opacity:.35;cursor:default}
+.wb-calidad-nosotros-testimonios-flecha:focus-visible,.wb-calidad-nosotros-testimonios-pausa:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.wb-calidad-nosotros-testimonios-flecha:not([aria-disabled=true]):hover{background:var(--wb-negro)}}
+.wb-calidad-nosotros-testimonios-pausa{position:absolute;left:50%;bottom:-32px;display:grid;place-items:center;width:24px;height:24px;margin-left:-12px;padding:0;border:0;border-radius:50%;background:rgb(5 10 7 / .65);color:var(--wb-texto);cursor:pointer}
+.wb-calidad-nosotros-hueco{height:262px;background:var(--wb-fondo)}
+@media(max-width:767px){
+  .wb-calidad-nosotros-testimonios{padding-inline:0}
+  .wb-calidad-nosotros-testimonio-cita{font-size:16px;line-height:28px}
+  .wb-calidad-nosotros-hueco{height:190px}
+}
+
+/* ---------- Blog ---------- */
+.wb-fila.wb-calidad-nosotros-blog-fila{padding-top:57px;padding-bottom:121px}
+.wb-calidad-nosotros-blog-vacio{margin:0;color:var(--wb-texto-suave)}
+.wb-calidad-nosotros-widget{margin:0 0 35px}
+.wb-calidad-nosotros-widget:last-child{margin-bottom:0}
+.wb-calidad-nosotros-widget-titulo{display:flex;align-items:center;gap:10px;margin:0 0 20px;font:600 var(--wb-t-h4)/1.2 var(--wb-f-display);letter-spacing:.02em;text-transform:uppercase;color:var(--wb-lima)}
+.wb-calidad-nosotros-widget-titulo::after{content:'';flex:1 1 auto;min-width:12px;border-top:2px dotted var(--wb-linea-fuerte)}
+.wb-calidad-nosotros-buscar{position:relative}
+.wb-calidad-nosotros-buscar input[type=search]{padding-right:52px}
+.wb-calidad-nosotros-buscar input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+/* Our bevelled lime button in place of the official magnifier (beats the .wb-form submit rule). */
+.wb-form.wb-calidad-nosotros-buscar button.wb-calidad-nosotros-buscar-boton{position:absolute;top:0;right:0;display:grid;place-items:center;width:48px;min-height:48px;height:48px;padding:0;border:0;background:linear-gradient(115deg,#ecffb0 0%,#c6ff55 45%,#9bf02e 100%);color:var(--wb-sobre-lima);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);cursor:pointer}
+.wb-form.wb-calidad-nosotros-buscar button.wb-calidad-nosotros-buscar-boton:focus-visible{outline:2px solid var(--wb-sobre-lima);outline-offset:-7px}
+.wb-calidad-nosotros-codigo{margin:0;font:400 14px/1.7 var(--wb-f-texto);color:var(--wb-texto-suave);overflow-wrap:anywhere}
+@media(max-width:767px){.wb-fila.wb-calidad-nosotros-blog-fila{padding-top:57px;padding-bottom:75px}}
+
+@media(prefers-reduced-motion:reduce){
+  .wb-calidad-nosotros-enlace-img img,.wb-calidad-nosotros-caja img,.wb-calidad-nosotros-caja-velo,.wb-calidad-nosotros-caja-info,.wb-calidad-nosotros-galeria-velo,.wb-calidad-nosotros-testimonios-pista{transition:none!important}
+}
+html[data-tony-effects=off] :is(.wb-calidad-nosotros-enlace-img img,.wb-calidad-nosotros-caja img,.wb-calidad-nosotros-testimonios-pista){transition:none!important}

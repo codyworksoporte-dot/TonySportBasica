@@ -4,7 +4,10 @@ const { chromium } = require('@playwright/test');
   const browser = await chromium.launch({channel:'msedge',headless:true});
   try {
   const page = await browser.newPage({viewport:{width:1280,height:900},reducedMotion:'reduce'});
-  const base = 'http://127.0.0.1:4173/TonySport';
+  // Same prefix rule as next.config.ts (TONY_PAGES_BASE, default '/TonySportBasica').
+  const raw = (process.env.TONY_PAGES_BASE || '').trim();
+  const prefix = raw ? (raw.replace(/^\/+|\/+$/g, '') ? `/${raw.replace(/^\/+|\/+$/g, '')}` : '') : '/TonySportBasica';
+  const base = `http://127.0.0.1:4173${prefix}`;
   const failures = [];
   page.on('pageerror', error => failures.push(`JS: ${error.message}`));
   page.on('response', response => {
@@ -13,7 +16,7 @@ const { chromium } = require('@playwright/test');
   for (const route of ['/', '/producto/', '/carrito/', '/configurador/', '/configurador/archivo/', '/tony-news/']) {
     const response = await page.goto(`${base}${route}`, {waitUntil:'networkidle'});
     if (response?.status() !== 200 || !await page.locator('main h1').count()) failures.push(`Ruta ${route} no abrió correctamente`);
-    const brokenLinks = await page.locator('a[href^="/"]').evaluateAll(links => links.map(link => link.getAttribute('href')).filter(href => href && !href.startsWith('/TonySport/')));
+    const brokenLinks = await page.locator('a[href^="/"]').evaluateAll((links, p) => links.map(link => link.getAttribute('href')).filter(href => href && !href.startsWith(`${p}/`)), prefix);
     if (brokenLinks.length) failures.push(`Enlaces fuera del sitio en ${route}: ${brokenLinks.join(', ')}`);
   }
   await page.goto(`${base}/`, {waitUntil:'networkidle'});

@@ -1,0 +1,106 @@
+/*
+ * Group "contenido" (B8): Tony News, subliminado, tipo de sublimando, replica, uniformes BKB, implementos
+ * deportivos, confección de uniformes personalizados and política de privacidad. Prefix wb-contenido-.
+ * Geometry follows the official outlines (1440 and 390 px); colours, buttons and type are ours.
+ */
+
+/* Short official pages keep the theme's minimum content height (595 px between header and footer). */
+.wb-contenido-pagina{min-height:595px}
+
+/* WPBakery rows on these pages: no band padding, 35 px under each row (vc_row margin-bottom). */
+.wb-contenido-fila{margin-bottom:35px}
+
+/* Title band: stretched row with the official green fill -> our lime. Heading at the top, 20 px under it;
+   the tipo-de-sublimando band also holds a divider drawn in the band's own colour (20 + 1 + 20 px). */
+.wb-contenido-banda{margin:0 0 35px;padding:0 15px 20px;text-align:center}
+.wb-contenido-banda--divisor{padding-bottom:41px}
+.wb-contenido-banda>.wb-titulo{margin:0}
+
+/* Headings of a multi-column row keep two lines on desktop, so the images below line up as on the official. */
+@media(min-width:768px){.wb-contenido-dos-lineas{min-height:2.4em}}
+
+/* Linked single image (wpb_single_image with a link). */
+.wb-contenido-imagen{display:block;line-height:0}
+.wb-contenido-imagen img,.wb-contenido-img{display:block;width:100%;height:auto}
+.wb-contenido-imagen:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+
+/* Image box (boc_image_box, pic_info type1): corner "+" and the title shown over the photo on hover. */
+.wb-contenido-caja{position:relative;isolation:isolate;display:block;overflow:hidden;background:var(--wb-tile);color:var(--wb-texto);text-decoration:none}
+.wb-contenido-caja .wb-contenido-img{transition:transform 700ms var(--tc-ease)}
+.wb-contenido-caja-esquina{position:absolute;right:0;bottom:0;z-index:1;display:flex;align-items:flex-end;justify-content:flex-end;width:clamp(38px,12%,70px);aspect-ratio:1;padding:clamp(5px,1.7%,11px);background:var(--wb-lima);color:var(--wb-sobre-lima);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.wb-contenido-caja-esquina svg{width:clamp(13px,42%,22px);height:auto}
+.wb-contenido-caja-info{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;background:rgb(5 10 7 / .84);text-align:center;opacity:0;transition:opacity 280ms ease}
+.wb-contenido-caja-icono{display:grid;place-items:center;width:46px;height:46px;flex:none;background:var(--wb-lima);color:var(--wb-sobre-lima);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)}
+.wb-contenido-caja-titulo{margin:0;font:600 var(--wb-t-h4)/1.25 var(--wb-f-display);letter-spacing:.04em;text-transform:uppercase;color:var(--wb-texto)}
+@media(hover:hover) and (pointer:fine){
+  .wb-contenido-caja:hover .wb-contenido-caja-info{opacity:1}
+  .wb-contenido-caja:hover .wb-contenido-img{transform:scale(1.04)}
+}
+.wb-contenido-caja:focus-visible{outline:3px solid var(--wb-lima);outline-offset:3px}
+.wb-contenido-caja:focus-visible .wb-contenido-caja-info{opacity:1}
+/* The official box without a picture shows nothing (only its 35 px margin): out of sight until keyboard focus. */
+.wb-contenido-caja-hueco{position:relative;min-height:35px}
+.wb-contenido-caja--vacia{margin-top:20px;background:var(--wb-tile-2)}
+.wb-contenido-caja--vacia .wb-contenido-caja-info{position:static;flex-direction:row;justify-content:flex-start;gap:12px;padding:10px 14px;background:none;opacity:1}
+.wb-contenido-caja--vacia .wb-contenido-caja-icono{width:34px;height:34px}
+
+/* Empty official link (a picture that was deleted): hidden, visible only with keyboard focus. */
+.wb-contenido-discreto{display:inline-block;margin-top:6px;padding:8px 14px;background:var(--wb-tile-2);color:var(--wb-lima);font:600 14px/1.4 var(--wb-f-texto);text-decoration:none}
+.wb-contenido-discreto:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+:is(.wb-contenido-discreto,.wb-contenido-caja--vacia):not(:focus-visible){position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ---------- Tony News: centred title, then the portrait video (478 × 850) at the left of the row ---------- */
+.wb-contenido-video{margin-bottom:35px}
+.wb-contenido-video-titulo{margin:0 0 35px;font:500 28px/1.2 var(--wb-f-display);letter-spacing:.03em;text-align:center;text-transform:uppercase;color:var(--wb-texto)}
+.wb-contenido-video-titulo--negrita{font-weight:700}
+.wb-contenido-video-marco{position:relative;width:min(100%,478px);aspect-ratio:478 / 850;overflow:hidden;background:var(--wb-negro);box-shadow:inset 0 0 0 1px var(--wb-linea)}
+.wb-contenido-video-medio{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.wb-contenido-video-medio:focus-visible{outline:3px solid var(--wb-lima);outline-offset:-3px}
+@media(max-width:767px){.wb-contenido-video-titulo{font-size:26px}}
+
+/* ---------- Page with sidebar (Confección de uniformes personalizados) ---------- */
+.wb-contenido-lados{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding:57px 0 80px}
+@media(min-width:768px){.wb-contenido-lados{grid-template-columns:minmax(0,74.6fr) minmax(0,23.8fr);column-gap:1.6%;align-items:start}}
+.wb-contenido-principal{min-width:0;padding-top:115px}
+.wb-contenido-principal .wb-titulo{margin:35px 0 20px}
+/* CTA band inside the main column: the lime fill runs edge to edge (the theme stretches the row) and, like
+   the official, it lies over the sidebar; text and button stay within the column. */
+.wb-contenido-cta{position:relative;z-index:1;margin-top:106px;padding:24px 0 20px;box-shadow:0 0 0 100vmax var(--wb-lima);clip-path:inset(0 -100vmax)}
+.wb-contenido-cta .wb-banda-cta-in{min-height:94px}
+.wb-contenido-cta .wb-banda-cta-texto{max-width:640px}
+
+.wb-contenido-lateral{min-width:0;color:var(--wb-texto)}
+@media(min-width:768px){.wb-contenido-lateral{padding-left:26px}}
+@media(max-width:767px){.wb-contenido-lateral{margin-top:40px}}
+.wb-contenido-widget{margin:0 0 30px}
+.wb-contenido-widget-titulo{margin:0 0 17px;font:600 19px/1.4 var(--wb-f-display);letter-spacing:.03em;text-transform:uppercase;color:var(--wb-lima)}
+.wb-contenido-widget-titulo>span{display:inline-block;padding:0 22px 0 0;background:var(--wb-negro)}
+.wb-contenido-widget-texto{margin:0;font:400 16px/1.7 var(--wb-f-texto);text-align:justify;overflow-wrap:anywhere;color:var(--wb-texto)}
+.wb-contenido-buscar-campo{position:relative}
+.wb-contenido-buscar-campo input{display:block;width:100%;min-height:36px;padding:6px 44px 6px 10px;border:1px solid var(--wb-linea-fuerte);border-radius:0;background:transparent;color:var(--wb-texto);font:400 15px/1.4 var(--wb-f-texto);-webkit-appearance:none;appearance:none}
+.wb-contenido-buscar-campo input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.wb-contenido-buscar-campo input:focus-visible{outline:2px solid var(--wb-lima);outline-offset:1px;border-color:var(--wb-lima)}
+.wb-contenido-buscar-campo button{position:absolute;top:0;right:0;bottom:0;display:grid;place-items:center;width:40px;padding:0;border:0;background:none;color:var(--wb-texto-suave);cursor:pointer}
+.wb-contenido-buscar-campo button:focus-visible{outline:2px solid var(--wb-lima);outline-offset:-2px;color:var(--wb-lima)}
+@media(hover:hover) and (pointer:fine){.wb-contenido-buscar-campo button:hover{color:var(--wb-lima)}}
+.wb-contenido-buscar-resultados{margin:12px 0 0;font:400 14px/1.5 var(--wb-f-texto);color:var(--wb-texto-suave)}
+.wb-contenido-buscar-resultados ul{margin:8px 0 0;padding:0;list-style:none}
+.wb-contenido-buscar-resultados li{margin:0 0 6px}
+.wb-contenido-buscar-resultados a{color:var(--wb-lima);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.wb-contenido-buscar-resultados a:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+
+/* ---------- Política de privacidad: justified text, bold text-face headings (official p > strong 25 / 20 px) ---------- */
+.wb-contenido-politica{padding:100px 0 98px}
+.wb-contenido.wb-contenido-politica-texto{text-align:justify}
+.wb-contenido.wb-contenido-politica-texto p{margin:0 0 12px}
+.wb-contenido.wb-contenido-politica-texto :is(h2,h3){font-family:var(--wb-f-texto);font-weight:700;letter-spacing:0;line-height:1.36;text-transform:none;color:var(--wb-texto)}
+.wb-contenido.wb-contenido-politica-texto h2{margin:0 0 51px;font-size:25px;text-align:left}
+.wb-contenido.wb-contenido-politica-texto h3{margin:52px 0 12px;font-size:20px}
+
+/* ---------- Official entrance animations at the top of the page (WPBakery fadeIn, Ultimate fadeInUp) ---------- */
+@keyframes wb-contenido-aparece{from{opacity:0}to{opacity:1}}
+@keyframes wb-contenido-sube{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){
+  html:not([data-tony-effects=off]) .wb-contenido-tp .wb-titulo-pagina-h{animation:wb-contenido-sube 900ms var(--tc-ease) both}
+  html:not([data-tony-effects=off]) .wb-contenido-aparece{animation:wb-contenido-aparece 1s ease both}
+}

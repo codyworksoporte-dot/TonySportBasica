@@ -4,8 +4,10 @@
  */
 import { siteAsset } from '@/lib/asset-path';
 const bootTexture = siteAsset('/assets/escamas-tony-base.webp');
+// Published site prefix ('' in development), so the curtain also recognises the exported home page.
+const homeBase = process.env.TONY_ASSET_BASE || '';
 const bootstrap = `(() => {
-  if (!['/', '/TonySport', '/TonySport/'].includes(location.pathname)) return;
+  if (!['/', ${JSON.stringify(homeBase)}, ${JSON.stringify(`${homeBase}/`)}].includes(location.pathname)) return;
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   let seen = false;
   try { seen = sessionStorage.getItem('tony:intro:v2') === 'seen'; } catch {}

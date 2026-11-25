@@ -1,7 +1,8 @@
-# Esta carpeta (web básica, el espejo del sitio oficial) todavía no está conectada a ningún repositorio
-# (no tiene repositorio remoto en GitHub), así que este flujo aún no se ejecuta. Al conectarla, la exportación
-# usa el prefijo /TonySportBasica, o el valor de TONY_PAGES_BASE si se define (ver docs/WEB-BASICA.md).
-name: Publicar Tony Sportswear
+# Web básica (espejo de tonysportselsalvador.com): repositorio codyworksoporte-dot/TonySportBasica.
+# Cada subida a main publica https://codyworksoporte-dot.github.io/TonySportBasica/ (prefijo /TonySportBasica,
+# o el valor de TONY_PAGES_BASE si se define; ver docs/WEB-BASICA.md). El envío de pedidos queda sin conectar
+# a propósito: NEXT_PUBLIC_TONY_API_BASE no está definido en este repositorio.
+name: Publicar web básica Tony Sportswear
 
 on:
   push:

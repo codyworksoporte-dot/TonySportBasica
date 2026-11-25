@@ -19,7 +19,8 @@ export default function LogoEspejo() {
     // Mount the intro before changing routes, so the page never flashes first.
     flushSync(() => window.dispatchEvent(new Event('tony:intro-replay')));
     router.push('/');
-    if (['/', '/TonySport', '/TonySport/'].includes(window.location.pathname)) window.scrollTo({ top: 0, behavior: 'instant' });
+    const base = process.env.TONY_ASSET_BASE || '';
+    if (['/', base, `${base}/`].includes(window.location.pathname)) window.scrollTo({ top: 0, behavior: 'instant' });
   }}>
     <img className="wb-logo-img" src={pequeno} srcSet={`${pequeno} 480w, ${grande} 1200w`} sizes="(max-width: 1018px) 70px, 163px" width={480} height={432} alt="TONY SPORTSWEAR EL SALVADOR" fetchPriority="high" decoding="async"/>
   </Link>;
