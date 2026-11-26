@@ -3,29 +3,11 @@
  * referencia-oficial/principales/inicio (outline-desktop.json at 1440 px, outline-mobile.json at 390 px).
  */
 
-/* Slider: the official «Mas diseños» button of the third slide (its only HTML layer), drawn as our lime
-   button over that slide's link. From 768 px only: on phones the official layer falls outside the slide. */
-@media(min-width:768px){
-  .wb-inicio-carrusel .wb-carrusel-enlace[href*="/categoria/camisa-full-sublimada-y-calzoneta-full-sublimada-personalizados"]::after{
-    content:'Mas diseños';
-    content:'Mas diseños' / '';
-    position:absolute;left:50%;bottom:44px;
-    display:inline-flex;align-items:center;min-height:44px;padding:0 42px 0 18px;
-    transform:translateX(-50%);
-    font:700 14px/1 var(--wb-f-texto);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
-    color:var(--wb-sobre-lima);
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b120d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E") no-repeat right 15px center/18px 18px,linear-gradient(to top,rgb(46 86 12 / .5) 0 3px,transparent 3px),linear-gradient(115deg,#ecffb0 0%,#c6ff55 45%,#9bf02e 100%);
-    clip-path:polygon(var(--tc-cut) 0,100% 0,100% calc(100% - var(--tc-cut)),calc(100% - var(--tc-cut)) 100%,0 100%,0 var(--tc-cut));
-    transition:filter 220ms ease;
-  }
-}
-@media(min-width:768px) and (hover:hover) and (pointer:fine){
-  .wb-inicio-carrusel .wb-carrusel-enlace[href*="/categoria/camisa-full-sublimada-y-calzoneta-full-sublimada-personalizados"]:hover::after{filter:brightness(1.06) drop-shadow(0 10px 18px rgb(0 0 0 / .35))}
-}
+/* Slider: the official «Mas diseños» button of the third slide (its only HTML layer) is our lime button.
+   Phones do not show it: there the official layer falls outside the slide. */
+@media(max-width:767px){.wb-inicio-carrusel .wb-carrusel-boton{display:none}}
 /* From 1240 px (the official top level) the layer sits at y 560 of 637, centred 8 px to the left. */
-@media(min-width:1240px){
-  .wb-inicio-carrusel .wb-carrusel-enlace[href*="/categoria/camisa-full-sublimada-y-calzoneta-full-sublimada-personalizados"]::after{bottom:33px;transform:translateX(calc(-50% - 8px))}
-}
+@media(min-width:1240px){.wb-inicio-carrusel .wb-carrusel-boton{bottom:33px;translate:calc(-50% - 8px) 0}}
 
 /* Navigation like the official slider: arrows only, no bullets (19 dots covered the bottom of every slide, in two
    rows on phones). The pause button stays for autoplay, tucked in the bottom-right corner. */

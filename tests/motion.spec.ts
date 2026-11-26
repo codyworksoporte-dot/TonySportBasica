@@ -27,22 +27,16 @@ async function clickCentre(page: Page, link: Locator) {
 // A first visit to a section can make the dev server compile it.
 const NAVIGATION = { timeout: 20_000 };
 
-test('el logo abre la intro inmediatamente y vuelve a Inicio desde una página interna', async ({ page }) => {
+test('el logo es un enlace simple que vuelve a Inicio desde una página interna sin repetir la intro', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await ready(page, '/contacto');
-  const logo = homeLogo(page);
-  await logo.click();
-  await expect(page.locator('.lagarto-intro[open]')).toBeVisible();
+  await homeLogo(page).click();
   await expect(page).toHaveURL(/\/$/, NAVIGATION);
-  await expect(page.locator('.lagarto-intro .lagarto-head--reference')).toHaveCount(1);
-  // The intro's mark is the only one on the page with the reference face.
-  await expect(page.locator('.lagarto-head--reference')).toHaveCount(1);
-  await page.keyboard.press('Escape');
+  await expect(page.locator('main h1').first()).toBeVisible();
+  // Like the official logo it only navigates: the entrance already played once this session.
   await expect(page.locator('.lagarto-intro')).toHaveCount(0);
+  await expect(page.locator('.route-transition')).toHaveAttribute('data-phase', 'idle', { timeout: 10000 });
   await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
-  await logo.click();
-  await expect(page.locator('.lagarto-intro[open]')).toBeVisible();
-  await page.getByRole('button', { name: 'Saltar intro', exact: true }).click();
 });
 
 test('al cambiar de apartado Tony se acerca, guiña y deja pasar sin bloquear clics', async ({ page }) => {
@@ -75,10 +69,11 @@ test('al cambiar de apartado Tony se acerca, guiña y deja pasar sin bloquear cl
   await expect(page).toHaveURL(/\/promociones$/, NAVIGATION);
   await expect.poll(phases, { timeout: 10000 }).toBe('cover wink reveal idle cover wink reveal idle');
   await expect(page.locator('html')).not.toHaveAttribute('data-route-cover', /.*/);
-  // The logo opens the intro instead of the section wink.
-  await homeLogo(page).click();
-  await expect(page.locator('.lagarto-intro[open]')).toBeVisible();
-  expect(await phases()).toBe('cover wink reveal idle cover wink reveal idle');
+  // The logo is a plain link home: the same section change, never the intro.
+  await clickCentre(page, homeLogo(page));
+  await expect(page).toHaveURL(/\/$/, NAVIGATION);
+  await expect.poll(phases, { timeout: 10000 }).toBe('cover wink reveal idle cover wink reveal idle cover wink reveal idle');
+  await expect(page.locator('.lagarto-intro')).toHaveCount(0);
 });
 
 test('el título del apartado que llega espera bajo las escamas y sube cuando se abren', async ({ page }) => {

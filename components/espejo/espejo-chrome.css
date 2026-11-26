@@ -236,7 +236,11 @@ body{top:0!important}
 
 /* ---------- Inner-page title band ---------- */
 .wb-titulo-pagina{position:relative;isolation:isolate;display:flex;align-items:center;min-height:var(--wb-tp-alto,274px);padding:40px 0;background-color:var(--wb-negro);background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff;text-align:center}
-.wb-titulo-pagina::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgb(3 7 5 / .42),rgb(3 7 5 / .62));pointer-events:none}
+/* Flat 40 % black veil, as the official overlay pattern (01.png: rgba(0,0,0,.5) at 80 % opacity). With the
+   mirrored pattern the span draws it instead, so the veil is never doubled. */
+.wb-titulo-pagina::before{content:'';position:absolute;inset:0;z-index:-1;background:rgb(0 0 0 / .4);pointer-events:none}
+.wb-titulo-pagina--patron::before{content:none}
+.wb-titulo-pagina-patron{position:absolute;inset:0;z-index:-1;opacity:.8;background-repeat:repeat;background-size:2px 2px;image-rendering:pixelated;pointer-events:none}
 .wb-titulo-pagina--sin-foto{background-size:420px;background-repeat:repeat}
 .wb-titulo-pagina--sin-foto::before{background:linear-gradient(115deg,rgb(9 22 14 / .86),rgb(5 10 7 / .9))}
 .wb-titulo-pagina-in{display:flex;flex-direction:column;align-items:center}

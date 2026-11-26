@@ -4,7 +4,7 @@
  * 16/27.2 justified with 12 px between them) in our colours and type. Prefix wb-pedido-app-.
  */
 /* The mirror header ends where the official one does (500 px, 124 on phones): content starts right there. */
-.wb-pedido-app{display:flex;flex-direction:column;gap:35px;padding:0 0 35px;background:var(--wb-fondo);color:var(--wb-texto)}
+.wb-pedido-app{display:flex;flex-direction:column;gap:35px;padding:0 0 35px;color:var(--wb-texto)}
 
 /* wpb_text_column */
 .wb-pedido-app-bloque{margin:0 0 35px}
@@ -35,4 +35,4 @@
 .wb-pedido-app-espaciado{display:block;height:50px}
 
 /* Pages whose WordPress content is empty: the official shows a blank body 596 px tall (1440 and 390). */
-.wb-pedido-app-vacia{min-height:596px;background:var(--wb-fondo)}
+.wb-pedido-app-vacia{min-height:596px}

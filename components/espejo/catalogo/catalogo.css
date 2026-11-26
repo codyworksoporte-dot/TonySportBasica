@@ -4,8 +4,8 @@
  * are ours. The loop cards reuse the base .wb-productos / .wb-producto classes.
  */
 
-/* Official teal page -> our dark background (like Fila fondo 'oscuro'). */
-.wb-catalogo,.wb-ficha{background:var(--wb-fondo);color:var(--wb-texto)}
+/* The flat page colour comes from app/espejo.css. */
+.wb-catalogo,.wb-ficha{color:var(--wb-texto)}
 
 /* ---------- Archive layout: 891 px shop column + 257 px sidebar (52 px apart) ---------- */
 .wb-catalogo{padding:57px 0 70px}

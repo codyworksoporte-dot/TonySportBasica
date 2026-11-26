@@ -17,49 +17,55 @@ type MirrorPage = {path: string; title: string; visible: boolean; ready: boolean
 
 const PAGES: MirrorPage[] = [
   // The 13 entries of the official menu.
-  {path: '/', title: 'BIENVENIDO A TONY SPORTSWEAR EL SALVADOR', visible: true, ready: false},
-  {path: '/crea-tu-pedido', title: 'CREÁ TU PEDIDO', visible: true, ready: false}, // inside «¡CREÁ TU PEDIDO A TU MANERA!»
-  {path: '/app-tony', title: 'DESCARGA NUESTRA APP Y GANA PREMIOS CON TONY', visible: true, ready: false},
-  {path: '/tienda-en-linea', title: 'TIENDA EN LINEA', visible: false, ready: false},
+  {path: '/', title: 'BIENVENIDO A TONY SPORTSWEAR EL SALVADOR', visible: true, ready: true},
+  {path: '/crea-tu-pedido', title: 'CREÁ TU PEDIDO', visible: true, ready: true}, // inside «¡CREÁ TU PEDIDO A TU MANERA!»
+  {path: '/app-tony', title: 'DESCARGA NUESTRA APP Y GANA PREMIOS CON TONY', visible: true, ready: true},
+  {path: '/tienda-en-linea', title: 'TIENDA EN LINEA', visible: false, ready: true},
   // Official path of the menu's «Productos». /producto is a placeholder a builder may turn into it: update `path` then.
-  {path: '/productos3', title: 'CONFECCIÓN DE UNIFORMES DE FUTBOL', visible: true, ready: false},
-  {path: '/promociones', title: 'Promociones', visible: false, ready: false},
-  {path: '/patrocinadores', title: 'TONY SPORTSWEAR NOS COMPLACE SER OFICIALMENTE PATROCINADORES DE CUATRO EQUIPOS DE LA PRIMERA DIVISIÓN DE EL SALVADOR', visible: true, ready: false},
-  {path: '/nuestras-tiendas', title: 'NUESTRAS TIENDAS', visible: true, ready: false},
-  {path: '/nuestra-calidad', title: 'LÍNEAS DE TELA', visible: true, ready: false},
-  {path: '/servicio-a-domicilio', title: 'SERVICIO A DOMICILIO', visible: true, ready: false},
-  {path: '/contacto', title: 'CONTACTO', visible: true, ready: false},
-  {path: '/tony-news', title: 'Tony News', visible: false, ready: false},
-  {path: '/categoria/rse-tony', title: 'RSE-TONY', visible: false, ready: false},
-  // Other official pages (the «Index of» ones — implementos-deportivos, galeria, mi-cuenta, eventos — are broken
-  // on the official site and are not mirrored; /carrito is the protected cart).
-  {path: '/subliminado', title: 'CONFECCIÓN UNIFORMES DE FUTBOL', visible: true, ready: false},
-  {path: '/replica', title: 'REPLICAS', visible: true, ready: false},
-  {path: '/tipo-de-sublimando', title: 'TIPOS DE PERSONALIZADO CAMISAS', visible: true, ready: false},
-  {path: '/quienes-somos', title: 'QUIÉNES SOMOS', visible: true, ready: false},
-  {path: '/proyectos', title: 'PROYECTOS', visible: true, ready: false},
-  {path: '/como-comprar', title: 'CÓMO COMPRAR', visible: true, ready: false},
-  {path: '/politica-de-privacidad', title: 'POLÍTICA DE PRIVACIDAD', visible: true, ready: false},
-  {path: '/productos', title: 'Productos', visible: false, ready: false},
-  {path: '/productos/confeccion-de-uniformes-personalizados', title: 'CAMISA + CALZONETA + NÚMERO + MEDIAS', visible: true, ready: false},
-  {path: '/uniformes-bkb', title: 'UNIFORME BKB FULL SUBLIMADO', visible: true, ready: false},
-  {path: '/copa-tony-sportswear', title: 'EQUIPOS PARTICIPANTES', visible: true, ready: false},
-  {path: '/blog', title: 'Blog', visible: false, ready: false},
-  {path: '/catalogo', title: 'CATÁLOGO', visible: true, ready: false},
-  {path: '/paquetes', title: 'PAQUETES', visible: true, ready: false},
-  {path: '/testimoniales-productos', title: 'Testimoniales (productos)', visible: false, ready: false},
-  {path: '/premios-app', title: 'Premios App', visible: false, ready: false},
-  {path: '/app-tony/descarga-nuestra-app', title: 'DESCARGA NUESTRA APP', visible: false, ready: false},
-  {path: '/tienda-en-linea/street-wear', title: 'Street Wear', visible: false, ready: false},
-  {path: '/tienda-en-linea/camisas-venta-individual', title: 'Camisas venta individual', visible: false, ready: false},
+  {path: '/productos3', title: 'CONFECCIÓN DE UNIFORMES DE FUTBOL', visible: true, ready: true},
+  {path: '/promociones', title: 'Promociones', visible: false, ready: true},
+  {path: '/patrocinadores', title: 'TONY SPORTSWEAR NOS COMPLACE SER OFICIALMENTE PATROCINADORES DE CUATRO EQUIPOS DE LA PRIMERA DIVISIÓN DE EL SALVADOR', visible: true, ready: true},
+  {path: '/nuestras-tiendas', title: 'NUESTRAS TIENDAS', visible: true, ready: true},
+  {path: '/nuestra-calidad', title: 'LÍNEAS DE TELA', visible: true, ready: true},
+  {path: '/servicio-a-domicilio', title: 'SERVICIO A DOMICILIO', visible: true, ready: true},
+  {path: '/contacto', title: 'CONTACTO', visible: true, ready: true},
+  {path: '/tony-news', title: 'Tony News', visible: false, ready: true},
+  {path: '/categoria/rse-tony', title: 'RSE-TONY', visible: false, ready: true},
+  // Other official pages (/carrito is the protected cart). The official implementos-deportivos, galeria, mi-cuenta
+  // and eventos answer with an Apache «Index of» listing: the mirror shows their WordPress page instead.
+  {path: '/subliminado', title: 'CONFECCIÓN UNIFORMES DE FUTBOL', visible: true, ready: true},
+  {path: '/replica', title: 'REPLICAS', visible: true, ready: true},
+  {path: '/tipo-de-sublimando', title: 'TIPOS DE PERSONALIZADO CAMISAS', visible: true, ready: true},
+  {path: '/quienes-somos', title: 'QUIÉNES SOMOS', visible: true, ready: true},
+  {path: '/proyectos', title: 'PROYECTOS', visible: true, ready: true},
+  {path: '/como-comprar', title: 'CÓMO COMPRAR', visible: true, ready: true},
+  {path: '/politica-de-privacidad', title: 'POLÍTICA DE PRIVACIDAD', visible: true, ready: true},
+  {path: '/productos', title: 'Productos', visible: false, ready: true},
+  {path: '/productos/confeccion-de-uniformes-personalizados', title: 'CAMISA + CALZONETA + NÚMERO + MEDIAS', visible: true, ready: true},
+  {path: '/uniformes-bkb', title: 'UNIFORME BKB FULL SUBLIMADO', visible: true, ready: true},
+  {path: '/copa-tony-sportswear', title: 'EQUIPOS PARTICIPANTES', visible: true, ready: true},
+  {path: '/blog', title: 'Blog', visible: false, ready: true},
+  {path: '/catalogo', title: 'CATÁLOGO', visible: true, ready: true},
+  {path: '/paquetes', title: 'PAQUETES', visible: true, ready: true},
+  {path: '/testimoniales-productos', title: 'Testimoniales (productos)', visible: false, ready: true},
+  {path: '/premios-app', title: 'Premios App', visible: false, ready: true},
+  {path: '/app-tony/descarga-nuestra-app', title: 'DESCARGA NUESTRA APP', visible: false, ready: true},
+  {path: '/tienda-en-linea/street-wear', title: 'Street Wear', visible: false, ready: true},
+  {path: '/tienda-en-linea/camisas-venta-individual', title: 'Camisas venta individual', visible: false, ready: true},
+  {path: '/implementos-deportivos', title: 'Implementos Deportivos', visible: false, ready: true},
+  {path: '/galeria', title: 'GALERÍA', visible: true, ready: true},
+  {path: '/mi-cuenta', title: 'Mi cuenta', visible: false, ready: true},
+  {path: '/eventos', title: 'EVENTOS', visible: true, ready: true},
   // Templates: WooCommerce categories and products (dynamic routes with generateStaticParams).
-  {path: '/categoria/implementos-deportivos', title: 'Implementos Deportivos', visible: false, ready: false},
-  {path: '/categoria/camisas-individuales/page/2', title: 'Camisas individuales', visible: false, ready: false},
-  {path: '/categoria/uniformes-de-voleibol', title: 'Uniformes de Voleibol', visible: false, ready: false},
-  {path: '/producto/38313', title: 'CLIC AQUI PARA VER CATALOGO DE REPLICAS 001', visible: true, ready: false},
-  {path: '/producto/milan-premier-futsal-no4', title: 'MILAN PREMIER FUTSAL Nº4', visible: true, ready: false},
-  {path: '/producto/camisas-linea-premium', title: 'CAMISAS LINEA PREMIUM', visible: true, ready: false},
-  {path: '/producto/click-aca-para-ver-el-album-013-de-uniformes-camiseta-full-sublimado-y-full-sublimado-calzoneta', title: 'CLICK ACA PARA VER EL ALBÙM 011 DE UNIFORMES CAMISETA FULL SUBLIMADO Y FULL SUBLIMADO CALZONETA', visible: true, ready: false},
+  {path: '/categoria/implementos-deportivos', title: 'Implementos Deportivos', visible: false, ready: true},
+  {path: '/categoria/camisas-individuales/page/2', title: 'Camisas individuales', visible: false, ready: true},
+  {path: '/categoria/uniformes-de-voleibol', title: 'Uniformes de Voleibol', visible: false, ready: true},
+  // Empty official category the menu links (the Store API hides it): the empty archive, never a 404.
+  {path: '/categoria/camisa-full-sublimada', title: 'Camisas Full Sublimadas', visible: false, ready: true},
+  {path: '/producto/38313', title: 'CLIC AQUI PARA VER CATALOGO DE REPLICAS 001', visible: true, ready: true},
+  {path: '/producto/milan-premier-futsal-no4', title: 'MILAN PREMIER FUTSAL Nº4', visible: true, ready: true},
+  {path: '/producto/camisas-linea-premium', title: 'CAMISAS LINEA PREMIUM', visible: true, ready: true},
+  {path: '/producto/click-aca-para-ver-el-album-013-de-uniformes-camiseta-full-sublimado-y-full-sublimado-calzoneta', title: 'CLICK ACA PARA VER EL ALBÙM 011 DE UNIFORMES CAMISETA FULL SUBLIMADO Y FULL SUBLIMADO CALZONETA', visible: true, ready: true},
 ];
 
 // Shared chrome of the mirror (components/espejo: Cabecera, Pie, WhatsAppFlotante), built apart from the pages.
@@ -179,6 +185,19 @@ test.describe('cabecera, pie y burbuja', () => {
     expect(stack[1]!.y).toBeLessThan(stack[2]!.y);
   });
 
+  test('el selector de categorías del pie marca la categoría actual y muestra su flecha', async ({page}) => {
+    pendingUnless(CHROME_READY.footer, 'pie');
+    const select = page.locator('#wb-pie-categorias');
+    await page.goto('/categoria/implementos-deportivos');
+    await expect(select).toHaveValue('implementos-deportivos');
+    expect(await select.evaluate(element => getComputedStyle(element).backgroundImage)).toContain('svg');
+    // On a product page, its first category (as the official widget does).
+    await page.goto('/producto/camisas-polos-lisas');
+    await expect(select).toHaveValue('camisas-empresariales');
+    await page.goto('/contacto');
+    await expect(select).toHaveValue('');
+  });
+
   for (const viewport of [{width: 1440, height: 900}, {width: 390, height: 844}]) {
     test(`la burbuja de WhatsApp enlaza a wa.me/50370155571 (${viewport.width}px)`, async ({page}) => {
       pendingUnless(CHROME_READY.whatsapp, 'burbuja de WhatsApp');
@@ -224,6 +243,9 @@ test.describe('lo que se conserva', () => {
       const response = await page.goto(path);
       expect(response?.status(), path).toBe(404);
     }
+    // The official 404: the theme's closable warning, inside the mirror's header and footer.
+    await expect(page.getByRole('main').getByText('¡La página a la que intentas acceder no existe!', {exact: true})).toBeVisible();
+    await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 });
 

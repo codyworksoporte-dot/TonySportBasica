@@ -159,7 +159,7 @@ const PRODUCTOS: ProductoOficial[] = ((productosJson as unknown as { products: P
   };
 });
 
-const CATEGORIAS: CategoriaOficial[] = ((categoriasJson as unknown as { categories: CategoriaApi[] }).categories ?? []).map((c) => ({
+const aCategoria = (c: CategoriaApi): CategoriaOficial => ({
   id: c.id,
   slug: c.slug,
   nombre: decodificar(c.name),
@@ -168,18 +168,31 @@ const CATEGORIAS: CategoriaOficial[] = ((categoriasJson as unknown as { categori
   conteo: c.count ?? 0,
   imagen: aImagen(c.image),
   permalink: c.permalink ?? `https://www.tonysportselsalvador.com/categoria/${c.slug}/`,
-}));
+});
+
+const CATEGORIAS: CategoriaOficial[] = ((categoriasJson as unknown as { categories: CategoriaApi[] }).categories ?? []).map(aCategoria);
+
+/*
+ * Empty official categories: the Store API (like the official dropdown widgets) hides terms without products,
+ * but the menu links them and the official answers with the empty archive. They get a route, never a list entry.
+ */
+const VACIAS_API: CategoriaApi[] = [
+  // Productos › Camisas deportivas y tipo polo › Camisas Full Sublimadas (term 123, top level, no description).
+  { id: 123, name: 'Camisas Full Sublimadas', slug: 'camisa-full-sublimada', parent: 0, count: 0, description: '', image: null },
+];
+const CATEGORIAS_VACIAS: CategoriaOficial[] = VACIAS_API.filter((c) => !CATEGORIAS.some((x) => x.id === c.id || x.slug === c.slug)).map(aCategoria);
+const CATEGORIAS_CON_RUTA = [...CATEGORIAS, ...CATEGORIAS_VACIAS];
 
 const PRODUCTO_POR_SLUG = new Map(PRODUCTOS.map((p) => [p.slug, p]));
 const PRODUCTO_POR_ID = new Map(PRODUCTOS.map((p) => [p.id, p]));
-const CATEGORIA_POR_SLUG = new Map(CATEGORIAS.map((c) => [c.slug, c]));
-const CATEGORIA_POR_RUTA = new Map(CATEGORIAS.map((c) => [rutaDePermalink(c.permalink), c]));
+const CATEGORIA_POR_SLUG = new Map(CATEGORIAS_CON_RUTA.map((c) => [c.slug, c]));
+const CATEGORIA_POR_RUTA = new Map(CATEGORIAS_CON_RUTA.map((c) => [rutaDePermalink(c.permalink), c]));
 
 // ---------------------------------------------------------------------------
 // Products and categories
 // ---------------------------------------------------------------------------
 
-/** All 242 official products, newest first (official default order). */
+/** All official products (241 in the Store API snapshot), newest first (official default order). */
 export function productos(): ProductoOficial[] {
   return PRODUCTOS.slice();
 }
@@ -199,11 +212,12 @@ export function productoPorId(id: number): ProductoOficial | null {
   return PRODUCTO_POR_ID.get(Number(id)) ?? null;
 }
 
-/** All 51 official categories (Store API order, alphabetical by name). */
+/** The 51 official categories with products (Store API order, alphabetical by name), as the widgets list them. */
 export function categorias(): CategoriaOficial[] {
   return CATEGORIAS.slice();
 }
 
+/** Category by slug, the empty ones that only have a route included. */
 export function categoria(slug: string): CategoriaOficial | null {
   return CATEGORIA_POR_SLUG.get(String(slug ?? '').replace(/^\/+|\/+$/g, '')) ?? null;
 }
@@ -245,12 +259,12 @@ export function paginar<T>(lista: readonly T[], pagina = 1): Paginacion<T> {
   return { items, pagina: actual, totalPaginas, total, desde: items.length ? inicio + 1 : 0, hasta: inicio + items.length };
 }
 
-/** WooCommerce result count text: "Mostrando 1–12 de 47 resultados", "Mostrando los 7 resultados", "Mostrando el único resultado". */
+/** Result count exactly as the official prints it: "Mostrando 1–12 de 47 resultados", "Mostrando todos los resultados 7", "Mostrando el único resultado". */
 export function textoResultados(paginacion: Pick<Paginacion<unknown>, 'total' | 'desde' | 'hasta' | 'totalPaginas'>): string {
   const { total, desde, hasta, totalPaginas } = paginacion;
   if (total === 0) return 'No se encontraron productos que concuerden con la selección.';
   if (total === 1) return 'Mostrando el único resultado';
-  if (totalPaginas <= 1) return `Mostrando los ${total} resultados`;
+  if (totalPaginas <= 1) return `Mostrando todos los resultados ${total}`;
   return `Mostrando ${desde}–${hasta} de ${total} resultados`;
 }
 
@@ -386,9 +400,9 @@ export function slugsDeProductos(): string[] {
   return PRODUCTOS.map((p) => p.slug);
 }
 
-/** Every category archive page (page 1 and /page/<n>/), for generateStaticParams. */
+/** Every category archive page (page 1 and /page/<n>/; empty categories get their page 1), for generateStaticParams. */
 export function paginasDeCategorias(): { slug: string; pagina: number; ruta: string }[] {
-  return CATEGORIAS.flatMap((c) => {
+  return CATEGORIAS_CON_RUTA.flatMap((c) => {
     const total = paginar(productosDeCategoria(c.slug)).totalPaginas;
     return Array.from({ length: total }, (_, i) => ({ slug: c.slug, pagina: i + 1, ruta: rutaCategoria(c, i + 1) }));
   });

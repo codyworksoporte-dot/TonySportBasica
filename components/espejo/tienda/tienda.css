@@ -5,8 +5,6 @@
  * uses the category archive styles of components/espejo/catalogo/catalogo.css).
  */
 
-/* Official plain page background (teal -> our dark), so the body's scale texture does not show through. */
-.wb-tel,.wb-tienda-vacia,.wb-productos3,.wb-pagina-catalogo{background:var(--wb-fondo)}
 /* Official content area: at least 596 px between header and footer on short pages. */
 .wb-tienda-vacia,.wb-tel{min-height:596px}
 

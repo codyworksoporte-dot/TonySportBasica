@@ -43,7 +43,7 @@ export default function ServicioADomicilioPage() {
           <div className="wb-tiendas-contacto-texto wb-justificado">
             <p><strong>Para realizar tu pedido solo tienes que:</strong></p>
             <p>1.- Ver nuestro video del servicio a domicilio en esta web</p>
-            <p>2.- Agregarnos a nuestro WhatsApp <em><a className="wb-tiendas-contacto-enlace" href="https://api.whatsapp.com/send?phone=50370155571">7015-5571</a></em></p>
+            <p>2.- Agregarnos a nuestro WhatsApp <em><a className="wb-tiendas-contacto-enlace" href="https://wa.me/50370155571">7015-5571</a></em></p>
             <p>3.- Contactarnos y explicarnos que diseño te interesa más</p>
             <p>4.- Uno de nuestros asesores de ventas te atenderá en el momento</p>
             <p>5.- Estamos para servirte</p>

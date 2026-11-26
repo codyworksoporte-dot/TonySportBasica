@@ -19,7 +19,7 @@ type Dato = { titulo: string; icono: ReactNode; texto: string; href: string; nue
 
 // "Datos de Contacto" in the official order; the official colour icons become ours (lime bevelled tiles).
 const DATOS: Dato[] = [
-  { titulo: 'Cel/WhatsApp', icono: <IconoEspejo nombre="whatsapp-solid"/>, texto: '7015-5571', href: 'https://api.whatsapp.com/send?phone=50370155571', nueva: true },
+  { titulo: 'Cel/WhatsApp', icono: <IconoEspejo nombre="whatsapp-solid"/>, texto: '7015-5571', href: 'https://wa.me/50370155571', nueva: true },
   { titulo: 'Facebook', icono: <IconoEspejo nombre="facebook"/>, texto: 'Tony Sportswear', href: 'https://www.facebook.com/profile.php?id=100085923971490' },
   { titulo: 'Instagram', icono: <IconoEspejo nombre="instagram"/>, texto: 'Tony Sportswear', href: 'https://www.instagram.com/tonysportwear/' },
   { titulo: 'E-mail', icono: <IconoEspejo nombre="correo"/>, texto: 'info@tonysportselsalvador.com', href: 'mailto:info@tonysportselsalvador.com' },

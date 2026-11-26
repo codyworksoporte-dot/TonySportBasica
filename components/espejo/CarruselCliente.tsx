@@ -13,7 +13,16 @@ import Icon from '@/components/Icon';
 import IconoEspejo from './Iconos';
 import './espejo-componentes.css';
 
-export type DiapositivaResuelta = { src: string | null; w?: number; h?: number; alt: string; href?: string; externo?: boolean; original: string };
+export type DiapositivaResuelta = { src: string | null; w?: number; h?: number; alt: string; href?: string; externo?: boolean; original: string; boton?: { texto: string; href: string; externo: boolean } };
+
+/** HTML layer of a slide: one of our lime buttons (the official layer is a button too). */
+function BotonDiapositiva({ boton }: { boton: NonNullable<DiapositivaResuelta['boton']> }) {
+  const clases = 'tc-btn tc-btn--lime tc-btn--sm wb-boton wb-boton--mayus wb-carrusel-boton';
+  const contenido = <>{boton.texto}<Icon name="right" className="wb-boton-flecha"/></>;
+  return boton.externo
+    ? <a className={clases} href={boton.href} target="_blank" rel="noopener noreferrer">{contenido}<span className="tc-sr"> (se abre en otra pestaña)</span></a>
+    : <Link className={clases} href={boton.href} prefetch={false}>{contenido}</Link>;
+}
 type Props = {
   slides: DiapositivaResuelta[];
   alturas: { xs: string; sm: string; md: string; lg: string };
@@ -105,6 +114,7 @@ export default function CarruselCliente({ slides, alturas, intervalo, etiqueta, 
               ? <a className="wb-carrusel-enlace" href={slide.href} target="_blank" rel="noopener noreferrer">{media}</a>
               : <Link className="wb-carrusel-enlace" href={slide.href} prefetch={false}>{media}</Link>
             : media}
+          {slide.boton && <BotonDiapositiva boton={slide.boton}/>}
         </div>;
       })}
     </div>

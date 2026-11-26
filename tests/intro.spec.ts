@@ -33,23 +33,26 @@ test('la primera pantalla queda cubierta antes de hidratar aunque el JavaScript 
   await expect(page.locator('body')).not.toHaveCSS('overflow','hidden');
 });
 
-test('la entrada del lagarto se reproduce una vez por sesión y se puede repetir',async({page})=>{
+test('la entrada del lagarto se reproduce una vez por sesión y el logo es un enlace simple',async({page})=>{
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const skip=page.getByRole('button',{name:'Saltar intro',exact:true});
   await expect(skip).toBeVisible();
-  await expect(skip).toBeHidden({timeout:8000});
+  await page.keyboard.press('Escape');
+  await expect(skip).toBeHidden();
   await page.reload({waitUntil:'domcontentloaded'});
   await expect(page.locator('main h1').first()).toBeVisible();
   await expect(skip).toBeHidden();
-  await page.getByRole('button',{name:'Repetir entrada del lagarto',exact:true}).click();
-  await expect(skip).toBeVisible();
-  await page.keyboard.press('Escape');
-  await expect(skip).toBeHidden();
+  // Like the official header there is no replay control: the logo is a plain link to the home page.
+  await expect(page.getByRole('button',{name:'Repetir entrada del lagarto',exact:true})).toBeHidden();
   // The page is usable right after: the header menu takes you to another section.
   await expect(page.locator('body')).not.toHaveCSS('overflow','hidden');
   await menuLink(page,/^Tony News/).click();
   await expect(page).toHaveURL(/\/tony-news\/?$/,{timeout:20000});
+  await page.getByRole('banner').locator('a[rel="home"]').click();
+  await expect.poll(()=>new URL(page.url()).pathname,{timeout:20000}).toBe('/');
+  await expect(page.locator('main h1').first()).toBeVisible();
+  await expect(skip).toBeHidden();
 });
 
 test('móvil permite usar la página inmediatamente sin esperar la intro',async({page})=>{
@@ -90,7 +93,6 @@ test('el escudo mantiene el nombre aunque falle la imagen del logo',async({page}
 });
 
 test('el escudo de la intro muestra el logo también cuando la imagen ya está en caché',async({page})=>{
-  // The home no longer renders the emblem: it only lives in the intro, so the cached logo is met on a replay.
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const intro=page.locator('.lagarto-intro');
@@ -98,8 +100,10 @@ test('el escudo de la intro muestra el logo también cuando la imagen ya está e
   await expect(logo).toHaveAttribute('data-wordmark-status','loaded');
   await page.getByRole('button',{name:'Saltar intro',exact:true}).click();
   await expect(intro).toHaveCount(0);
-  // Second entrance: the logo now comes from the cache and must still count as drawn, never as the fallback.
-  await page.getByRole('button',{name:'Repetir entrada del lagarto',exact:true}).click();
+  // A new session in the same browser: the entrance plays again with the logo from the cache, which must
+  // still count as drawn, never as the fallback.
+  await page.evaluate(()=>sessionStorage.removeItem('tony:intro:v2'));
+  await page.reload({waitUntil:'domcontentloaded'});
   await expect(intro).toBeVisible();
   await expect(logo).toHaveAttribute('data-wordmark-status','loaded');
   await expect(intro.locator('[data-wordmark-fallback]')).toHaveCount(0);

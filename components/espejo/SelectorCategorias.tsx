@@ -1,12 +1,15 @@
 'use client';
 /*
  * SelectorCategorias: the footer's "Elige una categoría" dropdown (WooCommerce product_cat widget).
- * Choosing with the mouse navigates to /categoria/<slug>/; with the keyboard, arrows only move and
- * Enter navigates, so browsing the list never leaves the page by accident.
+ * Like the official widget it shows the current category: the archive's own on /categoria/<slug>/, the
+ * product's first one on /producto/<slug>/ (both pages expose it as main[data-categoria]); elsewhere the
+ * placeholder. Choosing with the mouse navigates to /categoria/<slug>/; with the keyboard, arrows only move
+ * and Enter navigates, so browsing the list never leaves the page by accident. Choosing the current
+ * category does nothing.
  * Props: opciones ({ slug, nombre, nivel }[] in official order), placeholder, idTitulo (labelling heading).
  */
-import { useRouter } from 'next/navigation';
-import { useRef, type ChangeEvent, type KeyboardEvent } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 
 export type OpcionCategoria = { slug: string; nombre: string; nivel: number };
 type Props = { opciones: OpcionCategoria[]; placeholder: string; idTitulo: string };
@@ -15,8 +18,17 @@ const TECLAS_DE_NAVEGACION = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'Arro
 
 export default function SelectorCategorias({ opciones, placeholder, idTitulo }: Props) {
   const router = useRouter();
+  const ruta = usePathname();
   const conTeclado = useRef(false);
-  const ir = (slug: string) => { if (slug) router.push(`/categoria/${slug}/`); };
+  const [actual, setActual] = useState('');
+
+  // The footer lives in the layout, so the page tells it its category once it is on screen.
+  useEffect(() => {
+    const slug = document.querySelector<HTMLElement>('main[data-categoria]')?.dataset.categoria ?? '';
+    setActual(opciones.some(opcion => opcion.slug === slug) ? slug : '');
+  }, [ruta, opciones]);
+
+  const ir = (slug: string) => { if (slug && slug !== actual) router.push(`/categoria/${slug}/`); };
 
   function alCambiar(event: ChangeEvent<HTMLSelectElement>) {
     if (conTeclado.current) return;
@@ -28,11 +40,11 @@ export default function SelectorCategorias({ opciones, placeholder, idTitulo }: 
   }
 
   return <div className="wb-form wb-pie-selector">
-    <select id="wb-pie-categorias" name="product_cat" defaultValue="" aria-labelledby={idTitulo}
+    <select key={actual} id="wb-pie-categorias" name="product_cat" defaultValue={actual} aria-labelledby={idTitulo}
       onChange={alCambiar} onKeyDown={alPulsarTecla}
       onPointerDown={() => { conTeclado.current = false; }} onBlur={() => { conTeclado.current = false; }}>
       <option value="">{placeholder}</option>
-      {opciones.map(opcion => <option key={opcion.slug} value={opcion.slug}>{`${' '.repeat(opcion.nivel * 3)}${opcion.nombre}`}</option>)}
+      {opciones.map(opcion => <option key={opcion.slug} value={opcion.slug}>{`${' '.repeat(opcion.nivel * 3)}${opcion.nombre}`}</option>)}
     </select>
   </div>;
 }

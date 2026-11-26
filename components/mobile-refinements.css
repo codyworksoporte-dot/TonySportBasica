@@ -39,9 +39,9 @@
      size and prevent automatic input zoom on iOS. */
   main :is(select,textarea){font-size:16px!important}
   .pedido-modal,.pedido-catalog-preview{max-height:calc(100dvh - 24px);overscroll-behavior:contain}
-  .pedido-saved-tabs button,.te-zone-filters button{min-height:44px}
+  .pedido-saved-tabs button{min-height:44px}
   html:has(.pedido-modal[open],.pedido-catalog-preview[open],.catalog-gallery-dialog[open]){overflow:hidden}
-  .catalog-gallery-dialog-head,.pedido-catalog-preview .pedido-editor-heading{position:sticky;top:-1px;z-index:2;background:#101c13;padding:6px 0}
+  .pedido-catalog-preview .pedido-editor-heading{position:sticky;top:-1px;z-index:2;background:#101c13;padding:6px 0}
   .tony-scale-glow-layer,.tony-peek,.tony-scratch-stage{display:none}
   .button,.pedido-tool-button,.pedido-piece-button,.pedido-choice{touch-action:manipulation;-webkit-tap-highlight-color:#c4ed8030}
   .button:not(:disabled):active,.pedido-tool-button:not(:disabled):active,.pedido-piece-button:not(:disabled):active{filter:brightness(1.15)}

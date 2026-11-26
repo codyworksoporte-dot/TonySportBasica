@@ -1,7 +1,15 @@
-import Link from 'next/link';
-import Icon from '@/components/Icon';
-import { TonyHead } from '@/components/TonyArt';
-import './not-found.css';
+import type { Metadata } from 'next';
+import AvisoCerrable from '@/components/espejo/AvisoCerrable';
 
-/** Out of bounds: Tony peeks over the sideline with his eye on fire. */
-export default function NotFound(){return <main id="contenido" className="not-found"><p className="eyebrow orange">404 · FUERA DE LA CANCHA</p><div className="nf-tony" aria-hidden="true"><div className="nf-tony-clip"><TonyHead className="nf-tony-head"/></div><span className="nf-tony-line"/></div><h1>SE NOS ESCAPÓ<br/>ESTA PÁGINA.</h1><p>El enlace no existe. Volvamos al juego.</p><Link href="/" className="button primary">Volver al inicio <Icon/></Link></main>}
+// The official 404 page (Elegante theme): its title bar is hidden and the closable warning sits under the header
+// in the content area, which keeps the 596 px of the empty pages before the footer.
+export const metadata: Metadata = { title: 'Página no encontrada' };
+
+export default function NotFound() {
+  return <main id="contenido" className="wb-no-encontrada">
+    <h1 className="tc-sr">404 Página no encontrada</h1>
+    <div className="wb-contenedor">
+      <AvisoCerrable>¡La página a la que intentas acceder no existe!</AvisoCerrable>
+    </div>
+  </main>;
+}

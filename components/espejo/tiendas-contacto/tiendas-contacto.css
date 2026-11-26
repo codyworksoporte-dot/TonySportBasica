@@ -3,9 +3,6 @@
  * Prefix wb-tiendas-contacto-. Geometry from the official outlines (1440 and 390 px); colours from app/espejo.css.
  */
 
-/* Official teal page under the rows -> our flat page colour (the body texture must not show through). */
-.wb-tiendas-contacto-lista,.wb-tiendas-contacto-servicio,.wb-tiendas-contacto-cuenta{background:var(--wb-fondo)}
-
 /* ---------- Shared text (official wpb_text_column: Lato 16/27.2, 12 px between paragraphs) ---------- */
 .wb-tiendas-contacto-texto{font:400 var(--wb-t-texto)/var(--wb-lh-texto) var(--wb-f-texto);color:var(--wb-texto);overflow-wrap:break-word}
 .wb-tiendas-contacto-texto p{margin:0 0 12px}

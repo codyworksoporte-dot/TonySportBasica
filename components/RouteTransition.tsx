@@ -94,8 +94,8 @@ export default function RouteTransition() {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const anchor = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
       if (!anchor || (anchor.target && anchor.target !== '_self') || anchor.hasAttribute('download')) return;
-      // The logo replays the intro, which is its own entrance.
-      if (anchor.closest('[data-no-transition]') || (anchor.closest('.brand') && !matchMedia(MOBILE).matches)) return;
+      // The logo is a plain link home (as on the official site), so it gets the same section change.
+      if (anchor.closest('[data-no-transition]')) return;
       const url = new URL(anchor.href, location.href);
       if (url.origin !== location.origin || url.pathname === location.pathname || !allowed()) return;
       cover(event.clientX || innerWidth / 2, event.clientY || innerHeight / 2);

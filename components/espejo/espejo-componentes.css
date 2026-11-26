@@ -63,6 +63,8 @@
 .wb-carrusel-diapo :is(img,.wb-img-falta){position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:cover;user-select:none;-webkit-user-drag:none}
 .wb-carrusel--contener .wb-carrusel-diapo img{object-fit:contain}
 .wb-carrusel-enlace{position:absolute;inset:0;display:block}
+/* A slide's HTML layer (button), centred near the bottom; `translate` keeps the button's own hover transform. */
+.wb-carrusel-boton{position:absolute;left:50%;bottom:44px;z-index:2;translate:-50% 0}
 .wb-carrusel-enlace:focus-visible{outline:3px solid var(--wb-lima);outline-offset:-3px}
 .wb-carrusel-flecha{position:absolute;top:50%;z-index:3;display:grid;place-items:center;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:rgb(5 10 7 / .6);box-shadow:inset 0 0 0 1px var(--wb-linea-fuerte);color:var(--wb-lima);cursor:pointer;transition:background-color 200ms ease}
 .wb-carrusel-flecha--prev{left:14px}.wb-carrusel-flecha--next{right:14px}
@@ -129,6 +131,14 @@
 /* Embeds */
 .wb-mapa,.wb-video{position:relative;width:100%;overflow:hidden;background:var(--wb-tile);box-shadow:inset 0 0 0 1px var(--wb-linea)}
 .wb-mapa iframe,.wb-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* Closable notice (the theme's warning_msg closable) and the 404 page that shows it, 57 px under the header. */
+.wb-aviso-cerrable{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:49px;margin:0;padding:8px 8px 8px 17px}
+.wb-aviso-cerrable>p{margin:0}
+.wb-aviso-cerrar{display:grid;flex:none;place-items:center;width:32px;height:32px;padding:0;border:0;background:none;color:var(--wb-texto-suave);cursor:pointer}
+.wb-aviso-cerrar:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.wb-aviso-cerrar:hover{color:var(--wb-lima)}}
+.wb-no-encontrada{min-height:596px;padding:57px 0 40px}
 
 @media(prefers-reduced-motion:reduce){
   .wb-carrusel-diapo,.wb-producto-img,.wb-boton-flecha,.wb-carrusel-puntos button::before{transition:none!important}

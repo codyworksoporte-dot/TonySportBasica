@@ -34,8 +34,8 @@ html :is(.button.outline,.button.dark,.te-button-outline) :is(svg,span){color:va
 /* Text links: a rule draws in under them and the arrow turns toward where it leads. */
 html :is(.text-link,.hero-secondary,.te-text-link,.tony-footer-talk){position:relative;transition:color 200ms ease}
 html :is(.text-link,.hero-secondary,.te-text-link,.tony-footer-talk)::after{content:'';position:absolute;left:0;right:0;bottom:5px;height:1px;background:currentColor;opacity:.45;transform:scaleX(0);transform-origin:left;transition:transform 480ms var(--spring);pointer-events:none}
-html .text-link svg,html .te-text-link>span{transition:transform 260ms var(--ease),background 200ms ease,color 200ms ease,border-color 200ms ease}
-html .hero-secondary span,html .tony-footer-talk svg{display:inline-block;transition:transform 260ms var(--ease)}
+html .text-link svg{transition:transform 260ms var(--ease),background 200ms ease,color 200ms ease,border-color 200ms ease}
+html .tony-footer-talk svg{display:inline-block;transition:transform 260ms var(--ease)}
 
 /* Header icons: a quiet ring that lights up. */
 html .tony-icon-button{transition:background 180ms ease,border-color 180ms ease,color 180ms ease,transform 160ms var(--ease)}
@@ -52,13 +52,13 @@ html :is(.button.primary,.te-button,.tony-header-cta,.tony-footer-start,.button.
   html :is(.button.primary,.te-button:not(.te-button-outline),.tony-header-cta,.tony-footer-start):hover:not(:disabled)::after{background-position:-30% 0}
   html :is(.button.outline,.button.dark,.te-button-outline):hover:not(:disabled)::after{background-position:0 0,0 0}
   html :is(.button.primary:hover .button-icon svg,.tony-header-cta:hover>span svg,.tony-footer-start:hover>svg path,.button.primary:hover>svg path,.button.outline:hover>svg path,.button.dark:hover>svg path){animation:btn-arrow 560ms var(--ease) both}
-  html .button:hover .button-icon{transform:none}
-  html .button.primary:hover .button-icon{transform:rotate(-8deg) scale(1.06)}
-  html .te-button:hover>span{transform:translate(2px,-2px);background:#0d120c}
+  
+  
+  
   html :is(.text-link,.hero-secondary,.te-text-link,.tony-footer-talk):hover{color:var(--venom)}
   html :is(.text-link,.hero-secondary,.te-text-link,.tony-footer-talk):hover::after{transform:scaleX(1)}
-  html .text-link:hover svg,html .te-text-link:hover>span{background:var(--venom);border-color:var(--venom);color:#10160e;transform:rotate(-45deg)}
-  html .hero-secondary:hover span,html .tony-footer-talk:hover svg{transform:translate(3px,-3px)}
+  html .text-link:hover svg{background:var(--venom);border-color:var(--venom);color:#10160e;transform:rotate(-45deg)}
+  html .tony-footer-talk:hover svg{transform:translate(3px,-3px)}
   html .tony-icon-button:hover{background:rgb(180 255 53 / .1);border-color:rgb(180 255 53 / .35);color:var(--venom)}
 }
 @keyframes btn-arrow{0%{transform:none}44%{transform:translate(130%,-130%);opacity:0}45%{transform:translate(-130%,130%);opacity:0}100%{transform:none;opacity:1}}

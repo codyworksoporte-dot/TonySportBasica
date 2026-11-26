@@ -1,7 +1,7 @@
 /*
  * The official home slider (Slider Revolution «portada»): its 19 slides in the official order, with their
  * official image URLs. Every slide is one picture; the only HTML layer is the «Mas diseños» button of the
- * third slide, which opens its category: here the whole slide links there and inicio.css draws the button.
+ * third slide, which opens its category (the slide itself is not a link, as on the official site).
  */
 import type { Diapositiva } from '@/components/espejo/Carrusel';
 import { enlaceLocal } from '@/lib/oficial/enlaces';
@@ -13,7 +13,7 @@ export const ENLACE_MAS_DISENOS = enlaceLocal('https://www.tonysportselsalvador.
 export const DIAPOSITIVAS: Diapositiva[] = [
   { imagen: `${SUBIDAS}c279addb-9ccd-4580-bc2e-5518ae58d98f.jpeg`, alt: 'Tony Sportswear conquistando Primera: patrocinador oficial de C.D. Cacahuatique, C.D. Municipal Limeño, C.D. Fuerte San Francisco y C.D. Platense' },
   { imagen: `${SUBIDAS}WhatsApp-Image-2024-09-30-at-6.08.44-PM-1.jpeg`, alt: 'En Tony Sportswear te ofrecemos nuestras líneas de telas: Slim Fit, Slim Pro, Modern Carvin, Premier, Dry Fit y Dry Cool' },
-  { imagen: `${SUBIDAS}Full-sublimados-portada-1.png`, alt: '¡Tu diseño, tu estilo! Uniformes full sublimados: Mas diseños', href: ENLACE_MAS_DISENOS },
+  { imagen: `${SUBIDAS}Full-sublimados-portada-1.png`, alt: '¡Tu diseño, tu estilo! Uniformes full sublimados', boton: { texto: 'Mas diseños', href: ENLACE_MAS_DISENOS } },
   { imagen: `${SUBIDAS}photo_5087243150292005205_y.jpg`, alt: 'Descarga nuestra App y acumula puntos' },
   { imagen: `${SUBIDAS}WhatsApp-Image-2024-09-26-at-9.09.24-AM-3.jpeg`, alt: 'Tony Sportswear x Pollo Campero: ¡acumula puntos y gana!' },
   { imagen: `${SUBIDAS}e8d7fbea-cfb7-45aa-b708-a9c1bbcad5cf.jpeg`, alt: 'Camisas de algodón con tu logo a color a tan solo $4.99' },
