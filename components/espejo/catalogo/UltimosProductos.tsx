@@ -5,6 +5,7 @@
  * Props: items (UltimoProducto[], newest first); id?.
  */
 import Link from 'next/link';
+import PrecioOferta from './PrecioOferta';
 import type { UltimoProducto } from './tipos';
 import { SinFoto } from './TarjetaCatalogo';
 
@@ -21,8 +22,7 @@ export default function UltimosProductos({ items, id = 'wb-catalogo-ultimos' }: 
           <span className="wb-catalogo-ultimos-nombre">{p.nombre}</span>
         </Link>
         {p.precio && <span className="wb-catalogo-ultimos-precio">
-          {p.anterior && <del><span className="tc-sr">Precio anterior: </span>{p.anterior}</del>}
-          <ins><span className="tc-sr">{p.anterior ? 'Precio actual: ' : 'Precio: '}</span>{p.precio}</ins>
+          {p.anterior ? <PrecioOferta anterior={p.anterior} actual={p.precio}/> : p.precio}
         </span>}
       </li>)}
     </ul>

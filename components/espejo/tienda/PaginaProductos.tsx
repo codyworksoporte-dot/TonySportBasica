@@ -4,6 +4,8 @@
  * official has one, the linked square picture; then the green «¿Tienes alguna duda?» band.
  * Official quirks kept: three columns show their title with no picture (empty link on the official) and
  * the eighth column is empty. The official shows no h1 (its title band is hidden): ours is for screen readers.
+ * On phones the columns stack with no gap (only the inner rows keep 35 px between them), and a title-only
+ * column keeps the empty line its broken link leaves on the official.
  */
 import BandaCTA from '@/components/espejo/BandaCTA';
 import Columna from '@/components/espejo/Columna';
@@ -41,8 +43,9 @@ export default function PaginaProductos() {
     <h1 className="tc-sr">Productos</h1>
     <Fila sinPadding className="wb-productos3-fila">
       <Columna>
-        {FILAS.map((fila, i) => <div key={i} className="wb-fila-cols wb-productos3-interior">
-          {fila.map((linea, j) => <Columna key={j} ancho={{ sm: 3 }} className="wb-productos3-col">
+        {FILAS.map((fila, i) => <div key={i} className="wb-fila-cols wb-fila-cols--pegadas wb-productos3-interior">
+          {fila.map((linea, j) => <Columna key={j} ancho={{ sm: 3 }}
+            className={`wb-productos3-col${linea.titulo && !linea.imagen ? ' wb-productos3-col--sin-imagen' : ''}`}>
             {linea.titulo && <Titulo nivel={2} alinear="centro" color="lima" className="wb-productos3-titulo">{linea.titulo}</Titulo>}
             {linea.href && linea.imagen && <Link href={enlaceLocal(linea.href)} prefetch={false} className="wb-productos3-enlace">
               <ImagenSrcset urls={linea.imagen} alt={linea.titulo} sizes={TAMANOS} className="wb-productos3-img"/>

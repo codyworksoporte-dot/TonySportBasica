@@ -30,9 +30,6 @@ export type TarjetaDatos = {
 /** Option of the sidebar "Categorías" dropdown (WooCommerce product_cat widget, hierarchical). */
 export type OpcionCategoriaLateral = { slug: string; nombre: string; nivel: number };
 
-/** Search index entry: name and slug. */
-export type ProductoBusqueda = { n: string; s: string };
-
 /** "Últimos productos añadidos" widget entry. */
 export type UltimoProducto = { nombre: string; ruta: string; imagen: ImagenResuelta | null; precio: string; anterior: string | null };
 
@@ -63,10 +60,4 @@ export function textoConteo(total: number, pagina: number, porPagina = POR_PAGIN
   const desde = (pagina - 1) * porPagina + 1;
   const hasta = Math.min(total, pagina * porPagina);
   return `Mostrando ${desde}–${hasta} de ${total} resultados`;
-}
-
-const MARCAS = /[̀-ͯ]/g;
-/** Lowercase without accents, for accent-insensitive search. */
-export function normalizarTexto(texto: string): string {
-  return texto.normalize('NFD').replace(MARCAS, '').toLowerCase();
 }

@@ -22,6 +22,9 @@
 .wb-catalogo-orden{flex:none;width:251px;max-width:100%}
 .wb-catalogo-orden select{min-height:40px;padding:8px 40px 8px 14px;font-size:15px;background-position:right 12px center}
 .wb-catalogo-aviso{margin:0}
+/* Dropdown chevron of the selects (the official shows the native arrow). The shared field rule in espejo.css
+   has a higher specificity than its own select rule and resets the background, so it is set again here. */
+.wb-form.wb-catalogo-orden select,.wb-form.wb-catalogo-categorias select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b4ff35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:18px 18px}
 
 /* Loop cards (base .wb-producto): price inside the product link, sale flash top right as in the loop. */
 .wb-catalogo-tarjeta .wb-producto-precio{display:block}
@@ -40,6 +43,9 @@
 /* ---------- Sidebar widgets ---------- */
 .wb-catalogo-widget{margin:0 0 35px}
 .wb-catalogo-widget:last-child{margin-bottom:0}
+/* Official bottom gap: 70 px after the shop column, 100 px after a longer sidebar; 53 px on phones. */
+@media(min-width:992px){.wb-catalogo-lateral>.wb-catalogo-widget:last-child{margin-bottom:30px}}
+@media(max-width:991px){.wb-catalogo{padding-bottom:53px}}
 .wb-catalogo-widget-titulo{margin:0 0 20px;font:600 20px/1.2 var(--wb-f-display);letter-spacing:.04em;text-transform:uppercase;color:var(--wb-lima)}
 /* The official heading sits on a dark box that ends a little after the text. */
 .wb-catalogo-widget-titulo span{display:inline-block;max-width:100%;padding:1px 20px 1px 0;background:var(--wb-tile-2)}
@@ -47,17 +53,11 @@
 /* Buscar */
 .wb-catalogo-buscar{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
 .wb-catalogo-buscar input{min-height:44px;padding:9px 12px;font-size:15px}
-.wb-catalogo-resultados:empty{display:none}
-.wb-catalogo-resultados-conteo{margin:16px 0 8px;font:400 14px/1.5 var(--wb-f-texto);color:var(--wb-texto-suave)}
-.wb-catalogo-resultados-lista{margin:0;padding:0;list-style:none}
-.wb-catalogo-resultados-lista li{border-top:1px solid var(--wb-linea)}
-.wb-catalogo-resultados-lista a{display:block;padding:8px 0;color:var(--wb-texto);font:700 14px/1.35 var(--wb-f-texto);text-transform:uppercase;text-decoration:none}
-.wb-catalogo-resultados-lista a:focus-visible{outline:2px solid var(--wb-lima);outline-offset:2px}
-@media(hover:hover) and (pointer:fine){.wb-catalogo-resultados-lista a:hover{color:var(--wb-lima)}}
 
-/* Categorías (select2 look: the × clears it) */
+/* Categorías (select2 look: the × clears it). The official widget is 96 px from its title to the next one. */
+.wb-catalogo-widget--categorias{margin-bottom:22px}
 .wb-catalogo-categorias{position:relative}
-.wb-catalogo-categorias select{min-height:40px;padding:7px 40px 7px 12px;font-size:15px;background-position:right 12px center}
+.wb-catalogo-categorias select{min-height:34px;padding:5px 40px 5px 12px;font-size:15px;background-position:right 12px center}
 .wb-catalogo-categorias--con-valor select{padding-right:70px}
 .wb-catalogo-limpiar{position:absolute;top:50%;right:38px;display:grid;place-items:center;width:28px;height:28px;margin-top:-14px;padding:0;border:0;border-radius:50%;background:none;color:var(--wb-texto-suave);cursor:pointer}
 .wb-catalogo-limpiar:focus-visible{outline:2px solid var(--wb-lima);outline-offset:0}
@@ -82,10 +82,11 @@
 
 /* Últimos productos añadidos (product_list_widget): 56 px thumbnail floated left. */
 .wb-catalogo-ultimos{margin:0;padding:0;list-style:none}
-.wb-catalogo-ultimos li{display:flow-root;padding:12px 0}
+.wb-catalogo-ultimos li{display:flow-root;padding:12px 0;line-height:24px}
 .wb-catalogo-ultimos a{display:block;color:var(--wb-texto);text-decoration:none}
-.wb-catalogo-ultimos img,.wb-catalogo-ultimos-sin-foto{float:left;width:56px!important;height:56px!important;margin:0 14px 6px 0;object-fit:cover;box-shadow:0 0 0 2px var(--wb-linea-fuerte)}
-.wb-catalogo-ultimos-nombre{font:700 16px/24px var(--wb-f-texto);text-transform:uppercase}
+.wb-catalogo-ultimos img,.wb-catalogo-ultimos-sin-foto{float:left;width:56px!important;height:56px!important;margin:0 14px 0 0;object-fit:cover;box-shadow:0 0 0 2px var(--wb-linea-fuerte)}
+/* 15 px: with our wider face the names wrap like the official (two lines on phones, three in the 257 px column). */
+.wb-catalogo-ultimos-nombre{font:700 15px/24px var(--wb-f-texto);text-transform:uppercase}
 .wb-catalogo-ultimos-precio{display:block;font:400 14px/24px var(--wb-f-texto);color:var(--wb-texto)}
 .wb-catalogo-ultimos-precio del{margin-right:6px;color:var(--wb-texto-tenue)}
 .wb-catalogo-ultimos-precio ins{text-decoration:none}

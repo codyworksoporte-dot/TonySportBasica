@@ -31,7 +31,7 @@ export default function SelectorCategoriaLateral({ opciones, actual, id = 'wb-ca
     if (event.key === 'Enter') { event.preventDefault(); ir(event.currentTarget.value); return; }
     if (TECLAS.has(event.key) || event.key.length === 1) conTeclado.current = true;
   }
-  return <section className="wb-catalogo-widget" aria-labelledby={`${id}-t`}>
+  return <section className="wb-catalogo-widget wb-catalogo-widget--categorias" aria-labelledby={`${id}-t`}>
     <h2 className="wb-catalogo-widget-titulo" id={`${id}-t`}><span>Categorías</span></h2>
     <div className={`wb-form wb-catalogo-categorias${seleccion ? ' wb-catalogo-categorias--con-valor' : ''}`}>
       <select key={seleccion} id={id} name="product_cat" defaultValue={seleccion} aria-labelledby={`${id}-t`}

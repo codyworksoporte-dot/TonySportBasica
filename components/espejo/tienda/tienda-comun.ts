@@ -2,12 +2,13 @@
  * Shop archive (WooCommerce /productos/) helpers shared by the server pages and the client results.
  * No JSON imports here: client files may use this module. The server builds ProductoIndice[] with
  * datos-tienda.ts; the client gets the same records from /productos/indice.json.
+ * The shop is the same WooCommerce template as the category archives, so its cards are the
+ * category cards (TarjetaCatalogo) and its texts come from components/espejo/catalogo/tipos.
  */
+import { textoConteo as textoConteoCatalogo, type TarjetaDatos } from '@/components/espejo/catalogo/tipos';
 
 /** Products per archive page on the official site (3 columns x 4 rows). */
 export const POR_PAGINA_TIENDA = 12;
-
-export type ImagenResuelta = { src: string; w: number; h: number };
 
 /** One product of the shop index (compact keys: the whole catalogue travels as JSON). */
 export type ProductoIndice = {
@@ -25,8 +26,8 @@ export type ProductoIndice = {
   a: string | null;
   /** On sale («¡Oferta!» flag). */
   o: boolean;
-  /** Loop button: «Añadir al carrito» or «Más información». */
-  b: string;
+  /** Purchasable with a price: the official «Añadir al carrito» becomes «Pedir por WhatsApp». */
+  w: boolean;
   /** Lowest and highest price in dollars (null = no price: left out by the price filter). */
   mn: number | null;
   mx: number | null;
@@ -34,25 +35,19 @@ export type ProductoIndice = {
   t: string;
 };
 
-export type TarjetaTiendaDatos = {
-  nombre: string;
-  href: string;
-  imagen: ImagenResuelta | null;
-  precio?: string;
-  precioAnterior?: string;
-  etiqueta?: string;
-  boton: string;
-};
-
-export function aTarjeta(p: ProductoIndice): TarjetaTiendaDatos {
+/** Card data of the shared category card. The permalink is only the WhatsApp text until the browser knows the mirror URL. */
+export function aTarjeta(p: ProductoIndice): TarjetaDatos {
   return {
+    id: p.id,
     nombre: p.n,
-    href: p.h,
+    ruta: p.h,
     imagen: p.i ? { src: p.i[0], w: p.i[1], h: p.i[2] } : null,
-    precio: p.p || undefined,
-    precioAnterior: p.a ?? undefined,
-    etiqueta: p.o ? '¡Oferta!' : undefined,
-    boton: p.b,
+    precio: p.p,
+    anterior: p.a,
+    oferta: p.o,
+    valor: p.mn,
+    whatsapp: p.w,
+    permalink: `https://www.tonysportselsalvador.com${p.h}`,
   };
 }
 
@@ -78,12 +73,9 @@ export function paginarLista<T>(lista: readonly T[], pagina = 1): PaginaLista<T>
   return { items, pagina: actual, totalPaginas, total, desde: items.length ? inicio + 1 : 0, hasta: inicio + items.length };
 }
 
-/** WooCommerce result count, same texts as lib/oficial/catalogo textoResultados(). */
-export function textoConteo({ total, desde, hasta, totalPaginas }: Pick<PaginaLista<unknown>, 'total' | 'desde' | 'hasta' | 'totalPaginas'>): string {
-  if (total === 0) return 'No se encontraron productos que concuerden con la selección.';
-  if (total === 1) return 'Mostrando el único resultado';
-  if (totalPaginas <= 1) return `Mostrando los ${total} resultados`;
-  return `Mostrando ${desde}–${hasta} de ${total} resultados`;
+/** Result count exactly as the official prints it ('Mostrando todos los resultados 7', 'Mostrando 13–24 de 242 resultados'…). */
+export function textoConteo({ total, pagina }: Pick<PaginaLista<unknown>, 'total' | 'pagina'>): string {
+  return textoConteoCatalogo(total, pagina, POR_PAGINA_TIENDA);
 }
 
 // ---------------------------------------------------------------------------

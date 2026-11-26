@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Boton from '@/components/espejo/Boton';
 import { siteAsset } from '@/lib/asset-path';
 import BotonWhatsApp from './BotonWhatsApp';
+import PrecioOferta from './PrecioOferta';
 import type { TarjetaDatos } from './tipos';
 import '@/components/espejo/espejo-componentes.css';
 
@@ -35,8 +36,7 @@ export default function TarjetaCatalogo({ item, nivel = 2, prioridad = false }: 
       </span>
       <Encabezado className="wb-producto-nombre">{item.nombre}</Encabezado>
       {item.precio && <span className="wb-producto-precio">
-        {item.anterior && <del><span className="tc-sr">Precio anterior: </span>{item.anterior}</del>}
-        <ins><span className="tc-sr">{item.anterior ? 'Precio actual: ' : 'Precio: '}</span>{item.precio}</ins>
+        {item.anterior ? <PrecioOferta anterior={item.anterior} actual={item.precio}/> : item.precio}
       </span>}
     </Link>
     {item.whatsapp

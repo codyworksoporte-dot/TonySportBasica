@@ -30,7 +30,7 @@ export default function OrdenTienda() {
     if (TECLAS.has(event.key) || event.key.length === 1) conTeclado.current = true;
   };
 
-  return <form className="wb-form wb-tienda-orden" onSubmit={(event) => event.preventDefault()}>
+  return <form className="wb-form wb-catalogo-orden" onSubmit={(event) => event.preventDefault()}>
     {/* key: the select resets to the URL's order after every navigation. */}
     <select key={actual} name="orderby" aria-label="Pedido de la tienda" defaultValue={actual} onChange={alCambiar} onKeyDown={alPulsar}
       onPointerDown={() => { conTeclado.current = false; }} onBlur={() => { conTeclado.current = false; }}>

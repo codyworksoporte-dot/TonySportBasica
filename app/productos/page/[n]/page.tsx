@@ -13,7 +13,8 @@ type Props = { params: Promise<{ n: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { n } = await params;
-  return { title: `Productos – Página ${Number(n)}` };
+  // Official tab: "Productos | TONY SPORTSWEAR EL SALVADOR | Page N" (page number after the site name).
+  return { title: { absolute: `Productos | TONY SPORTSWEAR EL SALVADOR | Page ${Number(n)}` } };
 }
 
 export default async function ProductosPagina({ params }: Props) {

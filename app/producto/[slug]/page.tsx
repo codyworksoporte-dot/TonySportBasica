@@ -6,6 +6,7 @@ import BotonWhatsApp from '@/components/espejo/catalogo/BotonWhatsApp';
 import { disponibleParaReserva, pidePorWhatsApp, tarjetaDeProducto, tituloDeNavegacion } from '@/components/espejo/catalogo/datos';
 import GaleriaProducto, { type ImagenGaleria } from '@/components/espejo/catalogo/GaleriaProducto';
 import NavegacionProductos, { type ProductoVecino } from '@/components/espejo/catalogo/NavegacionProductos';
+import PrecioOferta from '@/components/espejo/catalogo/PrecioOferta';
 import TarjetaCatalogo from '@/components/espejo/catalogo/TarjetaCatalogo';
 import {
   fotoProducto,
@@ -70,7 +71,8 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
   const corta = p.descripcionCorta.trim();
   const larga = p.descripcion.trim();
 
-  return <main id="contenido" className="wb-ficha">
+  // data-categoria: the official footer dropdown preselects the product's first category.
+  return <main id="contenido" className="wb-ficha" data-categoria={p.categorias[0]?.slug}>
     <div className="wb-contenedor">
       <div className="wb-ficha-producto">
         <div className="wb-ficha-galeria">
@@ -78,9 +80,9 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
         </div>
         <div className="wb-ficha-resumen">
           <h1 className="wb-ficha-titulo">{p.nombre}</h1>
+          {/* Official price text: "$24.99", or "$14.99 $13.99" (struck regular + sale) when on sale. */}
           {precio.actual && <p className="wb-ficha-precio">
-            {precio.anterior && <del><span className="tc-sr">Precio anterior: </span>{precio.anterior}</del>}
-            <ins><span className="tc-sr">{precio.anterior ? 'Precio actual: ' : 'Precio: '}</span>{precio.actual}</ins>
+            {precio.anterior ? <PrecioOferta anterior={precio.anterior} actual={precio.actual}/> : precio.actual}
           </p>}
           {corta && <div className="wb-contenido wb-ficha-html wb-ficha-corta" dangerouslySetInnerHTML={{ __html: localizarHtml(corta) }}/>}
           {pidePorWhatsApp(p) && <div className="wb-ficha-accion">
@@ -94,13 +96,13 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
             </span>}
             {p.etiquetas.length > 0 && <span>{p.etiquetas.length > 1 ? 'Etiquetas:' : 'Etiqueta:'} {p.etiquetas.map((t) => t.nombre).join(', ')}</span>}
           </div>
+          {/* The theme prints the tabs inside the summary column, right under the meta (also on desktop). */}
+          {larga && <section className="wb-ficha-pestanas" aria-labelledby="wb-ficha-t-descripcion">
+            <h2 className="wb-ficha-pestana" id="wb-ficha-t-descripcion">Descripción</h2>
+            <div className="wb-contenido wb-ficha-html wb-ficha-panel" dangerouslySetInnerHTML={{ __html: localizarHtml(larga) }}/>
+          </section>}
         </div>
       </div>
-
-      {larga && <section className="wb-ficha-pestanas" aria-labelledby="wb-ficha-t-descripcion">
-        <h2 className="wb-ficha-pestana" id="wb-ficha-t-descripcion">Descripción</h2>
-        <div className="wb-contenido wb-ficha-html wb-ficha-panel" dangerouslySetInnerHTML={{ __html: localizarHtml(larga) }}/>
-      </section>}
 
       {relacionados.length > 0 && <section className="wb-ficha-relacionados" aria-labelledby="wb-ficha-t-relacionados">
         <h2 className="wb-ficha-relacionados-titulo" id="wb-ficha-t-relacionados">Productos relacionados</h2>

@@ -6,14 +6,12 @@ import {
   categorias,
   miniaturaProducto,
   precioPartes,
-  productos,
   rutaProducto,
-  slugDeProducto,
   type CategoriaOficial,
   type ProductoOficial,
 } from '@/lib/oficial/catalogo';
 import productosJson from '@/data/oficial/productos.json';
-import type { ImagenResuelta, OpcionCategoriaLateral, ProductoBusqueda, TarjetaDatos, UltimoProducto } from './tipos';
+import type { ImagenResuelta, OpcionCategoriaLateral, TarjetaDatos, UltimoProducto } from './tipos';
 
 // Store API field that lib/oficial/catalogo does not map (same JSON module, no extra copy in memory).
 const EN_RESERVA = new Set(
@@ -63,11 +61,6 @@ export function tarjetaDeProducto(p: ProductoOficial): TarjetaDatos {
 export function ultimoProducto(p: ProductoOficial): UltimoProducto {
   const partes = precioPartes(p);
   return { nombre: p.nombre, ruta: rutaProducto(p), imagen: resolver(miniaturaProducto(p, 0)), precio: partes.actual, anterior: partes.anterior };
-}
-
-/** Name + slug of every product, for the sidebar search. */
-export function indiceDeBusqueda(): ProductoBusqueda[] {
-  return productos().map((p) => ({ n: p.nombre, s: slugDeProducto(p) }));
 }
 
 /** Ancestor ids of a category, nearest first. */

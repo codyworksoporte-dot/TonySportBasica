@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ArchivoCatalogo from '@/components/espejo/catalogo/ArchivoCatalogo';
-import BuscadorProductos from '@/components/espejo/catalogo/BuscadorProductos';
-import { indiceDeBusqueda, opcionesCategoriaLateral, segmentosDeCategoria, tarjetaDeProducto, ultimoProducto } from '@/components/espejo/catalogo/datos';
+import { opcionesCategoriaLateral, segmentosDeCategoria, tarjetaDeProducto, ultimoProducto } from '@/components/espejo/catalogo/datos';
 import SelectorCategoriaLateral from '@/components/espejo/catalogo/SelectorCategoriaLateral';
 import UltimosProductos from '@/components/espejo/catalogo/UltimosProductos';
+import BuscarProductos from '@/components/espejo/tienda/BuscarProductos';
 import { categoriaPorRuta, categorias, localizarHtml, paginar, paginasDeCategorias, productosDeCategoria, rangoDePrecios, rutaCategoria, ultimosProductos } from '@/lib/oficial/catalogo';
 import '@/components/espejo/catalogo/catalogo.css';
 
@@ -44,8 +44,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { ruta } = await params;
   const datos = resolver(ruta);
   if (!datos) return {};
-  // Official tab: "<Nombre> | Categorías del producto | TONY SPORTSWEAR EL SALVADOR[ | Page N]".
-  return { title: `${datos.categoria.nombre} | Categorías del producto${datos.pagina > 1 ? ` | Page ${datos.pagina}` : ''}` };
+  // Official tab: "<Nombre> | Categorías del producto | TONY SPORTSWEAR EL SALVADOR[ | Page N]" (the page number
+  // goes after the site name, so pages > 1 skip the layout's title template).
+  const titulo = `${datos.categoria.nombre} | Categorías del producto`;
+  return { title: datos.pagina > 1 ? { absolute: `${titulo} | TONY SPORTSWEAR EL SALVADOR | Page ${datos.pagina}` } : titulo };
 }
 
 function descripcionHtml(html: string): string {
@@ -62,7 +64,8 @@ export default async function CategoriaPage({ params }: { params: Promise<Params
   const rango = rangoDePrecios(lista);
   const descripcion = pagina === 1 ? descripcionHtml(categoria.descripcion) : '';
 
-  return <main id="contenido" className="wb-catalogo">
+  // data-categoria: the footer's «Explora nuestras categorías» preselects it, as on the official site.
+  return <main id="contenido" className="wb-catalogo" data-categoria={categoria.slug}>
     <h1 className="tc-sr">{categoria.nombre}</h1>
     <div className="wb-contenedor">
       <ArchivoCatalogo key={ruta.join('/')}
@@ -73,7 +76,8 @@ export default async function CategoriaPage({ params }: { params: Promise<Params
         etiqueta={`Productos de ${categoria.nombre}`}
         cabecera={descripcion ? <div className="wb-contenido wb-catalogo-descripcion" dangerouslySetInnerHTML={{ __html: descripcion }}/> : null}
         lateralArriba={<>
-          <BuscadorProductos productos={indiceDeBusqueda()}/>
+          {/* Like the official product search, it opens the results in the shop template (/productos/?s=). */}
+          <BuscarProductos/>
           <SelectorCategoriaLateral opciones={opcionesCategoriaLateral(categoria)} actual={categoria.slug}/>
         </>}
         lateralAbajo={<UltimosProductos items={ultimosProductos(5).map(ultimoProducto)}/>}

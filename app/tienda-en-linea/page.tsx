@@ -9,6 +9,7 @@ import '@/components/espejo/tienda/tienda.css';
 
 // Official «TIENDA EN LINEA»: one row of three columns (picture + button). Its title band is hidden on the
 // official site, so the h1 is for screen readers. Only the first picture is a link, as on the official.
+// On phones the columns stack with no gap: each picture starts right under the previous button.
 export const metadata: Metadata = { title: 'TIENDA EN LINEA' };
 
 const SUBIDAS = 'https://www.tonysportselsalvador.com/wp-content/uploads/';
@@ -23,7 +24,7 @@ const COLUMNAS = [
 export default function TiendaEnLinea() {
   return <main id="contenido" className="wb-tel">
     <h1 className="tc-sr">TIENDA EN LINEA</h1>
-    <Fila sinPadding>
+    <Fila sinPadding pegadas>
       {COLUMNAS.map((c, i) => <Columna key={c.href} ancho={{ sm: 4 }}>
         <div className="wb-tel-figura">
           {c.enlazada
